@@ -115,7 +115,7 @@ let hasVideo = props.embedCode || props.ytLink
         <!-- Nesse curso você vai ter -->
         {Astro.slots.has('conteudos') &&
         <section id="conteudos" class="py-12 md:pt-20 md:pb-32 leading-relaxed bg-gradient-to-b from-gray-800 to-gray-900" data-theme={temaLC}>
-            <h2 class="md:mb-20 md:text-5xl text-4xl font-bold tracking-wide mb-8 text-center text-primary" set:html={props.conteudosTitle}/>
+            <h2 class="md:mb-20 md:text-5xl text-4xl font-bold tracking-wide mb-8 text-center text-primary"><slot name="conteudosTitulo"/></h2>
             <div class="flex gap-8 flex-wrap justify-center">
                 <slot name="conteudos"/>
             </div>
@@ -128,12 +128,12 @@ let hasVideo = props.embedCode || props.ytLink
 
         <!-- Bônus -->
         {Astro.slots.has('bonus') &&
-        <section id="bonus" class="py-20 lg:pb-32">
-            <h2 class="text-5xl mb-16 text-center font-black text-black" set:html={props.bonusTitle}/>
+        (<section id="bonus" class="py-20 lg:pb-32">
+            <h2 class="text-5xl mb-16 text-center font-black text-black"><slot name="bonusTitulo"/></h2>
             <div class="flex gap-12 flex-wrap justify-center">                
                 <slot name="bonus"/>
             </div>
-        </section>}
+        </section>)}
         
         <!-- Garantia -->
         <section id="garantia" class="py-16 md:flex md:gap-12 md:items-center md:max-w-screen-lg md:mx-auto">

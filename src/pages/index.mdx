@@ -58,7 +58,7 @@ import img1 from "@assets/praia.webp"
 <Layout frontmatter={frontmatter} >
 
 <Fragment slot="pre-promessa">- Texto opcional pré-promessa <span class="text-white">⚡</span> -</Fragment>
-<Fragment slot="promessa">Aqui vai a <Degrade>**Promessa de Transformação**.</Degrade> Ex.: "Descubra <Degrade grad="ig">o exato passo a passo</Degrade> para..."</Fragment>
+<Fragment slot="promessa">Aqui vai a <Degrade spanClass="text-4xl xs:text-5xl">**Promessa de Transformação**.</Degrade> Ex.: "Descubra <Degrade grad="ig">o exato passo a passo</Degrade> para..."</Fragment>
 <Fragment slot="subpromessa">Escreva aqui o reforço da <Degrade grad="yellow">_**promessa de transformação**_</Degrade>, exaltando a <Degrade grad="green">**simplicidade**</Degrade> do seu método e deixando _mais clara a sua proposta_. Aguce a curiosidade da pessoa leitora para que ela vá até a <Degrade grad="blue">**página de vendas**</Degrade>.</Fragment>
 {/* Opções do Degrade: yellow, blue, gree, ig */}
 
@@ -95,7 +95,7 @@ Não focar no problema, ir direto para a solução. Falar de forma lógica porqu
 
 </Fragment>
 
-{frontmatter.conteudosTitle = "Como você vai fazer X em tempo T?"}
+<Fragment slot="conteudosTitulo">Como você vai fazer X em tempo T?</Fragment>
 <Fragment slot="conteudos">
     <Card emoji="🛠️">
         <Fragment slot="h3">Título do Conteúdo</Fragment>
@@ -119,7 +119,7 @@ Não focar no problema, ir direto para a solução. Falar de forma lógica porqu
     </Card>
 </Fragment>
 
-{frontmatter.bonusTitle = "2 Aulas Bônus para impulsionar os seus Resultados"}
+<Fragment slot="bonusTitulo">2 Aulas Bônus para impulsionar os seus Resultados</Fragment>
 <Fragment slot="bonus">
     <Card emoji="👩🏾‍💻" h3size="big" precoDe="R$ 97,00" precoPor="R$ 0">
         <Fragment slot="h3">Título do Card</Fragment>
