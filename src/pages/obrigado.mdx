@@ -1,0 +1,27 @@
+---
+noindex: true
+tema: dark #emerald, dark, bumblebee, corporate. Não há grandes diferenças entre eles
+
+title: Tudo Certo! Agora confira seu e-mail 📩
+description: Acesse agora mesmo sua área de aprendizado e conte com a gente para crescer.
+---
+import Layout from "@layouts/partials/LayoutBase.astro"
+import Cta from "@components/cta.astro"
+import Footer from "@layouts/partials/footer.astro"
+
+<Layout frontmatter={frontmatter} >
+
+<main class="text-center px-4 mt-24 mx-auto prose prose-lg prose-p:text-2xl prose-li:text-2xl md:prose-p:text-xl md:prose-li:text-xl md:prose-h2:text-4xl">
+
+    # Tudo Certo! Agora confira seu e-mail 📩
+
+    Os dados de acesso foram enviados por e-mail. Caso não tenha recebido, procure por "@xxxxx" no spam.
+
+    Acesse agora mesmo sua área de aprendizado e conte com a gente para crescer.  
+
+    <Cta link="https://linkdaareademembros.com.br"> Acesse a Área de Membros </Cta>
+
+</main>
+
+<Footer dark/>
+</Layout>

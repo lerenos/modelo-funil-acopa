@@ -1,0 +1,38 @@
+---
+import Desenho from '@assets/icons/siteIcon.astro'
+let content = {
+    title: 'Obrigado!',
+    description: 'Recebemos sua mensagem'
+}
+let title = 'Obrigado!'
+let description = 'Recebemos sua mensagem'
+let pageUrl = new URL(Astro.url.pathname, Astro.site)
+---
+<!DOCTYPE html>
+<html lang='pt-BR' data-theme="">
+	<head>
+        <!-- Global Metadata -->
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+        <!-- Primary Meta Tags -->
+        <title>{title}</title>
+        <meta name="title" content={title} />
+        <meta name="description" content={description} />
+        <link rel="canonical" href={pageUrl} />
+	</head>
+
+	<body>
+        <section class="min-h-screen grid mx-auto place-content-center place-items-center gap-8 md:grid-cols-3 md:w-9/12">
+            <div id="img" class="grid place-content-center place-items-center w-28 md:w-full mx-auto">
+                <Desenho />
+            </div>
+            <div class="prose text-center md:text-left md:col-span-2">
+                <h1>Obrigado!</h1>
+                <p>Vamos te responder em breve com os próximos passos. Enquanto isso, que tal dar mais uma espiada em nosso site?</p>
+                <a href="/" class="btn btn-primary">Voltar para o Início</a>
+            </div>
+        </section>        
+    </body>
+</html>

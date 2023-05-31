@@ -1,0 +1,20 @@
+---
+import BaseHead from '@layouts/partials/baseHead.astro'
+
+const props = (Astro.props.frontmatter || Astro.props.props ) || Astro.props
+let {tema = "dark", persist = false} = props
+
+import {frontmatter as data} from 'src/siteInfo.mdx'
+let lang = props.lang || (data.lang || "pt-BR")
+
+---
+<!DOCTYPE html>
+<html lang={lang} data-theme={tema} persist={persist} >
+	<head>
+		<BaseHead {props}/>
+		<!-- <BaseHead /> -->
+	</head>
+	<body>
+        <slot />
+    </body>
+</html>

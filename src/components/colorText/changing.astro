@@ -1,0 +1,43 @@
+---
+let {time, infinite} = Astro.props
+---
+<changing-colors data-time={time} data-infinite={infinite?'true':false}>
+<slot/>
+</changing-colors>
+
+<script>
+class changingColors extends HTMLElement {
+constructor() {
+    super();
+
+    // Leia a mensagem do atributo `data-*`.
+    let time = this.dataset.time*1000
+    let isInfinite = this.dataset.infinite
+
+    const spans = this.querySelectorAll('span');
+    let newCls = "text-inherit"
+
+    function changeColor(){
+        let coloredIndex = Array.from(spans).findIndex( e => e.classList.contains('text-transparent'))
+        let next = (coloredIndex == spans.length-1) ? 0 : coloredIndex+1
+        if (coloredIndex > -1){
+            spans[coloredIndex].classList.replace('text-transparent',newCls)
+        }
+        spans[next].classList.replace(newCls,'text-transparent')
+    }
+    
+    let elementCount = spans.length
+    if (isInfinite){
+        setInterval(changeColor,time)
+    } else {
+        let i=0
+        let finite = setInterval(()=>{
+            i++
+            changeColor()
+            if (i==elementCount){clearInterval(finite)}
+        },time)
+    }
+}
+}  
+customElements.define('changing-colors', changingColors);
+</script>

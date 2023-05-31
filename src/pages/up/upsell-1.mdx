@@ -1,0 +1,140 @@
+---
+noindex: true #essa página não deve ser indexada pelo Google, já que teoricamente seria de Upsell
+
+title: Título Upsell - vai aparecer na aba do navegador | Sua Marca
+description: "Descrição da Página que vai aparecer no google e quando o link for compratilhado no whatsapp, twitter, etc. Mantenha abaixo de 160 caracteres"
+
+precoDe: 530,00
+preco: 47
+
+tema: emerald #dark, emerald, bumblebee ou corporate
+persist: true
+temaDestaque: dark #apenas dark, por enquanto
+temaCitacao: bumblebee #dark, emerald, bumblebee ou corporate
+temaOferta: emerald #dark, emerald, bumblebee ou corporate
+
+exibePrecoAposPromessa: false
+
+exibeBanner: true
+bannerBarSize: 5 #de 1 a 12. padrão: 10.
+bannerBarTxt: "Complete sua compra:"
+bannerMainTxt: "Oferta Especial para novos alunos! <br>
+            Treinamento recomendado para impulsionar suas chances de ganhos:"
+
+# beneficiosTitle: O que você vai ter acesso…
+# beneficios:
+#     - "Como fazer sites profissionais gratuitos"
+#     - "Como fazer sites impossíveis de cair, mesmo com picos de tráfego"
+#     - "Como colocar seu modelo de site no ar com apenas um clique"
+#     - "Como criar páginas de vendas de alta conversão em minutos"
+#     - "Como aumentar a conversão de uma Landing Page sem alterar copy ou design"
+#     - "Como aprender o básico de desenvolvimento web para rapidamente se colocar no mercado"
+#     - "Como prestar serviços para um mercado aquecido e que está disposto a pagar pela qualidade: o de Produtores Digitais"
+
+# Lista de Conteúdos está no corpo do arquivo
+# Lista de Bônus pode estar no corpo do arquivo (copiar e colar da Página de Vendas Principal, se for o caso)
+
+garantiaDias: 30
+garantiaTitle: "A garantia é a de sempre: compre agora, teste por 30 dias. ;)"
+
+ofertaChamada: "E por isso mesmo vou te dar uma condição MUITO especial, válida apenas para esta página:"
+# beneficiosOferta:
+# - Método mais moderno e profissional para fazer sites em 2023
+# - Automaticamente escalável, sem necessitar de ajustes
+# - Impossível de cair
+# - Super Seguro
+# - Não necessita de base de dados
+# - Ferramentas gratuitas
+# - Páginas rápidas, muito rápidas mesmo
+# - Coloque modelos de site no ar com 1 clique
+# - Crie sua máquina de produzir Landing Pages e testar produtos
+# - Trabalhe no mercado digital com baixo risco
+
+cta: Compre com apenas 1 clique!
+ctaLink: https://chk.eduzz.com/0000000?u=1&utm_medium=upsell_lp_rapida
+posCta: Aprenda como fazer headlines persuasivas para qualquer projeto
+
+btnNao: Não, obrigado. Não tenho interesse.
+linkNao: /up/upsell-2/
+
+---
+import Layout from "@layouts/lp.astro"
+import Degrade from "@components/colorText/span.astro"
+import Card from "@components/cards/emojiAndH3.astro"
+import Check from "@assets/icons/roundCheckmark.astro"
+
+<Layout frontmatter={frontmatter} >
+
+<Fragment slot="pre-promessa">- **Copywriting+ChatGPT** -</Fragment>
+<Fragment slot="promessa">
+<span class="text-4xl md:text-5xl">20% do Esforço </span><br/>
+<span class="text-lg">que gera </span><br/>
+<div class="mb-6"></div>
+<Degrade grad="blue" spanClass="xs:text-7xl md:text-8xl">**80% do Resultado**</Degrade>
+</Fragment>
+<Fragment slot="subpromessa"> Esse é o poder de headlines bem feitas. <br/> Elas são **a parte mais importante** de qualquer criativo ou página de vendas.</Fragment>
+
+É natural do ser humano, e acontece comigo e com você: ainda no subconsciente, a venda é feita na primeira impressão.
+
+Aqui no nosso caso, na _headline_: **a primeira frase da página, que desperta desejo e curiosidade**.
+
+Só depois o lado lógico de nossas mentes entra em cena (e em geral tentando *confirmar aquilo que a gente já estava sentindo*).
+
+E o copywriting é a técnica de fazer essa comunicação persuasiva, que consegue conectar pessoas a promessas de transformação…
+
+Ela é fundamental, é um pilar de qualquer oferta de venda: _sim, sim, você já tá cansado de ouvir isso, e eu também._
+
+Só que…
+
+Ok, vou ser bem sincero: _eu não curto perder tempo pensando em copy_. 
+
+Nem um pouco. Eu curto muito mais programar, fazer sites, integrações, etc. É a minha vibe.
+
+Então eu tive que aprender como fazer algo que realmente funcione. Eu sou metódico, eu precisava de um método.
+
+E… 
+
+Bem, não é que deu certo??
+
+Obviamente você já entendeu: o chatGPT foi um divisor de águas! Arrisco até a dizer que **fazer copy ficou divertido**!
+
+E hoje, graças ao chatGPT, você também pode criar **várias promessas de transformação** e ofertas de venda **vencedoras**, com um único comando.
+
+{frontmatter.conteudosTitle = "Como você vai fazer X em tempo T?"}
+<Fragment slot="conteudos">
+    <Card emoji="📣">
+        <Fragment slot="h3">As 4 características de uma boa headline de página de vendas</Fragment>
+        <>Como comunicar uma promessa de transformação de modo que as pessoas desejem e acreditem</>
+    </Card>
+    <Card emoji="👩🏾‍💻">
+        <Fragment slot="h3">Comandos Especializados em Headlines</Fragment>
+        <>Prompts detalhados feitos especialmente com o objetivo de criar a parte mais importante de uma Página de Vendas</>
+    </Card>
+</Fragment>
+
+<Fragment slot="pos-conteudos">
+A gente junta a **_estratégia de copywriting_** com a **_técnica de prompting_** e extrai como resultado **o melhor que a Inteligência Artificial pode nos fornecer**.
+
+E na maioria dos casos, você vai simplesmente **copiar e colar** a resposta do chatGPT na sua Página de Vendas, **de tão boa que ela fica**!
+</Fragment>
+
+{/* Os dias de garantia estão na frontmatter */}
+{/* O Título da seção de Garantia está na frontmatter */}
+<Fragment slot="garantiaTexto">
+Se por qualquer motivo esse conhecimento não gerar valor para você, é só pedir o reembolso total.
+</Fragment>
+
+<Fragment slot="pre-oferta">
+## Para você que acabou de adquirir o Método Landing Pages Rápidas, eu sei que isso vai agregar muito valor para a sua jornada.
+</Fragment>
+
+<Fragment slot="textoLogoAposCta">Esse desconto é válido **apenas se você clicar no botão acima**.</Fragment>
+
+{/* A Chamada e os benefícios da Oferta estão na frontmatter */}
+<Fragment slot="textoAposCta">
+Zero Risco:
+
+Se por qualquer motivo esse conhecimento não gerar valor para você, é só pedir o reembolso total.
+</Fragment>
+
+</Layout>

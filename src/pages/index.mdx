@@ -1,0 +1,155 @@
+---
+title: Título da Página - vai aparecer no Google e na aba do navegador | Sua Marca
+description: "Descrição da Página que vai aparecer no google e quando o link for compratilhado no whatsapp, twitter, etc. Mantenha abaixo de 160 caracteres"
+
+precoDe: 197,00
+preco: 20
+
+tema: emerald #dark, emerald, bumblebee ou corporate
+persist: true
+temaDestaque: dark #apenas dark, por enquanto
+temaCitacao: bumblebee #dark, emerald, bumblebee ou corporate
+# temaOferta: dark #dark, emerald, bumblebee ou corporate
+
+exibePrecoAposPromessa: false
+
+provaSocial:
+- {img: "/fotos/pessoa1.webp", texto: "Excelente! O curso X foi um divisor de águas. Em apenas T meses, eu fui de A para B", nome: "Pessoa 1" }
+- {img: "/fotos/pessoa2.webp", texto: "Excelente! O curso X foi um divisor de águas. Em apenas T meses, eu fui de A para B", nome: "Pessoa 2" }
+- {img: "/fotos/pessoa1.webp", texto: "Excelente! O curso X foi um divisor de águas. Em apenas T meses, eu fui de A para B", nome: "Pessoa 3" }
+
+beneficiosTitle: O que você vai ter acesso…
+beneficios:
+    - "Aqui vai uma lista de benefícios para o seu cliente"
+    - "A numeração dessa lista é automática"
+    - "Aqui tem mais a ver com copy do que lista de conteúdo"
+    - "Talvez você pegue algumas inspirações com o ChatGPT, por exemplo"
+    - "Como aumentar a conversão de uma Landing Page sem alterar copy ou design"
+    - "Como prestar serviços para um mercado aquecido e que está disposto a pagar pela qualidade: o de Produtores Digitais"
+
+# Lista de Conteúdos está no corpo do arquivo
+# Lista de Bônus está no corpo do arquivo
+
+garantiaDias: 30
+garantiaTitle: 30 dias de Garantia. <br class="hidden md:inline"> 100% de Satisfação. Risco Zero.
+
+ofertaChamada: "Aproveite os últimos dias da promoção:"
+beneficiosOferta:
+- "Item de Benefício ou Objetivo #1"
+- "Item de Benefício ou Objetivo #2"
+- Mais um item de benefício
+- Mais um item de benefício
+- Mais um item de benefício
+- Outro item de benefício
+- Outro item de benefício
+- Outro item de benefício
+- Outro item de benefício
+
+cta: Quero começar agora!
+ctaLink: https://chk.eduzz.com/1828321?cupom=GANHARCOMLPS20&utm_medium=lp
+
+---
+import Layout from "@layouts/lp.astro"
+import Degrade from "@components/colorText/span.astro"
+import Card from "@components/cards/emojiAndH3.astro"
+import Check from "@assets/icons/roundCheckmark.astro"
+import img1 from "@assets/praia.webp"
+
+<Layout frontmatter={frontmatter} >
+
+<Fragment slot="pre-promessa">- Texto opcional pré-promessa <span class="text-white">⚡</span> -</Fragment>
+<Fragment slot="promessa">Aqui vai a <Degrade>**Promessa de Transformação**.</Degrade> Ex.: "Descubra <Degrade grad="ig">o exato passo a passo</Degrade> para..."</Fragment>
+<Fragment slot="subpromessa">Escreva aqui o reforço da <Degrade grad="yellow">_**promessa de transformação**_</Degrade>, exaltando a <Degrade grad="green">**simplicidade**</Degrade> do seu método e deixando _mais clara a sua proposta_. Aguce a curiosidade da pessoa leitora para que ela vá até a <Degrade grad="blue">**página de vendas**</Degrade>.</Fragment>
+{/* Opções do Degrade: yellow, blue, gree, ig */}
+
+Algo diferente, algo que gere contraste com o que todo mundo tá falando, e que faça sentido.
+
+*Script geral:*
+
+Talvez você já tenha visto… [algo que as pessoas já conhecem: algo muito falado no mercado, ou que já foi muito falado no mercado]
+
+Eu tenho algo novo para te mostrar / Mas e se existisse uma maneira de… [falar algo que é diferente]. 
+
+Isso seria interessante para você?/Faz sentido para você?
+
+É exatamente isso que eu vou te mostrar no _**curso X**_.
+
+{/* Aqui nesta parte entra a lista de benefícios, que foi toda colocada no cabeçalho */}
+
+<Fragment slot="citacao">
+_"Essa frase de citação é bem opcional"_
+</Fragment>
+
+<Fragment slot="copy-logica">
+Não focar no problema, ir direto para a solução. Falar de forma lógica porque o seu produto faz sentido. Talvez deixar claro o mecanismo único do seu método.
+
+*Um exemplo de script geral:*
+
+[O que não deu certo: lembrar a pessoa de quando ela tentou e não deu certo] Talvez você não teve resultado com outros cursos que falam sobre o mesmo assunto
+
+[Causa de não dar certo] Isso acontece porque…
+
+[Apresentar o produto como solução] É exatamente por isso que eu criei [essa solução].
+
+<img src={img1} alt="Texto Alternativo e Explicativo da Imagem 1"/>
+
+</Fragment>
+
+{frontmatter.conteudosTitle = "Como você vai fazer X em tempo T?"}
+<Fragment slot="conteudos">
+    <Card emoji="🛠️">
+        <Fragment slot="h3">Título do Conteúdo</Fragment>
+        <>Vou te guiar no setup da sua estrutura de desenvolvimento, para que você tenha um bom ambiente de trabalho digital.</>
+    </Card>
+    <Card emoji="🚀">
+        <Fragment slot="h3">Título do Conteúdo</Fragment>
+        <>Texto do Card, exibindo o aprendizado daquele assunto do curso. Acima do título há um emoji.</>
+    </Card>
+    <Card emoji="🔎">
+        <Fragment slot="h3">É só preencher as Lacunas</Fragment>
+        <>Texto do Card, exibindo o aprendizado daquele assunto do curso. Acima do título há um emoji.</>
+    </Card>
+    <Card emoji="🏆">
+        <Fragment slot="h3">Ferramentas Gratuitas</Fragment>
+        <>Texto do Card, exibindo o aprendizado daquele assunto do curso. Acima do título há um emoji.</>
+    </Card>
+    <Card emoji="🎨">
+        <Fragment slot="h3">A marca é só sua, e ponto</Fragment>
+        <>Texto do Card, exibindo o aprendizado daquele assunto do curso. Acima do título há um emoji.</>
+    </Card>
+</Fragment>
+
+{frontmatter.bonusTitle = "2 Aulas Bônus para impulsionar os seus Resultados"}
+<Fragment slot="bonus">
+    <Card emoji="👩🏾‍💻" h3size="big" precoDe="R$ 97,00" precoPor="R$ 0">
+        <Fragment slot="h3">Título do Card</Fragment>
+        <>E aqui eu coloquei mais um texto *normal* dentro do card, mas você pode colocar **qualquer coisa.** Repare que os cards ficam alinhados, não importa o tamanho do texto.</>
+    </Card>
+
+    <Card emoji="📩" h3size="big" precoDe="R$ 200,00" precoPor="R$ 0">
+        <Fragment slot="h3">Título do Card</Fragment>
+        <ul class="[&>li]:flex [&>li]:items-center [&>li]:mb-4">
+            <li><Check/> Nada impede que você coloque uma lista</li>
+            <li><Check/> Aqui dentro do card mesmo</li>
+            <li><Check/> Como você pode ver</li>
+        </ul>
+    </Card>
+
+</Fragment>
+
+{/* Os dias de garantia estão na frontmatter */}
+{/* O Título da seção de Garantia está na frontmatter */}
+<Fragment slot="garantiaTexto">
+Experimente todo o treinamento, e se não for a coisa certa para você, devolvemos 100% do seu dinheiro. Simples e tranquilo.
+</Fragment>
+
+{/* A Chamada e os benefícios da Oferta estão na frontmatter */}
+<Fragment slot="textoAposCta">
+Pagamento único.
+
+Oferta especial por tempo limitado, 
+
+o preço aumentará em breve.
+</Fragment>
+
+</Layout>

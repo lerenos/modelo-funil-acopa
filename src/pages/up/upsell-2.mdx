@@ -1,0 +1,167 @@
+---
+noindex: true #essa página não deve ser indexada pelo Google, já que teoricamente seria de Upsell
+
+exibeBanner: true
+bannerBarSize: 12
+bannerBarTxt: ""
+bannerMainTxt: "Então acreditamos que esse curso seja <em>exatamente</em> o que você procura:"
+
+title: Título Upsell 2 - vai aparecer na aba do navegador | Sua Marca
+description: "Descrição da Página que vai aparecer no google e quando o link for compratilhado no whatsapp, twitter, etc. Mantenha abaixo de 160 caracteres"
+
+precoDe: 997,00
+preco: 197 #preco à vista
+parcelas: { vezes: 12, valor: 17  } #parcelado
+
+tema: emerald #dark, emerald, bumblebee ou corporate
+persist: true
+temaDestaque: dark #apenas dark, por enquanto
+temaCitacao: bumblebee #dark, emerald, bumblebee ou corporate
+temaOferta: emerald #dark, emerald, bumblebee ou corporate
+
+exibePrecoAposPromessa: false
+
+# beneficiosTitle: O que você vai ter acesso…
+# beneficios:
+#     - "Como fazer sites profissionais gratuitos"
+#     - "Como fazer sites impossíveis de cair, mesmo com picos de tráfego"
+#     - "Como colocar seu modelo de site no ar com apenas um clique"
+#     - "Como criar páginas de vendas de alta conversão em minutos"
+#     - "Como aumentar a conversão de uma Landing Page sem alterar copy ou design"
+#     - "Como aprender o básico de desenvolvimento web para rapidamente se colocar no mercado"
+#     - "Como prestar serviços para um mercado aquecido e que está disposto a pagar pela qualidade: o de Produtores Digitais"
+
+# Lista de Conteúdos está no corpo do arquivo
+# Lista de Bônus pode estar no corpo do arquivo (copiar e colar da Página de Vendas Principal, se for o caso)
+
+garantiaDias: 30
+garantiaTitle: "A garantia é a de sempre: compre agora, teste por 30 dias. ;)"
+
+ofertaChamada: "Oferta Especial: apenas para a primeira turma, e <b>apenas nesta página</b>"
+# beneficiosOferta:
+# - Método mais moderno e profissional para fazer sites em 2023
+# - Automaticamente escalável, sem necessitar de ajustes
+# - Impossível de cair
+# - Super Seguro
+# - Não necessita de base de dados
+# - Ferramentas gratuitas
+# - Páginas rápidas, muito rápidas mesmo
+# - Coloque modelos de site no ar com 1 clique
+# - Crie sua máquina de produzir Landing Pages e testar produtos
+# - Trabalhe no mercado digital com baixo risco
+
+cta: Compre com apenas 1 clique!
+ctaLink: https://chk.eduzz.com/0000000?u=1&utm_medium=upsell_lp_rapida
+posCta: Quero aprender como fazer sites completos, baratos e eficientes
+
+btnNao: Não, obrigado. Não tenho interesse.
+linkNao: /obrigado/
+
+---
+import Layout from "@layouts/lp.astro"
+import Degrade from "@components/colorText/span.astro"
+import Alternante from "@components/colorText/changing.astro"
+import Card from "@components/cards/emojiAndH3.astro"
+import Check from "@assets/icons/roundCheckmark.astro"
+
+<Layout frontmatter={frontmatter} >
+
+<Fragment slot="pre-promessa"><span class="text-base-content font-normal">Seu novo superpoder:</span></Fragment>
+<Fragment slot="promessa">
+<Alternante time="2" infinite>
+    <Degrade spanClass="text-8xl" grad="blue">Crie</Degrade> <br/>
+    <Degrade spanClass="text-7xl" grad="" startBlank>Qualquer</Degrade> <br/>
+    <Degrade spanClass="text-8xl tracking-tight" grad="green" startBlank>Site.</Degrade>
+</Alternante>
+</Fragment>
+<Fragment slot="subpromessa"><span class="text-base-content font-normal">Com Blog, Área Logada, Landing Pages, APIs, Forms, Integrações... Sem limites para sua próxima criação.</span></Fragment>
+
+Se você está aqui, é porque sabe da importância de usar ferramentas eficientes para desenvolver Landing Pages **rápidas, responsivas e escaláveis**.
+
+Mas porque parar em Landing Pages se você pode produzir **praticamente qualquer coisa**?
+
+Um blog otimizado para SEO com milhares de páginas e acessos? *Você pode.*
+
+Enviar mil formulários por dia? *Tudo certo.*
+
+Gerar e atualizar séries de milhares de páginas a partir dos dados de uma planilha? *Tranquilo, vai parecer que é mágica.*
+
+Um site em que a pessoa pode se cadastrar e ter acesso à área de membros? *Sim, você também pode.*
+
+Isso tudo usando praticamente as mesmas tecnologias que você usaria para fazer as Landing Pages. **Sem perda de performance**. E gastando muito pouco ou nada com servidores.
+
+Parece um sonho, mas é justamente o que você vai ver em nosso curso de **Desenvolvimento Web Moderno para Marketing.**
+
+{frontmatter.conteudosTitle = "Veja só o que você vai ter acesso:"}
+<Fragment slot="conteudos">
+    <Card emoji="📣">
+        <Fragment slot="h3">Como criar novos modelos de Landing Pages</Fragment>
+        <>Construiremos uma Landing Page do zero, para que você possa acompanhar cada passo, sem mistérios.</>
+    </Card>
+    <Card emoji="👩🏾‍💻">
+        <Fragment slot="h3">Revisão de HTML</Fragment>
+        <>Se você não sabe HTML, sem problemas: você vai aprender os conceitos básicos na prática.</>
+    </Card>
+    <Card emoji="🎨">
+        <Fragment slot="h3">Estilo e Responsividade</Fragment>
+        <>Usaremos o *TailwindCSS* para controlar o estilo da página. Se você não conhece, será uma ótima oportunidade de já começar com um framework popular e moderno.</>
+    </Card>
+    <Card emoji="🧩" etiqueta="em breve">
+        <Fragment slot="h3">Componentes Reutilizáveis </Fragment>
+        <>Sem Gambiarras ou Plugins: você aprenderá a criar componentes customizáveis que podem ser reutilizados em diferentes lugares do seu site.</>
+    </Card>
+    <Card emoji="🔍" etiqueta="em breve">
+        <Fragment slot="h3">SEO Técnico </Fragment>
+        <>Metatags e scripts ld+json no lugar correto. E é claro, uma velocidade... surpreendente!</>
+    </Card>
+    <Card emoji="🤖" etiqueta="em breve">
+        <Fragment slot="h3">Desenvolvimento de APIs básicas </Fragment>
+        <>Se você não sabe o que é uma API, aqui é mais uma boa oportunidade para aprender. Em resumo, você vai conseguir fazer seu site se comunicar com qualquer sistema, te auxiliando na automação de rotinas.</>
+    </Card>
+    <Card emoji="📰" etiqueta="em breve">
+        <Fragment slot="h3">CMS: Sistema de Gerenciamento de Conteúdo </Fragment>
+        <>Posts de Blog, Produtos de uma loja, Quadros de uma Galeria... qualquer tipo de conteúdo: você poderá criar seus próprios campos personalizados.</>
+    </Card>
+    <Card emoji="📊" etiqueta="em breve">
+        <Fragment slot="h3">Como criar séries de páginas a partir dos dados de uma planilha </Fragment>
+        <>Prompts detalhados feitos especialmente com o objetivo de criar a parte mais importante de uma Página de Vendas</>
+    </Card>
+    <Card emoji="🗝" etiqueta="em breve">
+        <Fragment slot="h3">Login e Autenticação </Fragment>
+        <>Aqui a coisa fica bem mais avançada: utilize mecanismos de login para autenticar usuários e prover conteúdo personalizado.</>
+    </Card>
+    <Card emoji="✨">
+        <Fragment slot="h3">E muito mais!</Fragment>
+        <>Não é apenas um curso. É um fluxo de conhecimento, constantemente atualizado, sobre as melhores práticas da Web.</>
+    </Card>
+</Fragment>
+
+<Fragment slot="pos-conteudos">
+É muito mais que um curso. É fazer parte de um grupo de pessoas que querem gerar uma web mais rápida: mais rápida para navegar, para inventar soluções e testar novos produtos.
+
+Mas...
+
+Com certeza você notou que muita coisa ali em cima ainda tá *"em breve"*, né?
+
+Pois bem, você faz parte da primeira deste curso: e por isso mesmo, **merece condições mais que especiais**.
+
+</Fragment>
+
+{/* Os dias de garantia estão na frontmatter */}
+{/* O Título da seção de Garantia está na frontmatter */}
+<Fragment slot="garantiaTexto">
+Se por qualquer motivo esse conhecimento não gerar valor para você, é só pedir o reembolso total.
+</Fragment>
+
+<Fragment slot="pre-oferta"></Fragment>
+
+<Fragment slot="textoLogoAposCta">Esse desconto é válido **apenas se você clicar no botão acima**.</Fragment>
+
+{/* A Chamada e os benefícios da Oferta estão na frontmatter */}
+<Fragment slot="textoAposCta">
+Zero Risco:
+
+Se por qualquer motivo esse conhecimento não gerar valor para você, é só pedir o reembolso total.
+</Fragment>
+
+</Layout>

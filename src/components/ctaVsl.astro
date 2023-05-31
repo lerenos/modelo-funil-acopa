@@ -1,0 +1,54 @@
+---
+let { link, pos, ctaClass, time } = Astro.props
+---
+<delayed-cta data-time={time}>
+    <div class:list={[ctaClass,"text-center my-12 mx-auto max-w-sm"]}>
+        <div class="text-center my-4 relative group max-w-sm mx-auto">
+            <div class="absolute -inset-1 bg-gradient-to-r from-green-500 to-teal-600 rounded-lg blur opacity-60 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse"></div>
+            <a href={link} class="cta-curso relative btn btn-block h-fit text-lg md:text-xl border-0 font-bold text-white bg-gradient-to-r from-green-500 to-green-700 ">
+                <div class="w-10/12 my-2"><slot>Saiba Mais</slot></div>
+                <svg class="w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+            </a>
+        </div>
+        <div set:html={pos} class="text-right font-medium text-sm uppercase max-w-sm"/>
+    </div>
+</delayed-cta>
+<script define:vars={{link}}>
+class Cta extends HTMLElement {
+constructor() {
+    super();
+
+    //Get the original url, set on the page build
+    let url = new URL(link)
+    let params = url.searchParams
+
+    const newParams = new URLSearchParams(window.location.search) //get the url params sent on the page visit
+    newParams.forEach((value, key) => {params.append(key,value)}) //append this new params on the original ones
+
+    url.search = params.toString()
+    let hrefCta = url.toString() //Makes the final url
+
+    // Find all buttons with the `alert` class on the page.
+    const button = this.querySelector('a.cta-curso');
+
+    // Handle clicks on each button.
+    button.href=hrefCta
+    
+    // Leia a mensagem do atributo `data-*`.
+    let time = this.dataset.time*1000
+
+    console.log(time)
+    
+    button.parentNode.style.display="none"
+    
+    function appear(){
+        console.log('appear')
+        button.parentNode.style.display="block"
+    }
+    setTimeout(appear,time)
+
+    }
+}  
+customElements.define('delayed-cta', Cta);
+
+</script>

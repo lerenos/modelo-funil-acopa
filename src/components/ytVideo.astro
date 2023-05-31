@@ -1,0 +1,9 @@
+---
+let { ytClass , link , h = 315 , w = 560 } = Astro.props
+
+let videoUrl = new URL(link)
+let vId =  videoUrl.searchParams.get('v')
+---
+<div class:list={[ytClass, "flex justify-center mb-8"]}>
+    <iframe id="player" width={w} height={h} src=`http://www.youtube.com/embed/${vId}?enablejsapi=1` title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>

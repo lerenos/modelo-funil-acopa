@@ -1,0 +1,47 @@
+---
+import BaseHead from '@components/BaseHead.astro';
+
+const { content } = Astro.props;
+let { title, description} = content;
+
+let pageUrl = new URL(Astro.url.pathname, Astro.site)
+let site = Astro.site
+
+// veja mais em https://github.com/JayHoltslander/Structured-Data-JSON-LD
+let jsonld = JSON.stringify({
+"@context": "http://schema.org",
+"@graph":[
+    {
+        "@type":"ContactPage",
+        "@id":pageUrl+"#jsonldWebpage",
+        "url":pageUrl,
+        "name":title,
+        "description":description,
+        "isPartOf":{
+            "@id":site+"#jsonldWebsite",
+            "@type":"WebSite",
+        },
+        "inLanguage":"pt-BR",
+    }
+  ]
+})
+
+
+
+---
+<!DOCTYPE html>
+<html lang={content.lang || 'pt-BR'} data-theme="dark">
+	<head>
+		<BaseHead {title} {description} ld={jsonld} />
+	</head>
+
+	<body class="p-4">
+
+    <main>
+        <section class="mx-auto prose dark:prose-h1:text-primary">
+            <slot/>
+		</section>
+    </main>
+
+</body>
+</html>

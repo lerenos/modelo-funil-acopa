@@ -1,0 +1,24 @@
+---
+let h3class = "dark:text-white font-semibold mb-2"
+// let h3size = Astro.props.h3size
+// switch (h3size) {
+//     case "big":
+//         h3class = "dark:text-white text-3xl font-bold mb-6"
+//         break;
+//     default: h3class = "dark:text-white text-2xl font-semibold mb-2"
+//         break;
+// }
+
+let { img, nome } = Astro.props
+---
+<div class="w-full max-w-sm p-8 rounded-3xl shadow-2xl bg-base-100 hover:scale-105 hover:shadow-4xl duration-500 grid grid-cols-3 gap-4">
+    <div class="avatar grid place-items-center">
+        <div class="w-24 h-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+          <img src={img} alt={`Depoimento de ${nome}`} width=96 height=96 />
+        </div>
+      </div>
+    <div class="col-span-2">
+        <p class="italic"><slot/></p>
+        <h3 class={h3class} set:html={nome}/>
+    </div>
+</div>

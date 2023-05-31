@@ -1,0 +1,25 @@
+{
+  "name": "lp-alta-conv-acopa",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "devDependencies": {
+    "@astrojs/sitemap": "^1.3.1",
+    "@astrojs/tailwind": "^3.1.2",
+    "@tailwindcss/typography": "^0.5.2",
+    "astro": "^2.5.5",
+    "daisyui": "^2.15.2",
+    "tailwindcss-patterns": "^0.1.2"
+  },
+  "dependencies": {
+    "@astrojs/image": "^0.14.1",
+    "@astrojs/mdx": "^0.19.4",
+    "sharp": "^0.31.3",
+    "theme-change": "^2.2.0"
+  }
+}

@@ -1,0 +1,16 @@
+---
+import Logo from '@components/logo.astro'
+const { dark } = Astro.props
+---
+<footer class="text-center pb-12 pt-16 md:pt-40" data-theme={dark ? "dark" : null}>
+    <div class="divider mb-12"></div> 
+    <div class="flex justify-center mb-4">
+        <Logo/>
+    </div> 
+    <!-- <Social/> -->
+    <p class="text-gray-600 mb-4">
+        Copyright © 2023 Sua Empresa. <br class="md:hidden">
+        CNPJ 00.000.000/0001-00 Razão Social Ltda.
+    </p>
+    <p class="text-gray-600 opacity-80"><a href="https://acopa.com.br">Feito com 🧡 e ☀️ no Rio de Janeiro</a></p>
+</footer>

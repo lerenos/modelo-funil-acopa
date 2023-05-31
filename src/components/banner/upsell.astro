@@ -1,0 +1,19 @@
+---
+let {barTxt, mainTxt, barSize} = Astro.props
+
+let sizeClass = '' 
+if (barSize){
+    if (barSize == 12 || barSize == 'full' ){
+        sizeClass ='w-full'
+    } else{
+        sizeClass =`w-${barSize}/12`
+    }
+} else{sizeClass = 'w-10/12'}
+---
+<section id="banner" class="fit-content !px-0 text-center bg-green-200 text-sm uppercase font-medium group">
+    <div class="relative text-center h-4">
+        <div class:list={[sizeClass,"h-4 absolute top-0 rounded-r-full bg-transparent pattern-diagonal-stripes-green-700/20 pattern-diagonal-stripes-scale-[0.5] animate-in-by-left transition duration-900 ease-in"]}></div>
+        <p class="text-[10px] leading-normal uppercase text-gray-500 animate-fade-in" set:html={barTxt}/>
+    </div>
+    <p class="pb-2 empty:hidden" set:html={mainTxt}></p>
+</section>

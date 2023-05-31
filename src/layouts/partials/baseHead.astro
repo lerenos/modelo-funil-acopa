@@ -1,0 +1,89 @@
+---
+//get general site data
+import {frontmatter as data} from 'src/siteInfo.mdx'
+
+let siteInfo = {
+  name: data.siteName || ( data.companyName || data.personName),
+  desc: data.siteDesc || data.personDesc,
+  siteTwitterUsername: data.social.twitter ? '@'+data.social.twitter : null
+}
+
+// get the props
+let props = Astro.props.props || Astro.props
+
+// console.log(props)
+let { title, description, permalink, img, imgAlt, ldjson, lang, twitterUsername, noindex } = props;
+
+title = title || siteInfo.name
+description = description || siteInfo.desc
+lang = lang || (data.lang || "pt-BR")
+const site = Astro.site
+let url = permalink || new URL(Astro.url.pathname, site)
+img = img || Astro.site+'social.webp'
+imgAlt = imgAlt || title
+
+// veja mais em https://github.com/JayHoltslander/Structured-Data-JSON-LD
+ldjson = ldjson || JSON.stringify({
+"@context": "http://schema.org",
+"@graph":[
+    {
+        "@type":"WebPage",
+        "@id":url+"#jsonldWebpage",
+        "url":url,
+        "name":title,
+        "description":description,
+        "isPartOf":{
+          "@id":site+"#jsonldWebsite",
+		  "@type":"WebSite",
+        },
+        "inLanguage":lang,
+        "potentialAction":[
+            {
+                "@type":"ReadAction",
+                "target":[url]
+            }
+        ]
+    }
+  ]
+})
+
+---
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width" />
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+<link rel="canonical" href={url} />
+{noindex && <meta name="robots" content="noindex"/>}
+
+<!-- Open Graph / Facebook -->
+<meta property="og:site_name" content={title} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={url} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={img} />
+<meta property="og:image:alt" content={title} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={url} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={img} />
+<meta property="twitter:image:alt" content={title} />
+{siteInfo.siteTwitterUsername && <meta name="twitter:site" content={siteInfo.siteTwitterUsername}/>}
+{twitterUsername && <meta name="twitter:creator" content={twitterUsername}/>}
+
+<!-- Schema Markup -->
+<script type="application/ld+json" set:html={ldjson} />
+
+<!-- Fonts -->
+<!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet"> -->
