@@ -37,7 +37,7 @@ let hasVideo = props.embedCode || props.ytLink
 ---
 <Layout {props}>
 
-    <main class="text-xl [&>section]:px-4">
+    <main class="text-xl [&_section]:px-4">
 
         {exibeBanner &&
             <Banner barTxt={bannerBarTxt} mainTxt={bannerMainTxt} barSize={bannerBarSize} />
@@ -45,7 +45,8 @@ let hasVideo = props.embedCode || props.ytLink
 
         <!-- Promessa, Título e Subpromessa -->
         {Astro.slots.has('promessa') &&
-        <section id="promessa-e-subpromessa" class="empty:hidden pt-20 pb-16 text-center [&>*]:md:mx-auto [&>*]:md:mb-12 md:bg-gradient-to-br md:from-gray-900 md:to-gray-950" data-theme={temaHeadline}>
+        <div data-theme={temaHeadline}>
+        <section id="promessa-e-subpromessa" class="empty:hidden pt-20 pb-16 text-center [&>*]:md:mx-auto [&>*]:md:mb-12 md:bg-gradient-to-br md:from-gray-900 md:to-gray-950">
             {Astro.slots.has('pre-promessa') && <div class="md:pb-2 md:max-w-screen-md md:text-3xl font-semibold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-teal-500 empty:hidden"><slot name="pre-promessa"/></div>}
 
             <h1 class="text-5xl font-bold tracking-wide my-8 empty:hidden"><slot name="promessa"/></h1>
@@ -56,6 +57,7 @@ let hasVideo = props.embedCode || props.ytLink
 
             {Astro.slots.has('subpromessa') && <h2 class="md:max-w-screen-md mb-8 empty:hidden"><slot name="subpromessa"/></h2>}
         </section>
+        </div>
         }
 
         <!-- Ancoragem de Preço -->
@@ -114,12 +116,14 @@ let hasVideo = props.embedCode || props.ytLink
         
         <!-- Nesse curso você vai ter -->
         {Astro.slots.has('conteudos') &&
-        <section id="conteudos" class="py-12 md:pt-20 md:pb-32 leading-relaxed bg-gradient-to-b from-gray-800 to-gray-900" data-theme={temaLC}>
+        <div data-theme={temaLC}>
+        <section id="conteudos" class="py-12 md:pt-20 md:pb-32 leading-relaxed bg-gradient-to-b from-gray-800 to-gray-900">
             <h2 class="md:mb-20 md:text-5xl text-4xl font-bold tracking-wide mb-8 text-center text-primary"><slot name="conteudosTitulo"/></h2>
             <div class="flex gap-8 flex-wrap justify-center">
                 <slot name="conteudos"/>
             </div>
-        </section>}
+        </section>
+        </div>}
 
         {Astro.slots.has('pos-conteudos') &&
         <section id="pos-conteudos" class="text-2xl py-16 leading-relaxed [&>p]:mb-4 md:pb-32 md:max-w-screen-md md:mx-auto [&_img]:rounded-sm [&_img]:shadow-lg hover:[&_img]:scale-105 [&_img]:duration-500 [&_img]:my-8 [&_img]:mx-auto [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:my-8">            
@@ -153,41 +157,36 @@ let hasVideo = props.embedCode || props.ytLink
         </section>}
 
         <!-- Oferta -->
-        <section id="oferta" class="py-12 lg:pb-32" data-theme={temaOferta}>
+        <div data-theme={temaOferta}>
+            <section id="oferta" class="py-12 lg:pb-32">
             
-            <h2 class="text-4xl font-bold tracking-wide mb-20 text-center md:mb-20" set:html={ofertaChamada}/>
-
-            <div class="px-2 py-8 md:max-w-screen-md md:mx-auto">
-                {props.precoDe &&
-                <p class="text-2xl text-center font-semibold mb-4 dark:text-white">de <span class="line-through text-red-600">R$ {props.precoDe}</span> por apenas</p>
-                }
-
-                {props.parcelas ? 
-
-                (<p class="text-3xl text-center font-bold mt-10 dark:text-white">{props.parcelas.vezes} x</p>
-                <p class="text-8xl text-center uppercase font-black mb-4 bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-teal-500 dark:from-green-400 dark:to-lime-500">R$ {props.parcelas.valor}</p>
-                <div class="text-center text-sm">(ou R$ {props.preco} à vista)</div>) : 
-
-                <p class="text-8xl text-center uppercase font-black mb-10 bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-teal-500 dark:from-green-400 dark:to-lime-500">R$ {props.preco}</p>
-                }
- 
-                {props.beneficiosOferta && 
-                <div>
-                    <div class="divider mb-8"></div>
-                    <ul class="md:mb-12 mb-8 [&_li]:flex [&_li]:items-center [&_li]:mb-4">
-                        {props.beneficiosOferta && props.beneficiosOferta.map( item => <li><Check/>{item}</li>)}
-                    </ul>
-                </div>}
-                
-                <Cta link={props.ctaLink} pos={props.posCta} set:html={cta}/>
-
-                {props.linkNao && <Nao link={props.linkNao} set:html={props.btnNao}/>}
-    
-                <div class="text-center text-sm mt-8">
-                    <slot name="textoAposCta"/>
-                </div>
-        </div>                
-        </section>
+                <h2 class="text-4xl font-bold tracking-wide mb-20 text-center md:mb-20" set:html={ofertaChamada}/>
+                <div class="px-2 py-8 md:max-w-screen-md md:mx-auto">
+                    {props.precoDe &&
+                    <p class="text-2xl text-center font-semibold mb-4 dark:text-white">de <span class="line-through text-red-600">R$ {props.precoDe}</span> por apenas</p>
+                    }
+                    {props.parcelas ?
+                    (<p class="text-3xl text-center font-bold mt-10 dark:text-white">{props.parcelas.vezes} x</p>
+                    <p class="text-8xl text-center uppercase font-black mb-4 bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-teal-500 dark:from-green-400 dark:to-lime-500">R$ {props.parcelas.valor}</p>
+                    <div class="text-center text-sm">(ou R$ {props.preco} à vista)</div>) :
+                    <p class="text-8xl text-center uppercase font-black mb-10 bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-teal-500 dark:from-green-400 dark:to-lime-500">R$ {props.preco}</p>
+                    }
+                    {props.beneficiosOferta &&
+                    <div>
+                        <div class="divider mb-8"></div>
+                        <ul class="md:mb-12 mb-8 [&_li]:flex [&_li]:items-center [&_li]:mb-4">
+                            {props.beneficiosOferta && props.beneficiosOferta.map( item => <li><Check/>{item}</li>)}
+                        </ul>
+                    </div>}
+            
+                    <Cta link={props.ctaLink} pos={props.posCta} set:html={cta}/>
+                    {props.linkNao && <Nao link={props.linkNao} set:html={props.btnNao}/>}
+                    <div class="text-center text-sm mt-8">
+                        <slot name="textoAposCta"/>
+                    </div>
+            </div>
+            </section>
+        </div>
 
         <!-- Último CTA -->
         <!-- <section id="ultimo-cta" class="py-32" data-theme="dark">

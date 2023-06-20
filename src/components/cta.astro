@@ -18,7 +18,9 @@ let { link, pos, ctaClass } = Astro.props
 
     const newParams = new URLSearchParams(window.location.search) //get the url params sent on the page visit
     newParams.forEach((value, key) => {params.append(key,value)}) //append this new params on the original ones
-
+    
+    params.set('utm_medium', newParams.get('fbclid') || params.get('utm_medium'))
+    
     url.search = params.toString()
     let hrefCta = url.toString() //Makes the final url
 
