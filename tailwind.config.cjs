@@ -36,7 +36,14 @@ module.exports = {
 	darkMode: ['class', '[data-theme="dark"]'],
 	daisyui: {
 		themes: [
-			"emerald",
+			{
+				emerald: {
+					...require("daisyui/src/colors/themes")["[data-theme=emerald]"],
+					'h1':{'color':'black'},
+					'h2':{'color':'black'},
+					// 'h3':{'color':'black'}
+				},
+			},
 			{
 				dark: {
 					...require("daisyui/src/colors/themes")["[data-theme=forest]"],

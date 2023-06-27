@@ -105,7 +105,7 @@ let hasVideo = props.embedCode || props.ytLink
         {Astro.slots.has('citacao') &&
         <div data-theme={temaCitacao}>
             <section id="citacao" class="py-20 leading-relaxed bg-gradient-to-br dark:from-gray-800 dark:to-gray-900 from-secondary to-primary">
-                <h2 class="md:text-5xl text-4xl font-bold tracking-wide text-center text-white"><slot name="citacao"/></h2>
+                <h2 class="md:text-5xl text-4xl font-bold tracking-wide text-center !text-white"><slot name="citacao"/></h2>
             </section>
         </div>}
 
