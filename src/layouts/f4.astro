@@ -1,0 +1,200 @@
+---
+import Layout from "@layouts/partials/layoutBase.astro"
+import Footer from "@layouts/partials/footer.astro"
+
+import Depoimento from "@components/cards/depoimento.astro"
+import Card from "@components/cards/numberH3.astro"
+import garantia from "@assets/garantia.webp"
+import garantia15 from "@assets/garantia15dias.webp"
+import Check from "@assets/icons/roundCheckmark.astro"
+
+import Cta from "@components/cta.astro"
+
+import Nao from "@components/btnGhost.astro" //up
+import Banner from "@components/banner/upsell.astro" //up
+import YTvideo from "@components/ytVideo.astro" //vsl
+import CtaVsl from "@components/ctaVsl.astro" //vsl
+
+let props = Astro.props.frontmatter
+
+let { exibeBanner, bannerBarTxt, bannerMainTxt, bannerBarSize }=props //up
+let { vslCtaTime, vslCtaLink, vslCta }=props //up
+
+let temaDestaque = props.temaDestaque || "dark"
+let temaHeadline = props.temaHeadline || temaDestaque
+let temaCitacao = props.temaCitacao || temaDestaque
+let temaLC = props.temaLC || temaDestaque
+let temaOferta = props.temaOferta || temaDestaque
+
+let garantiaDias = props.garantiaDias || 30
+let garantiaTitle = props.garantiaTitle || garantiaDias+' dias de Garantia. <br class="hidden md:inline"> 100% de Satisfação. Risco Zero.'
+
+let ofertaChamada = props.ofertaChamada || "Aproveite os últimos dias da promoção:"
+
+let cta = props.cta || "Quero começar agora!"
+
+let hasVideo = props.embedCode || props.ytLink
+---
+<Layout {props}>
+
+    <main class="text-xl [&_section]:px-4">
+
+        {exibeBanner &&
+            <Banner barTxt={bannerBarTxt} mainTxt={bannerMainTxt} barSize={bannerBarSize} />
+        }
+
+        <!-- Promessa, Título e Subpromessa -->
+        {Astro.slots.has('promessa') &&
+        <div data-theme={temaHeadline}>
+        <section id="promessa-e-subpromessa" class="empty:hidden pt-20 pb-16 text-center [&>*]:md:mx-auto [&>*]:md:mb-12 md:bg-gradient-to-br md:from-gray-900 md:to-gray-950">
+            {Astro.slots.has('pre-promessa') && <div class="md:pb-2 md:max-w-screen-md md:text-3xl font-semibold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-teal-500 empty:hidden"><slot name="pre-promessa"/></div>}
+
+            <h1 class="text-5xl font-bold tracking-wide my-8 empty:hidden"><slot name="promessa"/></h1>
+
+            {hasVideo && ( props.embedCode ? <div class="flex justify-center" set:html={props.embedCode} /> : <YTvideo link={props.ytLink} /> )}
+
+            {vslCta && <CtaVsl time={vslCtaTime} link={vslCtaLink} pos={props.vslPosCta} set:html={vslCta}/>}
+
+            {Astro.slots.has('subpromessa') && <h2 class="md:max-w-screen-md mb-8 empty:hidden"><slot name="subpromessa"/></h2>}
+        </section>
+        </div>
+        }
+
+        <!-- Ancoragem de Preço -->
+        {props.exibePrecoAposPromessa &&
+        <section id="ancoragem-de-preco" class="md:pb-32 py-6 text-center">
+            <p class="text-4xl font-extrabold uppercase mb-2 text-red-600">de <span class="line-through">R$ {props.precoDe}</span></p>
+            <p class="font-semibold uppercase mb-2">por apenas</p>
+            <p class="text-8xl font-black uppercase mb-4 text-green-600">R$ {props.preco}</p>
+            <p class="text-2xl font-bold uppercase mb-8">- risco zero! -</p>
+            <div class="divider my-4"></div>
+        </section>}
+
+        <!-- Prova Social -->
+        {props.provaSocial &&
+            <section id="prova-social" class="py-20 lg:pb-32">
+                <div class="flex gap-12 flex-wrap justify-center">
+                    {props.provaSocial.map( p => 
+                        <Depoimento img={p.img} nome={p.nome}>{p.texto}</Depoimento> 
+                        )
+                    }
+                </div>
+        </section>}
+
+        <!-- Copy Inicial -->
+        <section id="copy-expectativa" class="py-12 leading-relaxed [&>p]:mb-4 md:max-w-screen-md md:mx-auto [&_img]:rounded-sm [&_img]:shadow-lg hover:[&_img]:scale-105 [&_img]:duration-500 [&_img]:my-8 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:list-inside [&_li::marker]:font-bold">
+            <slot/>
+        </section>
+        
+
+        <!-- Lista de benefícios -->
+        {props.beneficios &&
+        <section id="beneficios" class="py-20 lg:pb-32">
+            <h2 class="text-5xl mb-16 text-center font-black" set:html={props.beneficiosTitle}/>
+            <div class="flex gap-12 flex-wrap justify-center">
+                {props.beneficios.map( (b,i) => 
+                    <Card>
+                        <span slot="number"> {i+1} </span>
+                        {b}
+                    </Card> 
+                    )
+                }
+            </div>
+        </section>}
+        
+        {Astro.slots.has('citacao') &&
+        <div data-theme={temaCitacao}>
+            <section id="citacao" class="py-20 leading-relaxed bg-gradient-to-br dark:from-gray-800 dark:to-gray-900 from-secondary to-primary">
+                <h2 class="md:text-5xl text-4xl font-bold tracking-wide text-center !text-white"><slot name="citacao"/></h2>
+            </section>
+        </div>}
+
+        {Astro.slots.has('copy-logica') &&
+        <section id="copy-logica" class="py-16 leading-relaxed [&>p]:mb-4 md:pb-32 md:max-w-screen-md md:mx-auto [&_img]:rounded-sm [&_img]:shadow-lg hover:[&_img]:scale-105 [&_img]:duration-500 [&_img]:my-8 [&_img]:mx-auto [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:my-8">            
+            <slot name="copy-logica"/>
+        </section>}
+        
+        <!-- Nesse curso você vai ter -->
+        {Astro.slots.has('conteudos') &&
+        <div data-theme={temaLC}>
+        <section id="conteudos" class="py-12 md:pt-20 md:pb-32 leading-relaxed bg-gradient-to-b from-gray-800 to-gray-900">
+            <h2 class="md:mb-20 md:text-5xl text-4xl font-bold tracking-wide mb-8 text-center text-primary"><slot name="conteudosTitulo"/></h2>
+            <div class="flex gap-8 flex-wrap justify-center">
+                <slot name="conteudos"/>
+            </div>
+        </section>
+        </div>}
+
+        {Astro.slots.has('pos-conteudos') &&
+        <section id="pos-conteudos" class="text-2xl py-16 leading-relaxed [&>p]:mb-4 md:pb-32 md:max-w-screen-md md:mx-auto [&_img]:rounded-sm [&_img]:shadow-lg hover:[&_img]:scale-105 [&_img]:duration-500 [&_img]:my-8 [&_img]:mx-auto [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:my-8">            
+            <slot name="pos-conteudos"/>
+        </section>}
+
+        <!-- Bônus -->
+        {Astro.slots.has('bonus') &&
+        (<section id="bonus" class="py-20 lg:pb-32">
+            <h2 class="text-5xl mb-16 text-center font-black text-black"><slot name="bonusTitulo"/></h2>
+            <div class="flex gap-12 flex-wrap justify-center">                
+                <slot name="bonus"/>
+            </div>
+        </section>)}
+        
+        <!-- Garantia -->
+        <section id="garantia" class="py-16 md:flex md:gap-12 md:items-center md:max-w-screen-lg md:mx-auto">
+                {(garantiaDias==15) ? 
+                    <img src={garantia15} alt="Garantia de 15 dias" class="md:mb-0 mb-8 mx-auto" width="240" height="240"/>:
+                    <img src={garantia} alt={`Garantia de ${garantiaDias} dias`} class="md:mb-0 mb-8 mx-auto" width="240" height="240"/>
+                }
+                <div>
+                <h2 class="md:mb-8 md:text-4xl text-3xl font-bold tracking-wide mb-12 text-black" set:html={garantiaTitle}/>
+                <slot name="garantiaTexto"/>
+            </div>
+        </section>
+
+        {Astro.slots.has('pre-oferta') &&
+        <section id="pre-oferta" class="py-16 leading-relaxed [&>p]:mb-4 md:pb-32 md:max-w-screen-md md:mx-auto [&_img]:rounded-sm [&_img]:shadow-lg hover:[&_img]:scale-105 [&_img]:duration-500 [&_img]:my-8 [&_img]:mx-auto [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:my-8">            
+            <slot name="pre-oferta"/>
+        </section>}
+
+        <!-- Oferta -->
+        <div data-theme={temaOferta}>
+            <section id="oferta" class="py-12 lg:pb-32">
+            
+                <h2 class="text-4xl font-bold tracking-wide mb-20 text-center md:mb-20" set:html={ofertaChamada}/>
+                <div class="px-2 py-8 md:max-w-screen-md md:mx-auto">
+                    {props.precoDe &&
+                    <p class="text-2xl text-center font-semibold mb-4 dark:text-white">de <span class="line-through text-red-600">R$ {props.precoDe}</span> por apenas</p>
+                    }
+                    {props.parcelas ?
+                    (<p class="text-3xl text-center font-bold mt-10 dark:text-white">{props.parcelas.vezes} x</p>
+                    <p class="text-8xl text-center uppercase font-black mb-4 bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-teal-500 dark:from-green-400 dark:to-lime-500">R$ {props.parcelas.valor}</p>
+                    <div class="text-center text-sm">(ou R$ {props.preco} à vista)</div>) :
+                    <p class="text-8xl text-center uppercase font-black mb-10 bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-teal-500 dark:from-green-400 dark:to-lime-500">R$ {props.preco}</p>
+                    }
+                    {props.beneficiosOferta &&
+                    <div>
+                        <div class="divider mb-8"></div>
+                        <ul class="md:mb-12 mb-8 [&_li]:flex [&_li]:items-center [&_li]:mb-4">
+                            {props.beneficiosOferta && props.beneficiosOferta.map( item => <li><Check/>{item}</li>)}
+                        </ul>
+                    </div>}
+            
+                    <Cta link={props.ctaLink} pos={props.posCta} set:html={cta}/>
+                    {props.linkNao && <Nao link={props.linkNao} set:html={props.btnNao}/>}
+                    <div class="text-center text-sm mt-8">
+                        <slot name="textoAposCta"/>
+                    </div>
+            </div>
+            </section>
+        </div>
+
+        <!-- Último CTA -->
+        <!-- <section id="ultimo-cta" class="py-32" data-theme="dark">
+            <Nota100/>
+            <h2 class="text-5xl font-bold my-16 text-center text-primary">Destrave o super-poder de fazer sites perfeitos em poucos minutos.</h2>
+            <Cta>Começar agora mesmo</Cta>
+        </section> -->
+
+    </main>
+    <Footer dark/>
+</Layout>

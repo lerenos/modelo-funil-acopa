@@ -1,0 +1,192 @@
+backend:
+  name: git-gateway
+  branch: main
+locale: pt
+# publish_mode: editorial_workflow
+media_folder: 'public/cms'
+public_folder: '/cms/'
+collections:
+  - name: 'lp'
+    label: 'LPs'
+    label_singular: 'LP'
+    folder: 'src/pages/lp'
+    create: true
+    delete: true
+    fields:
+      - { name: 'headline', label: 'Headline (Promessa)', widget: 'string', required: false, hint: "Para produtos de baixo ticket, a promessa deve ser clara, direta e objetiva." }
+      - { name: 'subheadline', label: 'Subhealine (Reforço da Promessa)', widget: 'string', required: false, hint: "Ideal ficar abaixo de 21 palavras." }
+      - { name: 'title', label: 'Título da Página', widget: 'string', hint: "Título que aparece na aba do navegador ou em compartilhamento da página" }
+      - { name: 'description', label: 'Metadescrição', widget: 'string', required: false, hint: "Descrição da página. Texto que aparece em compartilhamentos, e pode auxiliar em mecanismos de busca. Ideal ficar abaixo de 160 caracteres." }
+      - name: 'offers'
+        label: 'Seção de Ofertas'
+        widget: object
+        fields:
+          - name: 'title', label: 'Título da Seção de Ofertas', widget: 'string', required: false, default: "Escolha a melhor oferta para você" }
+          - name: list
+            label: Lista de Ofetas
+            widget: 'list'
+            fields:
+              - { name: 'id', widget: 'string', label: 'Id da Oferta', hint: "uso interno, não aparece na página"}
+              - { name: 'price', widget: 'number', label: 'Preço', value_type: "int", default: 10}
+              - { name: 'priceFrom', widget: 'number', label: 'Preço "De"', value_type: "float", default: 97, required: false, hint: 'Opcional'}
+              - { name: 'title', widget: 'string', label: 'Título da oferta', default: "Acesso Comum"}
+              - { name: 'link', widget: 'string', label: 'Link do Botão', required: false, hint: 'https://...' }
+              - { name: 'cta', widget: 'string', label: 'Texto do Botão', default: "Clique aqui para liberar o seu acesso" }
+              - name: 'checkmarks'
+                label: 'Lista de Benefícios'
+                widget: 'list'
+                required: false
+                field: {name: "item", label: "item", widget: "string", required: false}
+            default:
+              - { id: "main", price: 10, priceFrom: 97, title: "Acesso Comum", link: "https://", cta: "Clique aqui para liberar o seu acesso", checkmarks: {item: "Acesso Vitalício"} }
+              - { id: "super", price: 49, title: "Acesso Premium", link: "https://", cta: "Clique aqui para liberar o seu acesso", checkmarks: {item: "Acesso Vitalício"} }
+      - name: afterHeadline
+        label: Reforço de Preço
+        widget: object
+        fields:
+         - { name: 'title', label: 'Chamada da Seção', widget: 'string', required: false, default: "Domine agora mesmo a técnica de produção de Landing Pages Super Rápidas que tem acelerado os testes e resultados de centenas de infoprodutores brasileiros."}
+         - { name: 'priceCallout', label: 'Reforço do Preço e Desconto', widget: 'string', required: false, hint: 'Padrão: "90% OFF | De R$ {{preço De}} por *Apenas R$ {{preço}}*"'}
+      - name: testimonials
+        label: Depoimentos
+        widget: object
+        hint: "Pergunte aos seus alunos: eu consegui te ajudar em alguma coisa? Se sim, no que? Como você estava antes, e como está agora?"
+        required: false
+        fields:
+          - { name: 'show', label: 'Exibe Seção de Depoimentos?', widget: 'boolean', default: true }
+          - { name: 'title', label: 'Título da Seção de Depoimentos', widget: 'string', required: false, default: "Veja os resultados de quem está implementando…" }
+          - name: "list"
+            label: "Lista de Depoimentos"
+            widget: "list"
+            required: false
+            summary: '{{fields.quote}} - {{fields.author.name}}'
+            fields:
+              - {label: Depoimento, name: quote, widget: text, default: "Everything is *awesome*!"}
+              - name: author
+                label: Autor
+                widget: object
+                required: false
+                fields:
+                  - {label: Nome, name: name, widget: string, default: "David M."}
+                  - {label: Complemento ao nome, name: title, widget: string, required: false, default: "Rio de Janeiro, RJ", hint: "Cidade, Cargo, Conquista após o método... algo nessa linha"}
+                  - {label: Imagem, name: img, widget: image, required: false}
+          - name: "imgList"
+            label: "Lista de PRINTS de Depoimentos"
+            widget: "list"
+            required: false
+            summary: '{{fields.src}}'
+            hint: "OPCIONAL. Campo para, por exemplo, colocar prints de provas sociais, como conversas de whatsapp, faturamento, etc."
+            fields:
+              - {label: Depoimento, name: quote, widget: text, default: "Everything is *awesome*!"}
+              - name: author
+                label: Autor
+                widget: object
+                required: false
+                fields:
+                  - {label: Nome, name: name, widget: string, default: "David M."}
+                  - {label: Complemento ao nome, name: title, widget: string, required: false, default: "Rio de Janeiro, RJ", hint: "Cidade, Cargo, Conquista após o método... algo nessa linha"}
+                  - {label: Imagem, name: img, widget: image, required: false}
+      - name: "what"
+        label: "O que você vai aprender?"
+        widget: object
+        fields:
+          - { name: "title", label: "Título da Seção", widget: "string", required: false, default: "O que você vai aprender no curso?" }
+          - { name: 'body', label: 'Texto Longo', widget: 'markdown', required: false, default: "Você vai aprender a X... <u>Não é necessário saber Y</u>" }
+      - name: "outcomes"
+        label: "Ao concluir o curso você vai saber:"
+        widget: object
+        fields:
+          - { name: "title", label: "Título da Seção", widget: "string", required: false, default: "Ao concluir o curso você vai saber:" }
+          - { name: 'list', widget: 'list', label: 'Lista de Aprendizados', required: false, field: {name: "item", label: "item", widget: "string", required: false} }
+      - name: "who"
+        label: "Para quem?"
+        widget: object
+        fields:
+          - { name: "title", label: "Título da Seção", widget: "string", required: false, default: "O método [X] é perfeito para…" }
+          - { name: 'list', widget: 'list', label: 'Lista', required: false, field: {name: "item", label: "item", widget: "string", required: false, default: "Para quem quer vender e ter resultados expressivos sem precisar aparecer."} }
+      - name: "benefits"
+        label: "Benefícios Principais"
+        widget: object
+        hint: Ideal ter 3 benefícios 
+        fields:
+          - { name: "title", label: "Título da Seção", widget: "string", required: false, default: "3 Grandes Benefícios do Método X" }
+          - name: 'list'
+            label: 'Lista de Benefícios'
+            widget: 'list'
+            required: false
+            fields:
+              - {name: "title", label: "title", widget: "string", required: false}
+              - {name: "text", label: "text", widget: "string", required: false}
+      - name: 'countdown'
+        label: 'Contagem Regressiva'
+        widget: 'object'
+        fields:
+          - { name: 'show', widget: 'boolean', label: 'Exibe Contagem regressiva?', default: true }
+          - { name: 'title', widget: 'string', label: 'Título acima da contagem', default: "Esta oferta pode encerrar em:"}
+          - { name: 'time', widget: 'datetime', label: 'Data e Hora da Contagem Regressiva', default: "23:59:59", required: false, hint: "Padrão: 23:59:59 do mesmo dia em que a página está sendo visitada."}
+          - { name: 'text', widget: 'string', label: 'Texto logo abaixo da contagem', required: false}
+      - { name: 'img', widget: 'image', label: 'Imagem', required: false }
+      - { name: 'imgAlt', widget: 'string', label: 'Texto Alternativo da Imagem', required: false }
+      - name: 'tema',
+        widget: 'select',
+        required: false
+        options:
+          - { label: 'Dourado', value: "bumblebee" }
+          - { label: 'Dark', value: "dark" }
+          - { label: 'Esmeralda', value: "emerald" }
+          - { label: 'Azul', value: "corporate" }
+        default: { label: 'Dourado', value: "bumblebee" }
+      - { name: 'noindex', widget: 'boolean', label: 'Proibir Indexação?', hint: 'Ative se quiser PROIBIR o Google e outros buscadores de mostrarem esta página nos resultados de pesquisa.', defalut: false }
+      - { name: 'layout', widget: 'hidden', default: '@layouts/lp.astro'}
+      # - {
+      #     name: 'layout',
+      #     widget: 'select',
+      #     default: "'@layouts/artes/arte.astro'",
+      #     options: [
+      #       { label: 'Arte', value: "'@layouts/blog/arte.astro'" },
+      #     ],
+      #   }
+  # - name: 'colecoes'
+  #   label: 'Coleções'
+  #   label_singular: 'Coleção'
+  #   folder: 'src/pages/col'
+  #   create: true
+  #   delete: true
+  #   fields:
+  #     - { name: 'layout', widget: 'hidden', default: '@layouts/artes/col.astro'}
+  #     - { name: 'title', widget: 'string', label: 'Nome da Coleção' }
+  #     - { name: 'id', widget: 'string', label: 'Id da Coleção', hint: 'nome simples, em minúsculas, sem espaços ou acentos' }
+  #     - { name: 'description', widget: 'string', label: 'Description', required: false }
+  #     - { name: 'cor', label: 'Cor', widget: 'color' }
+  #     - { name: 'body', widget: 'markdown', label: 'Texto da Coleção', required: false }
+  #     - { name: 'img', widget: 'image', label: 'Imagem de Capa', required: false }
+  #     - { name: 'imgAlt', widget: 'string', label: 'Img Alt', hint:'texto alternativo da Imagem de Capa', required: false }
+  - name: "paginasesp"
+    label: "Páginas Especiais"
+    files:
+      - name: "home"
+        label: "Página Inicial"
+        file: "src/pages/index.md"
+        fields:
+          - { name: 'layout', widget: 'hidden', default: '@layouts/home.astro'}
+          - { name: 'body', widget: 'markdown', label: 'Texto Após Logo'}
+          # - label: "Links da Sidebar"
+          #   label_singular: "Link"
+          #   name: "links"
+          #   widget: "list"
+          #   summary: '{{fields.name}} - {{fields.link}}'
+          #   fields:
+          #     - {label: Nome da Página, name: name, widget: string, hint: "Nome do link. Ex.: Contato"}
+          #     - {label: Caminho, name: link, widget: string, hint: "Caminho relativo da página. Ex.: /contato"}
+  - name: 'paginas'
+    label: 'Páginas'
+    label_singular: 'Página'
+    folder: 'src/pages/p'
+    create: true
+    delete: true
+    fields:
+      - { name: 'title', widget: 'string', label: 'Título' }
+      - { name: 'description', widget: 'string', label: 'Descrição Curta', required: false }
+      - { name: 'img', widget: 'image', label: 'Imagem', required: false }
+      - { name: 'imgAlt', widget: 'string', label: 'Texto Alternativo da Imagem', required: false }
+      - { name: 'body', widget: 'markdown', label: 'Texto Longo' }
+      - { name: 'layout', widget: 'hidden', default: '@layouts/artes/arte.astro'}
