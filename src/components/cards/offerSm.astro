@@ -1,0 +1,32 @@
+---
+let {content, roundedBorders, noShadow, wfull, dark, hidePriceFrom} = Astro.props
+let {price, priceFrom, parcelas, title, link, cta, auxCta, checkmarks} = content
+
+import Check from "@assets/icons/check.astro";
+import Cta from "@components/cta.astro";
+---
+<div class:list={["p-5 pb-0",(dark && "bg-black text-white"), (wfull ? "max-w-screen-lg" : "max-w-sm")]}>
+    <h3 class="bg-primary text-primary-content font-black text-3xl uppercase leading-loose mb-6" set:html={title}/>
+    {checkmarks &&
+    <div>
+        <ul class="md:mb-12 mb-8 [&_li]:flex [&_li]:items-center [&_li]:py-4 text-left text-base font-bold leading-relaxed divide-y">
+            {checkmarks && checkmarks.map( item => <li><Check/>{item}</li>)}
+        </ul>
+    </div>}
+
+    {(priceFrom && !(hidePriceFrom)) &&
+        <p class="text-2xl text-center font-semibold mb-0 dark:text-white"><span class="text-[#FF2020] font-bold">de R$ {priceFrom}...</span></p>
+    }
+    {parcelas ?
+        (<p class="text-3xl text-center font-bold mt-10 dark:text-white">{parcelas.vezes} x</p>
+        <p class="text-8xl text-center uppercase font-black mb-4 bg-clip-text text-transparent bg-gradient-to-r from-green-500 to-teal-500 dark:from-green-400 dark:to-lime-500">R$ {parcelas.valor}</p>
+        <div class="text-center text-sm">(ou R$ {price} à vista)</div>) :
+        <p class="text-5xl text-center uppercase font-black  text-[#01D100]">POR R$ {price}</p>
+    }
+    
+    <Cta {roundedBorders} primary link={link} pos={auxCta} set:html={cta}/>
+    <!-- {linkNao && <Nao link={linkNao} set:html={btnNao}/>} -->
+    <!-- <div class="text-center text-sm mt-8">
+        <slot name="textoAposCta"/>
+    </div> -->
+</div>

@@ -1,0 +1,44 @@
+<div class="mt-4 flex w-fit mx-auto opacity-80">
+    <button id="showChanger" aria-hidden="true" class="text-gray-500">⁕</button>
+    <div id="theme-changer" class="text-sm mx-2 opacity-80 hidden">
+        <select id="theme" class="mx-2 opacity-80">
+            <option value="bumblebee">dourado</option>
+            <option value="emerald">esmeralda</option>
+            <option value="corporate">azul</option>
+            <option>dark</option>
+            <option>light</option>
+            <option>cupcake</option>
+            <option>synthwave</option>
+            <option>retro</option>
+            <option>cyberpunk</option>
+            <option>valentine</option>
+            <option>halloween</option>
+            <option>garden</option>
+            <option>forest</option>
+            <option>aqua</option>
+            <option>lofi</option>
+            <option>pastel</option>
+            <option>fantasy</option>
+            <option>wireframe</option>
+            <option>black</option>
+            <option>luxury</option>
+            <option>dracula</option>
+            <option>cmyk</option>
+            <option>autumn</option>
+            <option>business</option>
+            <option>acid</option>
+            <option>lemonade</option>
+            <option>night</option>
+            <option>coffee</option>
+            <option>winter</option>
+        </select>
+    </div>
+</div>
+<script>
+    let select = document.querySelector('select#theme')
+    select.addEventListener('change',()=>document.documentElement.setAttribute('data-theme',select.value))
+
+    let toggle = document.querySelector('#showChanger')
+    let changer = document.querySelector('#theme-changer')
+    toggle.addEventListener('click',()=>changer.classList.toggle('hidden'))
+</script>

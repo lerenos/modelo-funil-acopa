@@ -1,0 +1,36 @@
+---
+import { Markdown } from '@astropub/md'
+
+import Banner from "@components/banner/countdown.astro"
+
+import Depoimento from "@components/cards/depoimento.astro"
+import Card from "@components/cards/main.astro"
+import CardN from "@components/cards/numberH3.astro"
+import Offer from "@components/cards/offer.astro"
+
+import garantia from "@assets/garantia.webp"
+import garantia15 from "@assets/garantia15dias.webp"
+
+import Cta from "@components/cta.astro"
+import Nao from "@components/btnGhost.astro" //up
+
+let { p, cta, link, primary } = Astro.props
+
+---
+{p.type=="section" && 
+    <div class:list={["py-8 [&_img]:rounded-[--rounded-box] [&_img]:shadow-lg hover:[&_img]:scale-105 [&_img]:duration-500 [&_img]:my-8 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:list-inside [&_li::marker]:font-bold ", (p.divider?.show && "border-b"), (p.divider?.color=="primary" && "border-b-primary")]}>
+        <h2 set:html={p.title}/>
+        <Markdown of={p.body}/>
+    </div>
+}
+
+{p.type=="cta" && <Cta {primary} link={p.link || link} pos={p.auxCta} set:html={p.cta || cta}/>}
+
+{p.type=="testimonials" &&
+    <div class="flex gap-12 flex-wrap justify-center text-left">
+        {p.list.map( item => 
+            <Depoimento img={item.img} nome={item.author.name} subtitle={item.author.title}>{item.quote}</Depoimento> 
+            )
+        }
+    </div>
+}

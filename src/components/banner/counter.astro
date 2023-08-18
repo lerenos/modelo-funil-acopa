@@ -1,0 +1,59 @@
+---
+let {time} = Astro.props
+---
+<count-down data-time={time}>
+    <div class="text-center text-sm [&_span]:text-7xl flex gap-4 w-fit mx-auto">
+        <div class="w-24"><span id="h">__</span><br/> Horas</div>
+        <div class="w-24"><span id="m">__</span><br/> Min.</div>
+        <div class="w-24"><span id="s">__</span><br/> Seg.</div>
+    </div>
+</count-down>
+<script>
+class Countdown extends HTMLElement {
+    constructor() {
+    super();
+
+    // Read the message from the data attribute.
+    const time = this.dataset.time;
+
+    function updateTimer() {      
+        let midnight = new Date()
+        midnight.setHours(24,0,0,0)
+        
+        let future
+        if (isNaN(Date.parse(time))){
+            future = midnight
+        }else{
+            future = time ? Date.parse(time) : midnight
+        }
+
+        let now = new Date()
+        let diff = future - now
+
+        const SECOND = 1000
+        const MINUTE = 60 * SECOND
+        const HOUR = 60 * MINUTE
+        const DAY = 24 * HOUR
+        let days = Math.floor(diff / DAY)
+        let hours = Math.floor(diff / HOUR)
+        let mins = Math.floor(diff / MINUTE)
+        let secs = Math.floor(diff / SECOND)
+
+        let d = days
+        let h = hours - days * 24
+        let m = mins - hours * 60
+        let s = secs - mins * 60
+
+        return {d,h,m,s}
+    }
+    setInterval(() => {
+        let r = updateTimer()
+        this.querySelector('span#h').textContent=r.h.toString()
+        this.querySelector('span#m').textContent=r.m.toString()
+        this.querySelector('span#s').textContent=r.s.toString()
+    }, 1000)
+
+    }
+}
+customElements.define('count-down', Countdown);
+</script>

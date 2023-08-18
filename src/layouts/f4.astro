@@ -6,7 +6,7 @@ import Depoimento from "@components/cards/depoimento.astro"
 import Card from "@components/cards/numberH3.astro"
 import garantia from "@assets/garantia.webp"
 import garantia15 from "@assets/garantia15dias.webp"
-import Check from "@assets/icons/roundCheckmark.astro"
+import Check from "@assets/icons/greenCheckmark.astro"
 
 import Cta from "@components/cta.astro"
 
@@ -49,13 +49,13 @@ let hasVideo = props.embedCode || props.ytLink
         <section id="promessa-e-subpromessa" class="empty:hidden pt-20 pb-16 text-center [&>*]:md:mx-auto [&>*]:md:mb-12 md:bg-gradient-to-br md:from-gray-900 md:to-gray-950">
             {Astro.slots.has('pre-promessa') && <div class="md:pb-2 md:max-w-screen-md md:text-3xl font-semibold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-teal-500 empty:hidden"><slot name="pre-promessa"/></div>}
 
-            <h1 class="text-5xl font-bold tracking-wide my-8 empty:hidden"><slot name="promessa"/></h1>
+            <h1 class="text-5xl dark:text-white font-bold tracking-wide my-8 empty:hidden"><slot name="promessa"/></h1>
 
             {hasVideo && ( props.embedCode ? <div class="flex justify-center" set:html={props.embedCode} /> : <YTvideo link={props.ytLink} /> )}
 
             {vslCta && <CtaVsl time={vslCtaTime} link={vslCtaLink} pos={props.vslPosCta} set:html={vslCta}/>}
 
-            {Astro.slots.has('subpromessa') && <h2 class="md:max-w-screen-md mb-8 empty:hidden"><slot name="subpromessa"/></h2>}
+            {Astro.slots.has('subpromessa') && <h2 class="md:max-w-screen-md mb-8 empty:hidden dark:text-white"><slot name="subpromessa"/></h2>}
         </section>
         </div>
         }
@@ -160,7 +160,7 @@ let hasVideo = props.embedCode || props.ytLink
         <div data-theme={temaOferta}>
             <section id="oferta" class="py-12 lg:pb-32">
             
-                <h2 class="text-4xl font-bold tracking-wide mb-20 text-center md:mb-20" set:html={ofertaChamada}/>
+                <h2 class="text-4xl dark:text-white font-bold tracking-wide mb-20 text-center md:mb-20" set:html={ofertaChamada}/>
                 <div class="px-2 py-8 md:max-w-screen-md md:mx-auto">
                     {props.precoDe &&
                     <p class="text-2xl text-center font-semibold mb-4 dark:text-white">de <span class="line-through text-red-600">R$ {props.precoDe}</span> por apenas</p>
@@ -196,5 +196,5 @@ let hasVideo = props.embedCode || props.ytLink
         </section> -->
 
     </main>
-    <Footer dark/>
+    <Footer dark divider/>
 </Layout>

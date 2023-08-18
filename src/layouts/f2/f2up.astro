@@ -1,0 +1,109 @@
+---
+import Layout from "@layouts/partials/layoutBase.astro"
+import Footer from "@layouts/partials/footer.astro"
+
+import { Markdown } from '@astropub/md'
+
+import Banner from "@components/banner/countdown.astro"
+
+import Depoimento from "@components/cards/depoimento.astro"
+import Card from "@components/cards/main.astro"
+import CardN from "@components/cards/numberH3.astro"
+import Offer from "@components/cards/offer.astro"
+
+import garantia from "@assets/garantia.webp"
+import garantia15 from "@assets/garantia15dias.webp"
+
+import Cta from "@components/cta.astro"
+import ProxyElement from "@components/proxy.astro"
+
+import {frontmatter as siteInfo} from 'src/siteInfo.md'
+
+let f = Astro.props.frontmatter
+f.tema = f.tema || (siteInfo.tema || "bumblebee")
+
+let price = f.offer?.price || f.offers?.main?.price
+let priceFrom = f.offer?.priceFrom || f.offers?.main?.priceFrom
+let discount = Math.round((1-(price/priceFrom))*100)
+
+let cta = f.offer?.cta || `Clique aqui para adquirir com ${discount}% OFF`
+let link = f.offer?.link
+
+let roundedBorders=false
+
+---
+<Layout props={f}>
+
+    <main class="text-xl [&_section]:px-4">
+
+        <!-- Countdown -->
+        {f.countdown.show &&
+            <Banner title={f.countdown.title} text={f.countdown.text} time={f.countdown.time}/>
+        }
+
+        <!-- Promessa, Título e Subpromessa -->
+        <section id="headline" class="empty:hidden py-20 text-center [&>*]:md:mx-auto">
+            <h1 class="md:max-w-screen-lg md:mx-auto text-2xl md:text-4xl font-bold dark:text-primary tracking-wide my-8 md:mb-12 empty:hidden" set:html={f.headline} />
+            {f.subheadline && <div class="md:max-w-screen-md text-2xl mb-4 md:mb-12 empty:hidden leading-relaxed"><Markdown of={f.subheadline}/></div>}
+        </section>
+
+        {f.sec1?.subs && <section id="sec1" class:list={["text-center py-12 leading-relaxed [&_h2]:text-primary [&_h2]:text-2xl [&_h2]:md:text-3xl [&_h2]:font-black [&_h2]:my-4",(f.sec1.borderDashed && "border border-dashed")]}>
+            {f.sec1.subs.map( s => <ProxyElement p={s} {cta} {link} primary/>)}
+        </section>}
+
+        {f.sec2?.subs &&
+        <section id="sec2" class="text-center py-12 leading-relaxed [&_p]:mb-6 dark:[&_h2]:text-primary [&_h2]:text-2xl [&_h2]:md:text-3xl [&_h2]:font-black [&_h2]:my-4">
+            {f.sec2.subs.map( s => <ProxyElement p={s} {cta} {link} primary/>)}
+        </section>}
+
+        <!-- Provas -->
+        {f.testimonials?.show &&
+            <section id="proof" class="py-12 dark:[&_h2]:text-primary">
+                <h2 class="text-center text-3xl md:text-5xl font-black mb-12 md:mb-16" set:html={f.testimonials.title}/>
+                <div class="text-center mb-8"><Markdown of={f.testimonials.body}/></div>
+                <div class="flex gap-12 flex-wrap justify-center">
+                    {f.testimonials.list.map( p => 
+                        <Depoimento img={p.img} nome={p.author.name} subtitle={p.author.title} set:html={p.quote}/> 
+                        )
+                    }
+                </div>
+        </section>}                        
+
+        <!-- Última Seção -->
+        {f.sec3?.subs && 
+        <section id="sec3" class="text-center py-12 leading-relaxed [&_p]:mb-6 dark:[&_h2]:text-primary [&_h2]:text-2xl [&_h2]:md:text-3xl [&_h2]:font-black [&_h2]:my-4">
+            {f.sec3.subs.map( s => <ProxyElement p={s} {cta} {link} primary/>)}
+        </section>}
+
+        <!-- Garantia -->
+        <!-- <section id="garantia" class="py-16 md:flex md:gap-12 md:items-center md:max-w-screen-lg md:mx-auto">
+                {(garantiaDias==15) ? 
+                    <img src={garantia15} alt="Garantia de 15 dias" class="md:mb-0 mb-8 mx-auto" width="240" height="240"/>:
+                    <img src={garantia} alt={`Garantia de ${garantiaDias} dias`} class="md:mb-0 mb-8 mx-auto" width="240" height="240"/>
+                }
+                <div>
+                <h2 class="md:mb-8 md:text-4xl text-3xl font-bold tracking-wide mb-12 text-black" set:html={garantiaTitle}/>
+                <slot name="garantiaTexto"/>
+            </div>
+        </section> -->
+
+        <!-- Oferta -->
+        <section id="oferta" class="py-12 lg:pb-32 bg-primary">
+        
+            {f.offers.title && <h2 class="text-4xl md:text-5xl text-primary-content font-bold tracking-wide mb-20 text-center" set:html={f.offers.title}/>}
+
+            <div class="flex gap-4 flex-wrap justify-center text-center items-start">
+                    <Offer dark content={f.offers.main} beforePrice="por" />
+            </div>
+
+            <!-- <div class="max-w-sm mx-auto mt-8 tracking-wider bg-black text-primary [&_a]:font-bold">-->
+            <!-- <div class="max-w-sm mx-auto mt-8 tracking-wider [&_a]:font-bold [&_a]:leading-relaxed border border-dashed"> -->
+            <div class="max-w-sm mx-auto mt-8">
+                <Cta link={f.offers.alt.link} set:html={f.offers.alt.cta} not ctaClass="border border-dashed border-white text-primary-content" />
+            </div>
+
+        </section>
+
+    </main>
+    <Footer dark/>
+</Layout>

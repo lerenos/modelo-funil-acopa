@@ -1,0 +1,43 @@
+---
+let {content, roundedBorders, noShadow, wfull, dark, hidePriceFrom, beforePrice} = Astro.props
+let {price, priceFrom, parcelas, title, link, cta, auxCta, checkmarks, benefits, afterPrice} = content
+
+beforePrice = content.beforePrice || beforePrice
+
+import Check from "@assets/icons/check.astro";
+import Cta from "@components/cta.astro";
+
+---
+<div class:list={["p-5 pb-0",(dark && "bg-black text-white"), (wfull ? "max-w-screen-lg" : "max-w-sm")]}>
+    <h3 class="bg-primary text-primary-content font-black text-3xl uppercase leading-loose mb-6" set:html={title}/>
+    {checkmarks &&
+        <div>
+            <ul class="md:mb-12 mb-8 [&_li]:flex [&_li]:items-center [&_li]:py-4 text-left text-base font-bold leading-relaxed divide-y">
+                {checkmarks && checkmarks.map( item => <li><Check/>{item}</li>)}
+            </ul>
+        </div>
+    }
+    {benefits && benefits.map( b =>
+        <div>
+            <h4 class="text-primary font-extrabold uppercase text-base" set:html={b.title}/>
+            <ul class="md:mb-12 mb-8 [&_li]:flex [&_li]:items-center [&_li]:py-4 text-left text-base font-bold leading-relaxed">
+                {b.checkmarks && b.checkmarks.map( item => <li><Check/>{item}</li>)}
+            </ul>
+        </div>)
+    }
+
+    {(priceFrom && !(hidePriceFrom)) &&
+        <p class="text-2xl text-center font-semibold dark:text-white"><span class="text-[#FF2020] font-bold line-through">de R$ {(Number.isInteger(priceFrom))? priceFrom.toLocaleString('pt-BR'): priceFrom.toLocaleString('pt-BR',{minimumFractionDigits:2})}...</span></p>
+    }
+    {parcelas?.show ?
+        (<p class="text-xl text-center font-semibold dark:text-white text-slate-100 mb-4">por</p>
+        <p class="text-2xl text-center font-bold dark:text-white text-slate-100">{parcelas.vezes}x
+            <span class="text-5xl text-center uppercase font-black mb-4 text-[#01D100]">R$ {parcelas.valor}</span>
+        </p>
+        <div class="text-center text-sm italic">ou R$ {price} à vista</div>) :
+        <p class="text-2xl text-center font-black text-[#01D100]">{beforePrice} <span class="text-5xl">R$ {price}</span></p>
+    }
+    {afterPrice && <p class="text-lg leading-loose text-center uppercase font-black text-[#01D100]" set:html={afterPrice}/>}
+    
+    <Cta {roundedBorders} primary link={link} pos={auxCta} set:html={cta}/>
+</div>

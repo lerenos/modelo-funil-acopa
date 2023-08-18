@@ -39,9 +39,8 @@ module.exports = {
 			{
 				emerald: {
 					...require("daisyui/src/colors/themes")["[data-theme=emerald]"],
-					'h1':{'color':'black'},
-					'h2':{'color':'black'},
-					// 'h3':{'color':'black'}
+					'primary':'#22C55E',
+					'primary-content':'white'
 				},
 			},
 			{
@@ -51,13 +50,47 @@ module.exports = {
 					// "base-content": "#e2e8f0", //slate-200
 					"primary":"white",
 					"primary-content":"black",
-					"--rounded-btn": "0.5rem",
-					'h1':{'color':'white'},
-					'h2':{'color':'white'},
+					"--rounded-btn": "0",
+					"--rounded-box": "0",
+					// 'h1':{'color':'white'},
+					// 'h2':{'color':'white'},
 					// 'h3':{'color':'white'}
 				},
 			},
-			"bumblebee","corporate"
+			{
+				bumblebee: {
+					...require("daisyui/src/colors/themes")["[data-theme=bumblebee]"],
+					'primary':'#FFC820',
+					"--rounded-btn": "0",
+					"--rounded-box": "0",
+				},
+			},
+			"light",
+			"cupcake",
+			"corporate",
+			"synthwave",
+			"retro",
+			"cyberpunk",
+			"valentine",
+			"halloween",
+			"garden",
+			"forest",
+			"aqua",
+			"lofi",
+			"pastel",
+			"fantasy",
+			"wireframe",
+			"black",
+			"luxury",
+			"dracula",
+			"cmyk",
+			"autumn",
+			"business",
+			"acid",
+			"lemonade",
+			"night",
+			"coffee",
+			"winter"
 		]
 	},
 	

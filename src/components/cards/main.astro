@@ -1,0 +1,44 @@
+---
+let {emoji, h3size, etiqueta, precoDe, precoPor, roundedBorders, noShadow, transparent, wfull, icon, borderIcon} = Astro.props
+
+let iconHtml = emoji
+
+let h3Html = ""
+if (Astro.slots.has('h3')) {
+  h3Html = await Astro.slots.render('h3');
+}
+
+let h3class = ""
+switch (h3size) {
+    case "big":
+        h3class = "text-3xl font-bold mb-6"
+        break;
+    default: h3class = "text-2xl font-semibold mb-2"
+        break;
+}
+
+import Check from "@assets/icons/roundCheckmark.astro";
+import Person from "@assets/icons/personCheck.astro";
+
+let Icon
+switch (icon) {
+    case "person":
+        Icon = Person
+        break;
+    default: Icon = Check
+        break;
+}
+
+
+---
+<div class:list={["w-full p-8 dark:text-white hover:scale-105 hover:shadow-4xl duration-500", (roundedBorders ? "rounded-3xl":""), (noShadow ? "":"shadow-2xl"), (transparent ? "":"bg-base-100 rounded-[--rounded-box]"), (wfull ? "max-w-screen-lg" : "max-w-sm")]}>
+    {etiqueta && <div class="badge badge-success gap-2 float-right" set:html={etiqueta}/>}
+    {icon && <div class:list={["text-primary fill-primary w-fit mx-auto",(borderIcon && "p-8 bg-primary/5 rounded-full border-primary border-4 [&>svg]:w-16 [&>svg]:h-16")]}><Icon/></div>}
+    <p class="text-3xl mb-4" set:html={iconHtml}/>
+    <h3 class={h3class} set:html={h3Html}/>
+    <p><slot/></p>
+    {precoPor &&
+        <div class="text-center text-2xl font-bold mt-4">
+            de <span class="text-red-600 line-through">{precoDe}</span> por <span class="text-green-600">{precoPor}</span>
+    </div>}
+</div>

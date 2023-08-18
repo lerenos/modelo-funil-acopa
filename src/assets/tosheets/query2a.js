@@ -10,8 +10,8 @@ function addNewParams(el){
         //Anexa os novos parâmetros ao link do elemento
         newParams.forEach((value, key) => {params.append(key,value)}) 
         
-        //Faz com que utm_medium do link seja fbclid (opcional, mas recomendo)
-        params.set('utm_medium', newParams.get('fbclid') || params.get('utm_medium'))
+        //Faz com que utm_tracker do link seja fbclid
+        params.set('utm_medium', newParams.get('fbclid') || params.get('utm_tracker'))
     
         url.search = params.toString()
         let hrefCta = url.toString() //Faz a url final

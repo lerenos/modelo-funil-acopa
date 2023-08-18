@@ -1,5 +1,5 @@
 ---
-let h3class = "dark:text-white font-semibold mb-2"
+let h3class = "dark:text-white font-semibold"
 // let h3size = Astro.props.h3size
 // switch (h3size) {
 //     case "big":
@@ -9,16 +9,21 @@ let h3class = "dark:text-white font-semibold mb-2"
 //         break;
 // }
 
-let { img, nome } = Astro.props
+let { img, nome, roundedBorders, subtitle } = Astro.props
 ---
-<div class="w-full max-w-sm p-8 rounded-3xl shadow-2xl bg-base-100 hover:scale-105 hover:shadow-4xl duration-500 grid grid-cols-3 gap-4">
+<div class:list={["w-full max-w-sm p-8 flex flex-col justify-evenly shadow-2xl bg-base-100 hover:scale-105 hover:shadow-4xl duration-500 rounded-[--rounded-box]", (roundedBorders ? "rounded-3xl":"")]}>
+
+  <p class="italic mb-8"><slot/></p>
+
+  <div class="grid grid-cols-3 gap-4"><!--author-->
     <div class="avatar grid place-items-center">
-        <div class="xs:w-24 xs:h-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-          <img src={img} alt={`Depoimento de ${nome}`} width=96 height=96 />
-        </div>
+      <div class="xs:w-24 xs:h-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+        {img ? <img src={img} alt={`Depoimento de ${nome}`} width=96 height=96 /> : <div class="w-full h-24 text-center text-primary grid place-items-center text-4xl font-bold bg-primary/10" set:html={nome[0]}/> }
       </div>
-    <div class="col-span-2">
-        <p class="italic"><slot/></p>
-        <h3 class={h3class} set:html={nome}/>
     </div>
+    <div class="pl-4 col-span-2 flex flex-col justify-center">
+      <h3 class={h3class} set:html={nome}/>
+      <p class="italic" set:html={subtitle}/>
+    </div>
+  </div>
 </div>

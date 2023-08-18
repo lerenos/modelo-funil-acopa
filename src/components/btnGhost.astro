@@ -1,5 +1,8 @@
+---
+let { link, noMargin, noUnderline } = Astro.props
+---
 <div class="text-center">
-    <a href={Astro.props.link} class="btn btn-ghost btn-lg mb-4 gap-2 w-full md:w-fit underline normal-case font-normal">
+    <a href={link} class:list={["btn btn-ghost btn-lg gap-2 w-full md:w-fit normal-case font-normal",(!noMargin && "mb-4"),(!noUnderline && "underline")]}>
         <slot>Saiba Mais</slot>
     </a>
 </div>

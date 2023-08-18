@@ -1,5 +1,8 @@
+local_backend: true
 backend:
-  name: git-gateway
+  # name: git-gateway
+  name: proxy
+  proxy_url: http://localhost:8081/api/v1
   branch: main
 locale: pt
 # publish_mode: editorial_workflow
@@ -12,39 +15,58 @@ collections:
     folder: 'src/pages/lp'
     create: true
     delete: true
+    preview: false
+    summary: '{{title}} - (slug: {{fields.slug}})'
+    slug: '{{fields.slug}}'
     fields:
-      - { name: 'headline', label: 'Headline (Promessa)', widget: 'string', required: false, hint: "Para produtos de baixo ticket, a promessa deve ser clara, direta e objetiva." }
-      - { name: 'subheadline', label: 'Subhealine (Reforço da Promessa)', widget: 'string', required: false, hint: "Ideal ficar abaixo de 21 palavras." }
-      - { name: 'title', label: 'Título da Página', widget: 'string', hint: "Título que aparece na aba do navegador ou em compartilhamento da página" }
+      - name: 'headline'
+        label: 'Headline (Promessa)'
+        widget: 'text'
+        required: false
+        hint: "Para produtos de baixo ticket, a promessa deve ser clara, direta e objetiva. Você consegue formatar envolvendo com as tags *<em>* e <u>. Quebra de linha com <br>"
+        default: "Aprenda como ganhar <br> <strong>de X a Y reais por dia</strong> <br> vendendo P <em>no automático</em>"
+      - name: 'subheadline'
+        label: 'Sub headline (Reforço da Promessa)'
+        widget: 'text'
+        minimal: true
+        hint: "Ideal ficar em torno de 21 palavras. Você consegue formatar envolvendo com as tags **<strong>**, *<em>* e <u>. Quebra de linha com <br>"
+        default: A forma mais simples de ter resultados <em>verdadeiramente expressivos</em> vendendo P no automático.
+      - { name: 'slug', label: 'Slug da Página', widget: 'string', hint: 'Pedaço final da url na barra de endereços. Ex.: "metodo-x". Este campo não pode ser modificado após a criação da página. Se quiser modificar, duplique a página e exclua a antiga.' }
+      - { name: 'title', label: 'Título da Página', widget: 'string', default: "Título da Página | Sua Marca", hint: "Título que aparece na aba do navegador ou em compartilhamento da página" }
       - { name: 'description', label: 'Metadescrição', widget: 'string', required: false, hint: "Descrição da página. Texto que aparece em compartilhamentos, e pode auxiliar em mecanismos de busca. Ideal ficar abaixo de 160 caracteres." }
       - name: 'offers'
         label: 'Seção de Ofertas'
         widget: object
+        hint: Esta é a última seção da página, mas já coloquei logo aqui no início para facilitar a organização da estrutura.
         fields:
-          - name: 'title', label: 'Título da Seção de Ofertas', widget: 'string', required: false, default: "Escolha a melhor oferta para você" }
+          - {name: 'title', label: 'Título da Seção de Ofertas', widget: 'string', required: false, default: "Escolha a melhor oferta para você:"} 
           - name: list
-            label: Lista de Ofetas
+            label: Ofertas
+            label_singular: Oferta
             widget: 'list'
+            summary: 'R$ {{fields.price}} - {{fields.title}}'
             fields:
-              - { name: 'id', widget: 'string', label: 'Id da Oferta', hint: "uso interno, não aparece na página"}
+              # - { name: 'id', widget: 'string', label: 'Id da Oferta', hint: "uso interno, não aparece na página"}
               - { name: 'price', widget: 'number', label: 'Preço', value_type: "int", default: 10}
               - { name: 'priceFrom', widget: 'number', label: 'Preço "De"', value_type: "float", default: 97, required: false, hint: 'Opcional'}
               - { name: 'title', widget: 'string', label: 'Título da oferta', default: "Acesso Comum"}
-              - { name: 'link', widget: 'string', label: 'Link do Botão', required: false, hint: 'https://...' }
+              - { name: 'link', widget: 'string', label: 'Link do Botão', required: false, default: "https://acopa.com.br/lp/?utm_source=modelo-funil", hint: 'https://...' }
               - { name: 'cta', widget: 'string', label: 'Texto do Botão', default: "Clique aqui para liberar o seu acesso" }
               - name: 'checkmarks'
-                label: 'Lista de Benefícios'
+                label: 'Benefícios'
+                label_singular: 'Benefício'
                 widget: 'list'
                 required: false
-                field: {name: "item", label: "item", widget: "string", required: false}
+                summary: '{{fields.item}}'
+                field: {name: "item", label: "item", widget: "string", required: false, default: "Acesso Vitalício"}
             default:
-              - { id: "main", price: 10, priceFrom: 97, title: "Acesso Comum", link: "https://", cta: "Clique aqui para liberar o seu acesso", checkmarks: {item: "Acesso Vitalício"} }
-              - { id: "super", price: 49, title: "Acesso Premium", link: "https://", cta: "Clique aqui para liberar o seu acesso", checkmarks: {item: "Acesso Vitalício"} }
+              - { price: 10, priceFrom: 97, title: "Acesso Comum", link: "https://acopa.com.br/lp/?utm_source=modelo-funil", cta: "Clique aqui para liberar o seu acesso", checkmarks: ["Benefício 1", "Benefício 2"] }
+              - { price: 49, title: "Acesso Premium", link: "https://acopa.com.br/lp/?utm_source=modelo-funil", cta: "Clique aqui para liberar o seu acesso", checkmarks: ["Benefício 1", "Benefício 2"] }
       - name: afterHeadline
         label: Reforço de Preço
         widget: object
         fields:
-         - { name: 'title', label: 'Chamada da Seção', widget: 'string', required: false, default: "Domine agora mesmo a técnica de produção de Landing Pages Super Rápidas que tem acelerado os testes e resultados de centenas de infoprodutores brasileiros."}
+         - { name: 'title', label: 'Chamada da Seção', widget: 'text', required: false, default: "Domine agora mesmo a técnica simples e poderosa que tem acelerado os resultados de centenas de infoprodutores brasileiros."}
          - { name: 'priceCallout', label: 'Reforço do Preço e Desconto', widget: 'string', required: false, hint: 'Padrão: "90% OFF | De R$ {{preço De}} por *Apenas R$ {{preço}}*"'}
       - name: testimonials
         label: Depoimentos
@@ -53,14 +75,31 @@ collections:
         required: false
         fields:
           - { name: 'show', label: 'Exibe Seção de Depoimentos?', widget: 'boolean', default: true }
-          - { name: 'title', label: 'Título da Seção de Depoimentos', widget: 'string', required: false, default: "Veja os resultados de quem está implementando…" }
+          - { name: 'title', label: 'Título da Seção de Depoimentos', widget: 'string', required: false, default: "Quem implementou já está tendo resultado:" }
           - name: "list"
-            label: "Lista de Depoimentos"
+            label: "Depoimentos"
+            label_singular: "Depoimento"
             widget: "list"
             required: false
             summary: '{{fields.quote}} - {{fields.author.name}}'
+            default:
+              - quote: Excelente! O curso X foi um divisor de águas. Em <strong>apenas T
+                  meses</strong>, eu fui de A para B
+                author:
+                  name: Maria S.
+                  title: Rio de Janeiro, RJ
+              - quote: Excelente! O <strong>curso X foi um divisor de águas</strong>. Em apenas
+                  T meses, eu fui de A para B
+                author:
+                  name: João
+                  title: Rio de Janeiro, RJ
+              - quote: Excelente! O curso X foi um divisor de águas. Em <strong>apenas T
+                  meses</strong>, eu fui de A para B
+                author:
+                  name: David M.
+                  title: Rio de Janeiro, RJ
             fields:
-              - {label: Depoimento, name: quote, widget: text, default: "Everything is *awesome*!"}
+              - {name: quote, label: Depoimento, widget: text, default: "Excelente! O curso X foi um divisor de águas. Em <strong>apenas T meses</strong>, eu fui de A para B"}
               - name: author
                 label: Autor
                 widget: object
@@ -70,21 +109,13 @@ collections:
                   - {label: Complemento ao nome, name: title, widget: string, required: false, default: "Rio de Janeiro, RJ", hint: "Cidade, Cargo, Conquista após o método... algo nessa linha"}
                   - {label: Imagem, name: img, widget: image, required: false}
           - name: "imgList"
-            label: "Lista de PRINTS de Depoimentos"
+            label: "PRINTS de Depoimentos"
+            label_singular: "Depoimento (imagem)"
             widget: "list"
             required: false
-            summary: '{{fields.src}}'
+            summary: '{{fields.img}}'
             hint: "OPCIONAL. Campo para, por exemplo, colocar prints de provas sociais, como conversas de whatsapp, faturamento, etc."
-            fields:
-              - {label: Depoimento, name: quote, widget: text, default: "Everything is *awesome*!"}
-              - name: author
-                label: Autor
-                widget: object
-                required: false
-                fields:
-                  - {label: Nome, name: name, widget: string, default: "David M."}
-                  - {label: Complemento ao nome, name: title, widget: string, required: false, default: "Rio de Janeiro, RJ", hint: "Cidade, Cargo, Conquista após o método... algo nessa linha"}
-                  - {label: Imagem, name: img, widget: image, required: false}
+            field: {name: img, label: Imagem, widget: image, required: false}
       - name: "what"
         label: "O que você vai aprender?"
         widget: object
@@ -96,13 +127,35 @@ collections:
         widget: object
         fields:
           - { name: "title", label: "Título da Seção", widget: "string", required: false, default: "Ao concluir o curso você vai saber:" }
-          - { name: 'list', widget: 'list', label: 'Lista de Aprendizados', required: false, field: {name: "item", label: "item", widget: "string", required: false} }
+          - name: 'list'
+            label: 'Aprendizados'
+            widget: 'list'
+            summary: '{{fields.item}}'
+            required: false
+            field: {name: "item", label: "item", widget: "text", required: false}
+            default:
+              - Criar rapidamente X para fazer Y
+              - Fazer Z seguindo a estratégia que tem gerado resultado R para meus alunos
+              - Criar Y em poucos minutos que conseguem resultado R
       - name: "who"
         label: "Para quem?"
         widget: object
         fields:
           - { name: "title", label: "Título da Seção", widget: "string", required: false, default: "O método [X] é perfeito para…" }
-          - { name: 'list', widget: 'list', label: 'Lista', required: false, field: {name: "item", label: "item", widget: "string", required: false, default: "Para quem quer vender e ter resultados expressivos sem precisar aparecer."} }
+          - name: 'list'
+            label: 'Públicos'
+            label_singular: 'Público'
+            widget: 'list'
+            required: false
+            summary: '{{fields.item}}'
+            field: {name: "item", label: "item", widget: "text", required: false}
+            default: 
+              - Para quem quer ter resultados expressivos sem precisar aparecer.
+              - Para iniciantes em A que estão cansados de X
+              - Para pessoas P que querem ter mais tempo livre e um estilo de vida mais
+                leve
+              - Para quem está cansado desse papo de X  e a chatisse de Y para tentar
+                fazer Z.
       - name: "benefits"
         label: "Benefícios Principais"
         widget: object
@@ -110,56 +163,799 @@ collections:
         fields:
           - { name: "title", label: "Título da Seção", widget: "string", required: false, default: "3 Grandes Benefícios do Método X" }
           - name: 'list'
-            label: 'Lista de Benefícios'
+            label: 'Benefícios'
             widget: 'list'
             required: false
+            summary: '{{fields.title}} - {{fields.text}}'
             fields:
               - {name: "title", label: "title", widget: "string", required: false}
-              - {name: "text", label: "text", widget: "string", required: false}
+              - {name: "text", label: "text", widget: "text", required: false}
+            default:
+              - title: Você pode fazer X rapidamente
+                text: Criar X é rápido, simples e fácil… Você pode fazer Y
+              - title: X é fácil de vender
+                text: Vender X é muito fácil. Ao saber exatamente como lucrar com eles, você vai
+                  se surpreender com os [resultados] que podem ser gerados todos os
+                  dias/meses.
+              - title: Método validado por milhares de alunos em todos os cantos do mundo
+                text: O método que você vai conhecer hoje já é responsável por transformar a
+                  vida de milhares de alunos.
       - name: 'countdown'
         label: 'Contagem Regressiva'
         widget: 'object'
         fields:
           - { name: 'show', widget: 'boolean', label: 'Exibe Contagem regressiva?', default: true }
           - { name: 'title', widget: 'string', label: 'Título acima da contagem', default: "Esta oferta pode encerrar em:"}
-          - { name: 'time', widget: 'datetime', label: 'Data e Hora da Contagem Regressiva', default: "23:59:59", required: false, hint: "Padrão: 23:59:59 do mesmo dia em que a página está sendo visitada."}
+          - { name: 'time', widget: 'datetime', label: 'Data e Hora da Contagem Regressiva', date_format: "DD/MM/YYYY", time_format: HH:mm, format: "LLL", default: false, required: false, hint: "Padrão: 23:59:59 do mesmo dia em que a página está sendo visitada."}
           - { name: 'text', widget: 'string', label: 'Texto logo abaixo da contagem', required: false}
-      - { name: 'img', widget: 'image', label: 'Imagem', required: false }
-      - { name: 'imgAlt', widget: 'string', label: 'Texto Alternativo da Imagem', required: false }
-      - name: 'tema',
-        widget: 'select',
+      # - { name: 'img', widget: 'image', label: 'Imagem', required: false }
+      # - { name: 'imgAlt', widget: 'string', label: 'Texto Alternativo da Imagem', required: false }
+      - name: 'tema'
+        label: Tema
+        widget: 'select'
         required: false
         options:
           - { label: 'Dourado', value: "bumblebee" }
           - { label: 'Dark', value: "dark" }
           - { label: 'Esmeralda', value: "emerald" }
           - { label: 'Azul', value: "corporate" }
-        default: { label: 'Dourado', value: "bumblebee" }
-      - { name: 'noindex', widget: 'boolean', label: 'Proibir Indexação?', hint: 'Ative se quiser PROIBIR o Google e outros buscadores de mostrarem esta página nos resultados de pesquisa.', defalut: false }
+          - "light"
+          - "cupcake"
+          - "synthwave"
+          - "retro"
+          - "cyberpunk"
+          - "valentine"
+          - "halloween"
+          - "garden"
+          - "forest"
+          - "aqua"
+          - "lofi"
+          - "pastel"
+          - "fantasy"
+          - "wireframe"
+          - "black"
+          - "luxury"
+          - "dracula"
+          - "cmyk"
+          - "autumn"
+          - "business"
+          - "acid"
+          - "lemonade"
+          - "night"
+          - "coffee"
+          - "winter"
+      - { name: 'noindex', label: 'Proibir Indexação?', widget: 'boolean', required: false, default: false, hint: 'Ative se quiser PROIBIR o Google e outros buscadores de mostrarem esta página nos resultados de pesquisa.' }
+      - { name: 'draft',label: 'Rascunho?',  widget: 'boolean', required: false, default: false, hint: 'Ative este botão para *Modo Rascunho:* Esta página sai do ar, mas a informação continua aqui para você poder editar.' }
       - { name: 'layout', widget: 'hidden', default: '@layouts/lp.astro'}
-      # - {
-      #     name: 'layout',
-      #     widget: 'select',
-      #     default: "'@layouts/artes/arte.astro'",
-      #     options: [
-      #       { label: 'Arte', value: "'@layouts/blog/arte.astro'" },
-      #     ],
-      #   }
-  # - name: 'colecoes'
-  #   label: 'Coleções'
-  #   label_singular: 'Coleção'
-  #   folder: 'src/pages/col'
-  #   create: true
-  #   delete: true
-  #   fields:
-  #     - { name: 'layout', widget: 'hidden', default: '@layouts/artes/col.astro'}
-  #     - { name: 'title', widget: 'string', label: 'Nome da Coleção' }
-  #     - { name: 'id', widget: 'string', label: 'Id da Coleção', hint: 'nome simples, em minúsculas, sem espaços ou acentos' }
-  #     - { name: 'description', widget: 'string', label: 'Description', required: false }
-  #     - { name: 'cor', label: 'Cor', widget: 'color' }
-  #     - { name: 'body', widget: 'markdown', label: 'Texto da Coleção', required: false }
-  #     - { name: 'img', widget: 'image', label: 'Imagem de Capa', required: false }
-  #     - { name: 'imgAlt', widget: 'string', label: 'Img Alt', hint:'texto alternativo da Imagem de Capa', required: false }
+  - name: 'f2lp'
+    label: 'F2 LP - Funil Upgrade, Landing Pages'
+    label_singular: 'F2 LP'
+    folder: 'src/pages/f2'
+    create: true
+    delete: true
+    preview: false
+    summary: '{{title}} - (slug: {{fields.slug}})'
+    slug: '{{fields.slug}}'
+    fields:
+      - name: 'headline'
+        label: 'Headline (Promessa)'
+        widget: 'string'
+        required: false
+        hint: "Para produtos de baixo ticket, a promessa deve ser clara, direta e objetiva."
+        default: "A [Solução/Método X] que [gera resultado R] [em tempo T]"
+      - name: 'subheadline'
+        label: 'Sub headline (Reforço da Promessa)'
+        widget: 'markdown'
+        minimal: true
+        required: false
+        hint: "Ideal ficar em torno de 21 palavras."
+        default: "Se você implementar [este método] e não conseguir [resultado R]… Eu devolvo o seu dinheiro."
+      - { name: 'slug', label: 'Slug da Página', widget: 'string', hint: 'Pedaço final da url na barra de endereços. Ex.: "metodo-x". Este campo não pode ser modificado após a criação da página. Se quiser modificar, duplique a página e exclua a antiga.' }
+      - { name: 'title', label: 'Título da Página', widget: 'string', default: "Título da Página | Sua Marca", hint: "Título que aparece na aba do navegador ou em compartilhamento da página" }
+      - { name: 'description', label: 'Metadescrição', widget: 'string', required: false, hint: "Descrição da página. Texto que aparece em compartilhamentos, e pode auxiliar em mecanismos de busca. Ideal ficar abaixo de 160 caracteres." }
+      - name: 'offer'
+        label: 'A Oferta'
+        widget: object
+        summary: 'R$ {{fields.price}} - {{fields.cta}} {{fields.link}}'
+        fields:
+          - { name: 'price', widget: 'number', label: 'Preço', value_type: "int", default: 10}
+          - { name: 'priceFrom', widget: 'number', label: 'Preço "De"', value_type: "float", default: 97, required: false, hint: 'Opcional'}
+          - { name: 'link', widget: 'string', label: 'Link do Botão', default: '/f2/up/', hint: 'O link padrão desta página é para a página de upgrade. A ideia é só colocar o link do checkout na próxima página.' }
+          - { name: 'cta', widget: 'string', label: 'Texto do Botão', required: false, hint: '"Clique aqui para adquirir com [desconto/preço]% OFF" Se deixado em branco, a página calcula o desconto com base nos preços que você colocar acima.' }
+          - { name: 'show1stCta', widget: 'boolean', label: 'Exibe CTA logo na primeira seção?', default: false, required: false }
+        default:
+          - { price: 10, priceFrom: 97, link: "/f2/up/"}
+      - name: sec1
+        label: Primeira Seção
+        widget: object
+        fields:
+          - { name: 'borderDashed', widget: 'boolean', label: 'Linha Tracejada em torno desta Seção?', default: false, required: false }
+          - name: subs
+            label: Subseções
+            widget: list
+            default:
+              - type: section
+                title: "Como vai funcionar:"
+                body: Ao adquirir você vai receber uma aula completa ensinando a [fazer X que vem gerando resultado R].
+                divider:
+                  show: true
+                  color: primary
+              - type: section
+                title: "O que você vai receber:"
+                body: Você vai receber uma aula completa ensinando X
+                divider:
+                  show: true
+                  color: primary
+              - type: section
+                title: "Pré-Requisitos:"
+                body: Nenhum.
+                divider:
+                  show: true
+                  color: primary
+              - type: section
+                title: "Investimento necessário:"
+                body: Você vai precisar investir apenas R$ [PREÇO] para adquirir a aula e o modelo.
+                divider:
+                  show: true
+                  color: primary
+              - type: section
+                title: "Pior Cenário:"
+                body: Você [faz X] e se não alcançar [o resultado R] é só pedir o reembolso dentro
+                  de 7 dias… E ainda vai ter aprendido [X].
+                divider:
+                  show: false
+                  color: primary
+              - type: section
+                title: "Melhor Cenário:"
+                body: Funciona e você [sucesso]
+                divider:
+                  show: false
+                  color: primary
+              - type: cta
+            types:
+              - name: "section"
+                label: "Subseção comum (Título e Corpo de Texto)"
+                widget: object
+                summary: '{{fields.title}}'
+                fields:
+                  - { name: "title", label: "Título da Subseção", widget: "string", required: false, default: "Como vai funcionar:" }
+                  - { name: 'body', label: 'Texto Longo', widget: 'markdown', required: false, minimal: true, default: 'Texto Longo, aceita Markdown e Imagens. <u>Para sublinhar, envolva com as tags "u"</u>' }
+                  - name: "divider"
+                    label: "Linha Divisória ao fim da Seção"
+                    widget: object
+                    collapsed: true
+                    required: false
+                    fields:
+                      - { name: 'show', widget: 'boolean', label: 'Exibe a linha?',required: false, default: false }
+                      - name: 'color'
+                        label: Cor
+                        widget: 'select'
+                        required: false
+                        options:
+                          - { label: 'Cor Primária do Tema', value: "primary" }
+                          - { label: 'Cor Neutra do Tema', value: "" }
+                        default: "primary"
+                      - name: 'style'
+                        label: Estilo
+                        widget: 'select'
+                        required: false
+                        options:
+                          - { label: 'Linha Contínua', value: "" }
+                          - { label: 'Linha Tracejada', value: "dashed" }
+              - name: "cta"
+                label: "Call to Action"
+                widget: object
+                collapsed: true
+                hint: "Se deixado vazio, o padrão é o Call to Action da oferta principal da página"
+                fields:
+                  - { name: 'text', label: 'Texto do Call to Action', widget: 'string', required: false, hint: "Se deixado vazio, o padrão é o Call to Action da oferta principal da página" }
+                  - { name: 'link', label: 'Link do Call to Action', widget: 'string', required: false, hint: "Se deixado vazio, o padrão é o link da oferta principal da página" }
+      - name: sec2
+        label: Segunda Seção
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - name: subs
+            label: Subseções
+            widget: list
+            types:
+              - name: "section"
+                label: "Subseção comum (Título e Corpo de Texto)"
+                widget: object
+                summary: '{{fields.title}}'
+                fields:
+                  - { name: "title", label: "Título da Subseção", widget: "string", required: false, default: "Por que confiar nos meus produtos?" }
+                  - { name: 'body', label: 'Texto Longo', widget: 'markdown', required: false,  minimal: true, default: 'Texto Longo, aceita Markdown e Imagens. <u>Para sublinhar, envolva com as tags "u"</u>' }
+                  - name: "divider"
+                    label: "Linha Divisória ao fim da Seção"
+                    widget: object
+                    collapsed: true
+                    fields:
+                      - { name: 'show', widget: 'boolean', label: 'Exibe a linha?',required: false, default: false }
+                      - name: 'color'
+                        label: Cor
+                        widget: 'select'
+                        required: false
+                        options:
+                          - { label: 'Cor Primária do Tema', value: "primary", required: false }
+                          - { label: 'Cor Neutra do Tema', value: "", required: false }
+                        default: "primary"
+                      - name: 'style'
+                        label: Estilo
+                        widget: 'select'
+                        required: false
+                        options:
+                          - { label: 'Linha Contínua', value: "" }
+                          - { label: 'Linha Tracejada', value: "dashed" }
+              - name: "cta"
+                label: "Call to Action"
+                widget: object
+                collapsed: true
+                summary: '{{fields.text}} - {{fields.link}}'
+                hint: "Você pode deixar em branco. Se deixado em branco, o padrão é o Call to Action da oferta principal da página"
+                fields:
+                  - { name: 'text', label: 'Texto do Call to Action', widget: 'string', required: false, hint: "Se deixado em branco, o padrão é o Call to Action da oferta principal da página" }
+                  - { name: 'link', label: 'Link do Call to Action', widget: 'string', required: false, hint: "Se deixado em branco, o padrão é o Call to Action da oferta principal da página" }
+      - name: testimonials
+        label: Depoimentos
+        widget: object
+        hint: "Pergunte aos seus alunos: eu consegui te ajudar em alguma coisa? Se sim, no que? Como você estava antes, e como está agora?"
+        required: false
+        default:
+          title: Por que confiar nos meus produtos?
+          body: Veja o resultados de alguns alunos e mentorados…
+          list:
+            - quote: Excelente! O curso X foi um divisor de águas. Em <strong>apenas T
+                meses</strong>, eu fui de A para B
+              author:
+                name: David M.
+                title: Rio de Janeiro, RJ
+            - quote: Excelente! O curso X foi um divisor de águas. Em <strong>apenas T
+                meses</strong>, eu fui de A para B
+              author:
+                name: David M.
+                title: Rio de Janeiro, RJ
+            - quote: Excelente! O curso X foi um divisor de águas. Em <strong>apenas T
+                meses</strong>, eu fui de A para B
+              author:
+                name: David M.
+                title: Rio de Janeiro, RJ
+        fields:
+          - { name: 'show', label: 'Exibe Seção de Depoimentos?', widget: 'boolean', default: true }
+          - { name: 'title', label: 'Título da Seção de Depoimentos', widget: 'string', required: false, default: "Por que confiar nos meus produtos?" }
+          - { name: 'body', label: 'Texto Longo', widget: 'markdown', required: false,  minimal: true, default: "Veja o resultados de alguns alunos…", hint: 'Texto Longo, aceita Markdown e Imagens. <u>Para sublinhar, envolva com as tags "u"</u>' }
+          - name: "list"
+            label: "Depoimentos"
+            label_singular: "Depoimento"
+            widget: "list"
+            required: false
+            summary: '{{fields.quote}} - {{fields.author.name}}'
+            fields:
+              - {name: quote, label: Depoimento, widget: text, default: "Excelente! O curso X foi um divisor de águas. Em <strong>apenas T meses</strong>, eu fui de A para B"}
+              - name: author
+                label: Autor
+                widget: object
+                required: false
+                fields:
+                  - {label: Nome, name: name, widget: string, default: "David M."}
+                  - {label: Complemento ao nome, name: title, widget: string, required: false, default: "Rio de Janeiro, RJ", hint: "Cidade, Cargo, Conquista após o método... algo nessa linha"}
+                  - {label: Imagem, name: img, widget: image, required: false}
+      - name: sec3
+        label: Última Seção
+        widget: object
+        fields:
+          - name: subs
+            label: Subseções
+            widget: list
+            default:
+              - type: cta
+            types:
+              - name: "section"
+                label: "Subseção comum (Título e Corpo de Texto)"
+                widget: object
+                summary: '{{fields.title}}'
+                hint: 'Não usaremos neste modelo de página.'
+                required: false
+                fields:
+                  - { name: "title", label: "Título da Subseção", widget: "string", required: false, hint: 'Não usaremos neste modelo de página.' }
+                  - { name: 'body', label: 'Texto Longo', widget: 'markdown', required: false,  minimal: true, hint: 'Texto Longo, aceita Markdown e Imagens. <u>Para sublinhado, envolva com as tags "u"</u>.Não usaremos neste modelo de página.' }
+              - name: "cta"
+                label: "Call to Action"
+                widget: object
+                collapsed: true
+                summary: '{{fields.text}} - {{fields.link}}'
+                hint: "Você pode deixar em branco. Se deixado em branco, o padrão é o Call to Action da oferta principal da página"
+                fields:
+                  - { name: 'text', label: 'Texto do Call to Action', widget: 'string', required: false, hint: "Se deixado em branco, o padrão é o Call to Action da oferta principal da página" }
+                  - { name: 'link', label: 'Link do Call to Action', widget: 'string', required: false, hint: "Se deixado em branco, o padrão é o Call to Action da oferta principal da página" }
+      - name: 'countdown'
+        label: 'Contagem Regressiva'
+        widget: 'object'
+        required: false
+        fields:
+          - { name: 'show', widget: 'boolean', label: 'Exibe Contagem regressiva?', default: false }
+          - { name: 'title', widget: 'string', label: 'Título acima da contagem', default: "- Oferta especial por tempo limitado -"}
+          - { name: 'time', widget: 'datetime', label: 'Data e Hora da Contagem Regressiva', date_format: "DD/MM/YYYY", time_format: HH:mm, format: "LLL", required: false, default: '', hint: "Padrão: 23:59:59 do mesmo dia em que a página está sendo visitada."}
+          - { name: 'text', widget: 'string', label: 'Texto logo abaixo da contagem', required: false}
+      # - { name: 'img', widget: 'image', label: 'Imagem', required: false }
+      # - { name: 'imgAlt', widget: 'string', label: 'Texto Alternativo da Imagem', required: false }
+      - name: 'tema'
+        label: Tema
+        widget: 'select'
+        required: false
+        options:
+          - { label: 'Dourado', value: "bumblebee" }
+          - { label: 'Dark', value: "dark" }
+          - { label: 'Esmeralda', value: "emerald" }
+          - { label: 'Azul', value: "corporate" }
+          - "light"
+          - "cupcake"
+          - "synthwave"
+          - "retro"
+          - "cyberpunk"
+          - "valentine"
+          - "halloween"
+          - "garden"
+          - "forest"
+          - "aqua"
+          - "lofi"
+          - "pastel"
+          - "fantasy"
+          - "wireframe"
+          - "black"
+          - "luxury"
+          - "dracula"
+          - "cmyk"
+          - "autumn"
+          - "business"
+          - "acid"
+          - "lemonade"
+          - "night"
+          - "coffee"
+          - "winter"
+      - { name: 'noindex', label: 'Proibir Indexação?', widget: 'boolean', required: false, default: false, hint: 'Ative se quiser PROIBIR o Google e outros buscadores de mostrarem esta página nos resultados de pesquisa.' }
+      - { name: 'draft',label: 'Rascunho?',  widget: 'boolean', required: false, default: false, hint: 'Ative este botão para *Modo Rascunho:* Esta página sai do ar, mas a informação continua aqui para você poder editar.' }
+      - { name: 'layout', widget: 'hidden', default: '@layouts/f2/f2lp.astro'}
+  - name: 'f2up'
+    label: 'F2 UP - Funil Upgrade, Página de Upgrade'
+    label_singular: 'F2 UP'
+    folder: 'src/pages/f2/up'
+    create: true
+    delete: true
+    preview: false
+    summary: '{{title}} - (slug: {{fields.slug}})'
+    slug: '{{fields.slug}}'
+    fields:
+      - name: 'headline'
+        label: 'Headline (Promessa)'
+        widget: 'string'
+        required: false
+        hint: "Para produtos de baixo ticket, a promessa deve ser clara, direta e objetiva."
+        default: "Libere seu acesso a [Produto da Página Anterior] <u>+ [Produto desta Oferta de Upgrade] por Apenas R$ [Preço]! (Pagamento único)</u>"
+      - name: 'subheadline'
+        label: 'Sub headline (Reforço da Promessa)'
+        widget: 'markdown'
+        required: false
+        minimal: true
+        hint: "Nesta página, a ideia é não ter nada aqui. Mas fica aqui como recurso disponível."
+      - { name: 'slug', label: 'Slug da Página', widget: 'string', hint: 'Pedaço final da url na barra de endereços. Ex.: "metodo-x". Este campo não pode ser modificado após a criação da página. Se quiser modificar, duplique a página e exclua a antiga.' }
+      - { name: 'title', label: 'Título da Página', widget: 'string', default: "Título da Página | Sua Marca", hint: "Título que aparece na aba do navegador ou em compartilhamento da página" }
+      - { name: 'description', label: 'Metadescrição', widget: 'string', required: false, hint: "Descrição da página. Texto que aparece em compartilhamentos, e pode auxiliar em mecanismos de busca. Ideal ficar abaixo de 160 caracteres." }
+      - name: 'offers'
+        label: 'Ofertas'
+        widget: object
+        summary: 'R$ {{fields.price}} - {{fields.link}}'
+        fields:
+          - name: main
+            label: Oferta do Upgrade (a de maior valor)
+            widget: object
+            fields:
+              - { name: 'title', widget: 'string', label: 'Título da oferta', default: "Leve mais X", required: false}
+              - { name: 'priceFrom', widget: 'number', label: 'Preço "De"', value_type: "float", default: 1297, required: false, hint: 'Opcional'}
+              - { name: 'price', widget: 'number', label: 'Preço', value_type: "int", default: 97}
+              - name: parcelas
+                label: Preço Parcelado
+                widget: object
+                required: false
+                collapsed: true
+                fields:
+                  - { name: show, widget: 'boolean', label: 'Exibe preço parcelado?', required: false, hint: 'Se desativado, exibe apenas o preço à vista'}
+                  - { name: 'vezes', widget: 'number', label: 'Número de Parcelas', value_type: "int", required: false, default: 12}
+                  - { name: 'valor', widget: 'string', label: 'Valor da Parcela', required: false, default: '9,70'}
+              - { name: 'afterPrice', widget: 'string', label: 'Texto Curto logo após preço', default: "(Pagamento Único)", required: false}
+              - { name: 'link', widget: 'string', label: 'Link do Botão', required: false, default: "https://acopa.com.br/lp/?utm_source=modelo-funil", hint: Coloque aqui o link para o checkout. Os parâmetros da URL vindos da página anterior são automaticamente passados para a próxima página. }
+              - { name: 'cta', widget: 'string', label: 'Texto do Botão', default: "Clique aqui para seguir com o Desconto Especial" }
+              - name: benefits
+                label: 'Benefícios'
+                label_singular: 'Benefício'
+                widget: 'list'
+                summary: '{{fields.title}}'
+                default:
+                  - title: "O que você vai ter acesso:"
+                    checkmarks:
+                      - Atualizações constantes e novas estratégias validadas para você ter
+                        resultados cada vez maiores.
+                      - Modelo de X para copiar e colar
+                  - title: "O que você vai aprender:"
+                    checkmarks:
+                      - Atualizações constantes e novas estratégias validadas para você ter
+                        resultados cada vez maiores.
+                      - O melhor jeito para fazer Y
+                  - title: Além de tudo isso...
+                    checkmarks:
+                      - Suporte por e-mail com orientações práticas e personalizadas
+                      - Acesso vitalício
+                fields:
+                  - { name: 'title', widget: 'string', label: 'Título desta subseção de benefícios', default: "Além de tudo isso...", required: false}
+                  - name: 'checkmarks'
+                    label: 'Itens'
+                    label_singular: 'Item'
+                    widget: 'list'
+                    required: false
+                    summary: "{{fields.item}}"
+                    field: {name: "item", label: "item", widget: "string", required: false, default: "Suporte por e-mail com orientações práticas e personalizadas"}
+                    default:
+                      - "Atualizações constantes e novas estratégias validadas para você ter resultados cada vez maiores."
+                      - "Acesso vitalício"
+          - name: alt
+            label: Oferta Original (a mais barata)
+            widget: object
+            fields:
+              - { name: 'link', widget: 'string', label: 'Link do Botão', required: false, default: 'https://acopa.com.br/lp/?utm_source=modelo-funil', hint: Coloque aqui o link para o checkout da oferta básica (a da página anterior). Os parâmetros da URL vindos da página anterior são automaticamente passados para a próxima página. }
+              - { name: 'cta', widget: 'string', label: 'Texto do Botão', default: "Não quero. Prefiro apenas o [Produto da Página Anterior]" }
+      - name: 'countdown'
+        label: 'Contagem Regressiva'
+        widget: 'object'
+        fields:
+          - { name: 'show', widget: 'boolean', label: 'Exibe Contagem regressiva?', default: true }
+          - { name: 'title', widget: 'string', label: 'Título acima da contagem', default: "Upgrade Liberado!"}
+          - { name: 'time', widget: 'datetime', label: 'Data e Hora da Contagem Regressiva', date_format: "DD/MM/YYYY", time_format: HH:mm, format: "LLL", default: '', required: false, hint: "Padrão: 23:59:59 do mesmo dia em que a página está sendo visitada."}
+          - { name: 'text', widget: 'string', label: 'Texto logo abaixo da contagem', required: false, default: "ESPERE! UM UPGRADE PARA [X] FOI LIBERADO!"}
+      # - { name: 'img', widget: 'image', label: 'Imagem', required: false }
+      # - { name: 'imgAlt', widget: 'string', label: 'Texto Alternativo da Imagem', required: false }
+      - name: 'tema'
+        label: Tema
+        widget: 'select'
+        required: false
+        options:
+          - { label: 'Dourado', value: "bumblebee" }
+          - { label: 'Dark', value: "dark" }
+          - { label: 'Esmeralda', value: "emerald" }
+          - { label: 'Azul', value: "corporate" }
+          - "light"
+          - "cupcake"
+          - "synthwave"
+          - "retro"
+          - "cyberpunk"
+          - "valentine"
+          - "halloween"
+          - "garden"
+          - "forest"
+          - "aqua"
+          - "lofi"
+          - "pastel"
+          - "fantasy"
+          - "wireframe"
+          - "black"
+          - "luxury"
+          - "dracula"
+          - "cmyk"
+          - "autumn"
+          - "business"
+          - "acid"
+          - "lemonade"
+          - "night"
+          - "coffee"
+          - "winter"
+      - { name: 'noindex', label: 'Proibir Indexação?', widget: 'boolean', required: false, default: true, hint: 'Ative se quiser PROIBIR o Google e outros buscadores de mostrarem esta página nos resultados de pesquisa. **Padrão desta página: Ativado (ou seja, não queremos que o google indexe)**' }
+      - { name: 'draft',label: 'Rascunho?',  widget: 'boolean', required: false, hint: 'Ative este botão para *Modo Rascunho:* Esta página sai do ar, mas a informação continua aqui para você poder editar.' }
+      - { name: 'layout', widget: 'hidden', default: '@layouts/f2/f2up.astro'}
+  - name: 'f3'
+    label: 'F3 - Página Captura de Leads'
+    label_singular: 'F3 Leads'
+    folder: 'src/pages/f3/'
+    create: true
+    delete: true
+    preview: false
+    summary: '{{title}} - (slug: {{fields.slug}})'
+    slug: '{{fields.slug}}'
+    fields:
+      - name: showForm
+        label: Exibe Formulário?
+        widget: boolean
+        required: false
+        default: true
+      - name: 'headline'
+        label: 'Headline (Promessa)'
+        widget: 'string'
+        required: false
+        hint: "Caso queira, você consegue formatar partes do texto envolvendo com as tags **<strong>**, *<em>* e <u>. Quebra de linha com <br>."
+        default: "Essa pode ser sua melhor chance de conseguir Viver do Digital"
+      - name: 'subheadline'
+        label: 'Sub headline (Reforço da Promessa)'
+        widget: 'markdown'
+        required: false
+        minimal: true
+        hint: "Chame para fazer a inscrição."
+        default: "De todos os negócios digitais que eu tentei, fazer X **foi o caminho que me
+            deu resultados mais expressivos, estáveis e escaláveis.**
+
+
+            Preencha para entrar no **Grupo de Treinamento Gratuito:**"
+      - name: img
+        label: Imagem Principal
+        required: false
+        widget: object
+        fields:
+          - { name: 'src', widget: 'image', label: 'Imagem', required: false, default: '' }
+          - { name: 'alt', widget: 'string', label: 'Texto Alternativo da Imagem', required: false, hint: 'Se em branco, o padrão é o texto da headline acima' }
+      - { name: 'slug', label: 'Slug da Página', widget: 'string', hint: 'Pedaço final da url na barra de endereços. Ex.: "metodo-x". Este campo não pode ser modificado após a criação da página. Se quiser modificar, duplique a página e exclua a antiga.' }
+      - { name: 'title', label: 'Título da Página', widget: 'string', default: "Entre no Grupo de Treinamento Gratuito | Sua Marca", hint: "Título que aparece na aba do navegador ou em compartilhamento da página" }
+      - { name: 'description', label: 'Metadescrição', widget: 'string', required: false, default: "Grupo de Treinamento Gratuito sobre X: essa é a melhor chance de ter um negócio sustentável e lucrativo.", hint: "Descrição da página. Texto que aparece em compartilhamentos, e pode auxiliar em mecanismos de busca. Ideal ficar abaixo de 160 caracteres." }
+      - name: 'countdown'
+        label: 'Contagem Regressiva no Início da Página?'
+        widget: 'object'
+        collapsed: true
+        required: false
+        fields:
+          - { name: 'show', widget: 'boolean', label: 'Exibe Contagem regressiva?', default: false, required: false}
+          - { name: 'title', widget: 'string', label: 'Título acima da contagem', default: "- inscrições só até T -"}
+          - { name: 'time', widget: 'datetime', label: 'Data e Hora da Contagem Regressiva', date_format: "DD/MM/YYYY", time_format: HH:mm, format: "LLL", default: '', required: false, hint: "Padrão: 23:59:59 do mesmo dia em que a página está sendo visitada."}
+          - { name: 'text', widget: 'string', label: 'Texto logo abaixo da contagem', required: false, default: ""}
+      - name: subs
+        label: Seções
+        widget: list
+        types:
+          - name: "section"
+            label: "Seção comum (Títulos, Corpo de Texto, Imagens)"
+            widget: object
+            summary: '{{fields.body}}'
+            fields:
+              - { name: 'body', label: 'Texto Longo', widget: 'markdown', required: false,  minimal: true, default: 'Texto Longo, aceita Markdown e Imagens. <u>Para sublinhar, envolva com as tags "u"</u>' }
+              - name: 'tema'
+                label: Tema desta Seção
+                widget: 'select'
+                required: false
+                options:
+                  - { label: 'Dourado', value: "bumblebee" }
+                  - { label: 'Dark', value: "dark" }
+                  - { label: 'Esmeralda', value: "emerald" }
+                  - { label: 'Azul', value: "corporate" }
+                  - "light"
+                  - "cupcake"
+                  - "synthwave"
+                  - "retro"
+                  - "cyberpunk"
+                  - "valentine"
+                  - "halloween"
+                  - "garden"
+                  - "forest"
+                  - "aqua"
+                  - "lofi"
+                  - "pastel"
+                  - "fantasy"
+                  - "wireframe"
+                  - "black"
+                  - "luxury"
+                  - "dracula"
+                  - "cmyk"
+                  - "autumn"
+                  - "business"
+                  - "acid"
+                  - "lemonade"
+                  - "night"
+                  - "coffee"
+                  - "winter"
+              - name: "divider"
+                label: "Linha Divisória ao fim da Seção"
+                widget: object
+                collapsed: true
+                fields:
+                  - { name: 'show', widget: 'boolean', label: 'Exibe a linha?',required: false, default: false }
+                  - name: 'color'
+                    label: Cor
+                    widget: 'select'
+                    required: false
+                    options:
+                      - { label: 'Cor Primária do Tema', value: "primary", required: false }
+                      - { label: 'Cor Neutra do Tema', value: "", required: false }
+                    default: "primary"
+                  - name: 'style'
+                    label: Estilo
+                    widget: 'select'
+                    required: false
+                    options:
+                      - { label: 'Linha Contínua', value: "" }
+                      - { label: 'Linha Tracejada', value: "dashed" }
+          - name: "cta"
+            label: "Call to Action"
+            widget: object
+            collapsed: true
+            summary: '{{fields.text}} - {{fields.link}}'
+            fields:
+              - { name: 'text', label: 'Texto do Call to Action', widget: 'string', required: false, default: "Faça a sua Inscrição" }
+              - { name: 'link', label: 'Link do Call to Action', widget: 'string', required: false, deafult: '#', hint: "Se deixado em branco, o padrão é retornar ao topo da página." }
+              - name: 'tema'
+                label: Tema desta Seção
+                widget: 'select'
+                required: false
+                options:
+                  - { label: 'Dourado', value: "bumblebee" }
+                  - { label: 'Dark', value: "dark" }
+                  - { label: 'Esmeralda', value: "emerald" }
+                  - { label: 'Azul', value: "corporate" }
+                  - "light"
+                  - "cupcake"
+                  - "synthwave"
+                  - "retro"
+                  - "cyberpunk"
+                  - "valentine"
+                  - "halloween"
+                  - "garden"
+                  - "forest"
+                  - "aqua"
+                  - "lofi"
+                  - "pastel"
+                  - "fantasy"
+                  - "wireframe"
+                  - "black"
+                  - "luxury"
+                  - "dracula"
+                  - "cmyk"
+                  - "autumn"
+                  - "business"
+                  - "acid"
+                  - "lemonade"
+                  - "night"
+                  - "coffee"
+                  - "winter"
+          - name: testimonials
+            label: Depoimentos
+            widget: object
+            hint: "Pergunte aos seus alunos: eu consegui te ajudar em alguma coisa? Se sim, no que? Como você estava antes, e como está agora?"
+            required: false
+            fields:
+              - { name: 'title', label: 'Título da Seção de Depoimentos', widget: 'string', required: false, default: "Por que confiar nos meus produtos?" }
+              - { name: 'body', label: 'Texto Longo', widget: 'markdown', required: false,  minimal: true, default: "Veja o resultados de alguns alunos…", hint: 'Texto Longo, aceita Markdown e Imagens. <u>Para sublinhar, envolva com as tags "u"</u>' }
+              - name: "list"
+                label: "Depoimentos"
+                label_singular: "Depoimento"
+                widget: "list"
+                required: false
+                summary: '{{fields.quote}} - {{fields.author.name}}'
+                fields:
+                  - {name: quote, label: Depoimento, widget: text, default: "Excelente! O curso X foi um divisor de águas. Em <strong>apenas T meses</strong>, eu fui de A para B"}
+                  - name: author
+                    label: Autor
+                    widget: object
+                    required: false
+                    fields:
+                      - {label: Nome, name: name, widget: string, default: "David M."}
+                      - {label: Complemento ao nome, name: title, widget: string, required: false, default: "Rio de Janeiro, RJ", hint: "Cidade, Cargo, Conquista após o método... algo nessa linha"}
+                      - {label: Imagem, name: img, widget: image, required: false}      
+              - name: 'tema'
+                label: Tema da Página
+                widget: 'select'
+                required: false
+                options:
+                  - { label: 'Dourado', value: "bumblebee" }
+                  - { label: 'Dark', value: "dark" }
+                  - { label: 'Esmeralda', value: "emerald" }
+                  - { label: 'Azul', value: "corporate" }
+                  - "light"
+                  - "cupcake"
+                  - "synthwave"
+                  - "retro"
+                  - "cyberpunk"
+                  - "valentine"
+                  - "halloween"
+                  - "garden"
+                  - "forest"
+                  - "aqua"
+                  - "lofi"
+                  - "pastel"
+                  - "fantasy"
+                  - "wireframe"
+                  - "black"
+                  - "luxury"
+                  - "dracula"
+                  - "cmyk"
+                  - "autumn"
+                  - "business"
+                  - "acid"
+                  - "lemonade"
+                  - "night"
+                  - "coffee"
+                  - "winter"
+          - name: 'countdown'
+            label: 'Contagem Regressiva'
+            widget: 'object'
+            required: false
+            fields:
+              - { name: 'show', widget: 'boolean', label: 'Exibe Contagem regressiva?', default: false, required: false}
+              - { name: 'title', widget: 'string', label: 'Título acima da contagem', default: "- Inscrições só até T -"}
+              - { name: 'time', widget: 'datetime', label: 'Data e Hora da Contagem Regressiva', date_format: "DD/MM/YYYY", time_format: HH:mm, format: "LLL", default: '', required: false, hint: "Padrão: 23:59:59 do mesmo dia em que a página está sendo visitada."}
+              - { name: 'text', widget: 'string', label: 'Texto logo abaixo da contagem', required: false, default: ""}
+      - name: 'tema'
+        label: Tema da Página
+        widget: 'select'
+        required: false
+        options:
+          - { label: 'Dourado', value: "bumblebee" }
+          - { label: 'Dark', value: "dark" }
+          - { label: 'Esmeralda', value: "emerald" }
+          - { label: 'Azul', value: "corporate" }
+          - "light"
+          - "cupcake"
+          - "synthwave"
+          - "retro"
+          - "cyberpunk"
+          - "valentine"
+          - "halloween"
+          - "garden"
+          - "forest"
+          - "aqua"
+          - "lofi"
+          - "pastel"
+          - "fantasy"
+          - "wireframe"
+          - "black"
+          - "luxury"
+          - "dracula"
+          - "cmyk"
+          - "autumn"
+          - "business"
+          - "acid"
+          - "lemonade"
+          - "night"
+          - "coffee"
+          - "winter"
+      - { name: 'noindex', label: 'Proibir Indexação?', widget: 'boolean', required: false, default: false, hint: 'Ative se quiser PROIBIR o Google e outros buscadores de mostrarem esta página nos resultados de pesquisa.' }
+      - { name: 'draft',label: 'Rascunho?',  widget: 'boolean', required: false, hint: 'Ative este botão para *Modo Rascunho:* Esta página sai do ar, mas a informação continua aqui para você poder editar.' }
+      - { name: 'layout', widget: 'hidden', default: '@layouts/f3.astro'}
+  - name: 'wa'
+    label: 'WhatsApp - Link de Redirecionamento para Conversa'
+    label_singular: 'WhatsApp - Link para Conversa'
+    folder: 'src/pages/wa/'
+    create: true
+    delete: true
+    preview: false
+    summary: '{{slug}} -> +{{fields.number}} : {{fields.msg}}'
+    slug: '{{fields.slug}}'
+    fields:
+      - { name: 'slug', label: 'Slug da Página', widget: 'string', hint: 'Pedaço final da url na barra de endereços. Ex.: Se inserir "abc", você terá um link parecido com "seusite.com.br/wa/abc". Este campo não pode ser modificado após a criação da página. Se quiser modificar, duplique a página e exclua a antiga.' }
+      - name: 'number'
+        label: 'Número do Whats de Destino'
+        widget: 'number'
+        value_type: 'int'
+        max: 9999999999999
+        hint: 'Apenas números. Insira o número do país e DDD. Por exemplo, um número do Rio de Janeiro seria "*55*21912345678"'
+      - { name: 'msg', label: 'Mensagem Inicial', widget: 'string', required: false, hint: 'Pode te ajudar a entender de onde o Lead veio. Algo como: "Oi, vim da página de X. Quero saber mais sobre o produto Y."' }
+      - { name: 'draft',label: 'Rascunho?',  widget: 'boolean', required: false, hint: 'Ative este botão para *Modo Rascunho:* Esta página sai do ar, mas a informação continua aqui para você poder editar.' }
+      - { name: 'title', label: 'Título da Página', widget: 'hidden', default: "Redirecionando para o Whatsapp", hint: "Título que aparece na aba do navegador ou em compartilhamento da página" }
+      - { name: 'noindex', label: 'Proibir Indexação?', widget: 'hidden', default: true }
+      - { name: 'layout', widget: 'hidden', default: '@layouts/wa/groups.astro'}
+  - name: 'wagroups'
+    label: 'WhatsApp - Link de Redirecionamento para Grupos'
+    label_singular: 'WhatsApp - Link para Grupos'
+    folder: 'src/pages/wa/group/'
+    create: true
+    delete: true
+    preview: false
+    summary: '{{slug}} -> {{fields.link}}'
+    slug: '{{fields.slug}}'
+    fields:
+      - { name: 'slug', label: 'Slug da Página', widget: 'string', hint: 'Pedaço final da url na barra de endereços. Ex.: Se inserir "abc", você terá um link parecido com "seusite.com.br/wa/group/abc". Este campo não pode ser modificado após a criação da página. Se quiser modificar, duplique a página e exclua a antiga.' }
+      - name: 'link'
+        label: 'Link para o Grupo'
+        widget: 'string'
+        pattern: ['^http', "Insira um link válido"]
+        default: "https://api.whatsapp.com/"
+      - { name: 'draft',label: 'Rascunho?',  widget: 'boolean', required: false, hint: 'Ative este botão para *Modo Rascunho:* Esta página sai do ar, mas a informação continua aqui para você poder editar.' }
+      - { name: 'title', label: 'Título da Página', widget: 'hidden', default: "Redirecionando para o Whatsapp", hint: "Título que aparece na aba do navegador ou em compartilhamento da página" }
+      - { name: 'noindex', label: 'Proibir Indexação?', widget: 'hidden', default: true }
+      - { name: 'layout', widget: 'hidden', default: '@layouts/wa/groups.astro'}
   - name: "paginasesp"
     label: "Páginas Especiais"
     files:
@@ -167,8 +963,11 @@ collections:
         label: "Página Inicial"
         file: "src/pages/index.md"
         fields:
+          - { name: 'showLogo', label: 'Mostra a Logo?', widget: 'boolean', default: false, required: false, hint: "Não se preocupe com sua Logo agora. Deixe para colocar isso por último, se quiser. É totalmente opcional. Assim sendo, se você ativar este campo, você esconde a Logo da Página Inicial." }
+          - { name: 'showTitle', label: 'Mostra o nome da sua marca?', widget: 'boolean', default: true, required: false }
+          - { name: 'showDesc', label: 'Mostra a Descrição da Empresa?', widget: 'boolean', default: true, required: false }
+          - { name: 'body', widget: 'markdown', label: 'Texto Após Títulos', required: false}
           - { name: 'layout', widget: 'hidden', default: '@layouts/home.astro'}
-          - { name: 'body', widget: 'markdown', label: 'Texto Após Logo'}
           # - label: "Links da Sidebar"
           #   label_singular: "Link"
           #   name: "links"
@@ -177,16 +976,72 @@ collections:
           #   fields:
           #     - {label: Nome da Página, name: name, widget: string, hint: "Nome do link. Ex.: Contato"}
           #     - {label: Caminho, name: link, widget: string, hint: "Caminho relativo da página. Ex.: /contato"}
-  - name: 'paginas'
-    label: 'Páginas'
-    label_singular: 'Página'
-    folder: 'src/pages/p'
-    create: true
-    delete: true
-    fields:
-      - { name: 'title', widget: 'string', label: 'Título' }
-      - { name: 'description', widget: 'string', label: 'Descrição Curta', required: false }
-      - { name: 'img', widget: 'image', label: 'Imagem', required: false }
-      - { name: 'imgAlt', widget: 'string', label: 'Texto Alternativo da Imagem', required: false }
-      - { name: 'body', widget: 'markdown', label: 'Texto Longo' }
-      - { name: 'layout', widget: 'hidden', default: '@layouts/artes/arte.astro'}
+      - name: "config"
+        label: "Informações Gerais do Site"
+        file: "src/siteInfo.md"
+        fields:
+          - { name: 'companyName', widget: 'string', label: 'Nome da sua Marca' }
+          - { name: 'companyDesc', widget: 'string', label: 'Metadescrição do seu Site', hint: "Curta. Abaixo de 160 caracteres." }
+          - { name: 'lang', widget: 'string', label: 'Idioma Principal', default: 'pt-BR', hint: "Padrão: pt-BR" }
+          - name: 'tema'
+            label: Tema Geral do Site
+            widget: 'select'
+            required: false
+            options:
+              - { label: 'Dourado', value: "bumblebee" }
+              - { label: 'Dark', value: "dark" }
+              - { label: 'Esmeralda', value: "emerald" }
+              - { label: 'Azul', value: "corporate" }
+              - "light"
+              - "cupcake"
+              - "synthwave"
+              - "retro"
+              - "cyberpunk"
+              - "valentine"
+              - "halloween"
+              - "garden"
+              - "forest"
+              - "aqua"
+              - "lofi"
+              - "pastel"
+              - "fantasy"
+              - "wireframe"
+              - "black"
+              - "luxury"
+              - "dracula"
+              - "cmyk"
+              - "autumn"
+              - "business"
+              - "acid"
+              - "lemonade"
+              - "night"
+              - "coffee"
+              - "winter"
+          - name: address
+            label: Localização
+            widget: object
+            required: false
+            fields:
+            - { name: 'city', label: 'Cidade', widget: 'string', required: false}
+            - { name: 'region', label: 'Estado', widget: 'string', required: false}
+            - { name: 'country', label: 'Estado', widget: 'string', required: false, default: 'BR'}
+          - name: social
+            label: Links para as Redes Sociais
+            widget: object
+            required: false
+            fields:
+            - { name: 'instagram', label: 'Instagram', widget: 'string', required: false}
+            - { name: 'facebook', label: 'Facebook', widget: 'string', required: false}
+            - { name: 'linkedin', label: 'Linkedin', widget: 'string', required: false}
+            - { name: 'github', label: 'Github', widget: 'string', required: false}
+          - name: corp
+            label: Informações Corporativas
+            widget: object
+            required: false
+            hint: Não se preocupe com isso. Não tem o menor problema não exisitir.
+            fields:
+            - { name: 'cnpj', label: 'CNPJ', widget: 'string', required: false, hint: '00.000.000/0001-00'}
+            - { name: 'razao', label: 'Razão Social', widget: 'string', required: false, hint: 'Razão Social Ltda.'}
+          - { name: 'hideFooterLogo', label: 'Esconde a Logo nos Rodapés?', widget: 'boolean', default: false, required: false, hint: "Não se preocupe com sua Logo agora. Deixe para colocar isso por último, se quiser. É totalmente opcional. Assim sendo, se você marcar este campo, você esconde a Logo nos rodapés." }
+          - { name: 'themeChanger', label: 'Exibe botão de Experimentação de Tema nos Rodapés?', widget: 'boolean', default: true, required: false}
+          - { name: 'body', widget: 'markdown', modes: ["raw"], buttons: ["bold"], required: false, label: 'Código SVG da sua Logo', hint: "Não se preocupe com isso agora, é totalmente dispensável para começar."}
