@@ -1,6 +1,6 @@
 {
-  "name": "lp-alta-conv-acopa",
-  "version": "1.0.0",
+  "name": "funil-acopa",
+  "version": "2.1.0",
   "private": true,
   "scripts": {
     "dev": "astro dev",
