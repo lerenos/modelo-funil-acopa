@@ -1,6 +1,60 @@
 ---
+import Layout from "@layouts/partials/layoutBase.astro"
+import Footer from "@layouts/partials/footer.astro"
+
+import { Markdown } from '@astropub/md'
+
+import Banner from "@components/banner/countdown.astro"
+
+import Depoimento from "@components/cards/depoimento.astro"
+import Card from "@components/cards/main.astro"
+import CardN from "@components/cards/numberH3.astro"
+import Offer from "@components/cards/offer.astro"
+
+import garantia from "@assets/garantia.webp"
+import garantia15 from "@assets/garantia15dias.webp"
+
+import Cta from "@components/cta.astro"
+
+import Form from "@components/forms/lead.astro"
+
+//General Site Information
+import {frontmatter as siteInfo} from 'src/siteInfo.md'
+let { tema } = siteInfo
+
+let f = Astro.props.frontmatter
+f.tema = f.tema || tema
+
+let {showLogo, showTitle, showDesc} = f
+
 
 // img 540x540
-//sec max 1080
-
+// sec max 1080
 ---
+<Layout props={f}>
+<main class="text-xl [&_section]:px-4 min-h-screen grid place-content-center">
+
+    {f.countdown.show &&
+        <Banner title={f.countdown.title} text={f.countdown.text} time={f.countdown.time}/>
+    }
+
+    <section class="grid place-content-center py-12">
+        <div class="grid place-content-center md:grid-cols-2 gap-4 md:gap-8 max-w-screen-xl">
+            <div class="prose prose-neutral dark:prose-invert">
+                <h1 set:html={f.headline} class="text-primary font-bold"/>
+                <Markdown of={f.subheadline}/>
+                {f.showForm ? <Form cta={f.cta.txt} link={f.cta.link} /> : <Cta wfull primary link={f.cta.link} set:html={f.cta.txt}/>}
+            </div>
+            <div class="grid place-content-center">
+                <img src={f.img.src} alt={f.img.alt || f.headline} />
+            </div>
+        </div>
+    </section>
+
+    <div>
+        <!-- sections goes here -->
+    </div>
+
+</main>
+<Footer dark/>
+</Layout>

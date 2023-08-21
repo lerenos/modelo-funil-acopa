@@ -2,18 +2,6 @@
 import Layout from "@layouts/partials/layoutBase.astro"
 import Footer from "@layouts/partials/footer.astro"
 
-import { Markdown } from '@astropub/md'
-
-import Banner from "@components/banner/countdown.astro"
-
-import Depoimento from "@components/cards/depoimento.astro"
-import Card from "@components/cards/main.astro"
-import CardN from "@components/cards/numberH3.astro"
-import Offer from "@components/cards/offer.astro"
-
-import garantia from "@assets/garantia.webp"
-import garantia15 from "@assets/garantia15dias.webp"
-
 import Cta from "@components/cta.astro"
 
 import {Content, frontmatter as siteInfo} from 'src/siteInfo.md'
@@ -33,8 +21,8 @@ let {showLogo, showTitle, showDesc} = f
             {showLogo && <div class="mx-auto my-8 text-center items-center w-fit"><Content/></div>}
             {showTitle && <h1 set:html={companyName}/>}
             {showDesc && <h4 set:html={companyDesc}/>}
-        </section>
-        <slot/>
+          </section>
+          <slot/>
     </main>
     <Footer dark/>
     <script is:inline>

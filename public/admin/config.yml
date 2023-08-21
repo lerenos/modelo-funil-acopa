@@ -661,11 +661,9 @@ collections:
     summary: '{{title}} - (slug: {{fields.slug}})'
     slug: '{{fields.slug}}'
     fields:
-      - name: showForm
-        label: Exibe Formulário?
-        widget: boolean
-        required: false
-        default: true
+      - { name: 'slug', label: 'Slug da Página', widget: 'string', hint: 'Pedaço final da url na barra de endereços. Ex.: "metodo-x". Este campo não pode ser modificado após a criação da página. Se quiser modificar, duplique a página e exclua a antiga.' }
+      - { name: 'title', label: 'Título da Página', widget: 'string', default: "Entre no Grupo de Treinamento Gratuito | Sua Marca", hint: "Título que aparece na aba do navegador ou em compartilhamento da página" }
+      - { name: 'description', label: 'Metadescrição', widget: 'string', required: false, default: "Grupo de Treinamento Gratuito sobre X: essa é a melhor chance de ter um negócio sustentável e lucrativo.", hint: "Descrição da página. Texto que aparece em compartilhamentos, e pode auxiliar em mecanismos de busca. Ideal ficar abaixo de 160 caracteres." }
       - name: 'headline'
         label: 'Headline (Promessa)'
         widget: 'string'
@@ -690,9 +688,25 @@ collections:
         fields:
           - { name: 'src', widget: 'image', label: 'Imagem', required: false, default: '' }
           - { name: 'alt', widget: 'string', label: 'Texto Alternativo da Imagem', required: false, hint: 'Se em branco, o padrão é o texto da headline acima' }
-      - { name: 'slug', label: 'Slug da Página', widget: 'string', hint: 'Pedaço final da url na barra de endereços. Ex.: "metodo-x". Este campo não pode ser modificado após a criação da página. Se quiser modificar, duplique a página e exclua a antiga.' }
-      - { name: 'title', label: 'Título da Página', widget: 'string', default: "Entre no Grupo de Treinamento Gratuito | Sua Marca", hint: "Título que aparece na aba do navegador ou em compartilhamento da página" }
-      - { name: 'description', label: 'Metadescrição', widget: 'string', required: false, default: "Grupo de Treinamento Gratuito sobre X: essa é a melhor chance de ter um negócio sustentável e lucrativo.", hint: "Descrição da página. Texto que aparece em compartilhamentos, e pode auxiliar em mecanismos de busca. Ideal ficar abaixo de 160 caracteres." }
+      - name: showForm
+        label: Exibe Formulário?
+        widget: boolean
+        required: false
+        default: true
+      - name: cta
+        label: Call to Action
+        widget: object
+        fields:
+          - name: txt
+            widget: string
+            label: Chamada
+            default: "Quero fazer parte do Grupo de Treinamento"
+            hint: Se o formulário estiver ativo, essa chamada é o botão do formulário
+          - name: link
+            widget: string
+            label: Link de Redirecionamento
+            default: "/wa/group/"
+            hint: Link para o qual a pessoa será redirecionada após envio do form (ou após clicar no CTA, caso não haja form).
       - name: 'countdown'
         label: 'Contagem Regressiva no Início da Página?'
         widget: 'object'
@@ -706,6 +720,7 @@ collections:
       - name: subs
         label: Seções
         widget: list
+        required: false
         types:
           - name: "section"
             label: "Seção comum (Títulos, Corpo de Texto, Imagens)"
@@ -723,6 +738,7 @@ collections:
                   - { label: 'Esmeralda', value: "emerald" }
                   - { label: 'Azul', value: "corporate" }
                   - "light"
+                  - "darkLime"
                   - "cupcake"
                   - "synthwave"
                   - "retro"
@@ -786,6 +802,7 @@ collections:
                   - { label: 'Esmeralda', value: "emerald" }
                   - { label: 'Azul', value: "corporate" }
                   - "light"
+                  - "darkLime"
                   - "cupcake"
                   - "synthwave"
                   - "retro"
@@ -844,6 +861,7 @@ collections:
                   - { label: 'Esmeralda', value: "emerald" }
                   - { label: 'Azul', value: "corporate" }
                   - "light"
+                  - "darkLime"
                   - "cupcake"
                   - "synthwave"
                   - "retro"
@@ -887,6 +905,7 @@ collections:
           - { label: 'Esmeralda', value: "emerald" }
           - { label: 'Azul', value: "corporate" }
           - "light"
+          - "darkLime"
           - "cupcake"
           - "synthwave"
           - "retro"

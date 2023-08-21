@@ -1,5 +1,5 @@
 ---
-let { link, pos, ctaClass, primary, not, noMargin } = Astro.props
+let { link, pos, ctaClass, primary, not, noMargin, wfull } = Astro.props
 ---
 <cta-button data-link={link}>
 {not ?
@@ -7,15 +7,15 @@ let { link, pos, ctaClass, primary, not, noMargin } = Astro.props
         <slot>Saiba Mais</slot>
     </a>
 :
-<div class:list={[ctaClass,"text-center my-12 mx-auto max-w-sm"]}>
-    <div class="text-center my-4 relative group max-w-sm mx-auto">
+<div class:list={[ctaClass,"text-center my-12 mx-auto", (!wfull && "max-w-sm")]}>
+    <div class:list={["text-center my-4 relative group mx-auto",(!wfull && "max-w-sm")]}>
         <div class:list={["absolute -inset-1 rounded-[--rounded-btn] blur opacity-80 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse", (primary ? "bg-primary" : "bg-gradient-to-r from-green-500 to-teal-600")]}></div>
         <a href={link} class:list={["cta-curso relative btn btn-block h-fit text-lg md:text-xl border-0 font-bold",(primary ? "btn-primary" : "text-white bg-gradient-to-r from-green-500 to-green-700")]}>
             <div class="w-10/12 my-2"><slot>Saiba Mais</slot></div>
             <svg class="w-4 h-4 ml-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
         </a>
     </div>
-    <div set:html={pos} class="text-right font-medium text-sm uppercase max-w-sm"/>
+    <div set:html={pos} class:list={["text-right font-medium text-sm uppercase",(!wfull && "max-w-sm")]}/>
 </div>}
 </cta-button>
 <script>

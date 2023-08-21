@@ -58,6 +58,17 @@ module.exports = {
 				},
 			},
 			{
+				darkLime: {
+					...require("daisyui/src/colors/themes")["[data-theme=forest]"],
+					// "base-100": "#1e293b", //slate-800
+					"base-content":"white",
+					"primary":"#BFFF22",
+					"primary-content":"black",
+					"--rounded-btn": "0.5",
+					"--rounded-box": "0.5",
+				},
+			},
+			{
 				bumblebee: {
 					...require("daisyui/src/colors/themes")["[data-theme=bumblebee]"],
 					'primary':'#FFC820',
