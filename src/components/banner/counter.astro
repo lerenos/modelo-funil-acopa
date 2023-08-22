@@ -3,9 +3,9 @@ let {time} = Astro.props
 ---
 <count-down data-time={time}>
     <div class="text-center text-sm [&_span]:text-7xl flex gap-4 w-fit mx-auto">
-        <div class="w-24"><span id="h">__</span><br/> Horas</div>
-        <div class="w-24"><span id="m">__</span><br/> Min.</div>
-        <div class="w-24"><span id="s">__</span><br/> Seg.</div>
+        <div class="w-24"><span id="h"><span class="inline-block animate-pulse">•</span></span><br/> Horas</div>
+        <div class="w-24"><span id="m"><span class="inline-block animate-pulse">•</span></span><br/> Min.</div>
+        <div class="w-24"><span id="s"><span class="inline-block animate-pulse">•</span></span><br/> Seg.</div>
     </div>
 </count-down>
 <script>

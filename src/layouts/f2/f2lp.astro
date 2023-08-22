@@ -71,7 +71,7 @@ let roundedBorders=false
                 <h2 class="text-center text-3xl md:text-5xl font-black mb-12 md:mb-16" set:html={f.testimonials.title}/>
                 <div class="text-center mb-8"><Markdown of={f.testimonials.body}/></div>
                 <div class="flex gap-12 flex-wrap justify-center">
-                    {f.testimonials.list.map( p => 
+                    {f.testimonials?.list && f.testimonials.list.map( p => 
                         <Depoimento img={p.img} nome={p.author.name} subtitle={p.author.title} set:html={p.quote}/> 
                         )
                     }
