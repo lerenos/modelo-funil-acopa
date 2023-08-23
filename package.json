@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "astro dev",
+    "code": "astro dev --host 0.0.0.0",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview"
