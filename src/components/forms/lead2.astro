@@ -1,11 +1,11 @@
 ---
-let {link,cta} = Astro.props
+let {link,cta, fields, recaptcha} = Astro.props
 ---
-<form id="contato-simples" class="form-control gap-4 p-4 mb-4" method="POST" action={link} data-netlify="true" name="contato-simples" data-netlify-recaptcha="true">
-    <input name="name" type="text" placeholder="Primeiro Nome" class="input w-full" required/>
-    <input name="email" type="email" placeholder="Email" class="input w-full" required/>
-    <input name="tel" type="tel" placeholder="DDD + Número do Whatsapp" class="input w-full" required/>
-    <div data-netlify-recaptcha="true"></div>
+<form id="contato-simples" class="form-control gap-4 p-4 mb-4" method="POST" action={link} data-netlify="true" name="leads" data-netlify-recaptcha={recaptcha}>
+    <input name="name" type="text" placeholder="Primeiro Nome" required class="input w-full"/>
+    <input name="email" type="email" placeholder="Email" required class="input w-full"/>
+    <input name="tel" type="tel" placeholder="DDD + Número do Whatsapp" required class="input w-full"/>
+    {recaptcha && <div data-netlify-recaptcha="true"></div>}
     <button type="submit" class="btn btn-primary dark:btn-accent font-semibold" set:html={cta}/>
 </form>
 <script>

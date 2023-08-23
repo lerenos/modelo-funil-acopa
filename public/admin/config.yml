@@ -688,11 +688,13 @@ collections:
         fields:
           - { name: 'src', widget: 'image', label: 'Imagem', required: false, default: '' }
           - { name: 'alt', widget: 'string', label: 'Texto Alternativo da Imagem', required: false, hint: 'Se em branco, o padrão é o texto da headline acima' }
-      - name: showForm
-        label: Exibe Formulário?
-        widget: boolean
+      - name: form
+        label: Formulário de Captura de Leads
+        widget: object
         required: false
-        default: true
+        fields:
+          - { name: 'show', widget: 'boolean', label: 'Exibe Formulário?', default: true, required: false}
+          - { name: 'recaptcha', widget: 'boolean', label: 'Proteção Anti-Spam: Ativa recaptcha?', default: false, required: false}
       - name: cta
         label: Call to Action
         widget: object

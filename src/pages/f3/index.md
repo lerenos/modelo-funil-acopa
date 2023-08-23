@@ -12,7 +12,9 @@ subheadline: >-
   Preencha para entrar no **Grupo de Treinamento Gratuito:**
 img:
   src: /cms/540.webp
-showForm: true
+form:
+  show: true
+  recaptcha: false
 cta:
   txt: Quero fazer parte do Grupo de Treinamento
   link: /wa/group/
