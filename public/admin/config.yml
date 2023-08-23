@@ -940,7 +940,7 @@ collections:
     create: true
     delete: true
     preview: false
-    summary: '{{slug}} -> +{{fields.number}} : {{fields.msg}}'
+    summary: '{{fields.slug}} -> +{{fields.number}} : {{fields.msg}}'
     slug: '{{fields.slug}}'
     fields:
       - { name: 'slug', label: 'Slug da Página', widget: 'string', hint: 'Pedaço final da url na barra de endereços. Ex.: Se inserir "abc", você terá um link parecido com "seusite.com.br/wa/abc". Este campo não pode ser modificado após a criação da página. Se quiser modificar, duplique a página e exclua a antiga.' }
@@ -954,7 +954,7 @@ collections:
       - { name: 'draft',label: 'Rascunho?',  widget: 'boolean', required: false, hint: 'Ative este botão para *Modo Rascunho:* Esta página sai do ar, mas a informação continua aqui para você poder editar.' }
       - { name: 'title', label: 'Título da Página', widget: 'hidden', default: "Redirecionando para o Whatsapp", hint: "Título que aparece na aba do navegador ou em compartilhamento da página" }
       - { name: 'noindex', label: 'Proibir Indexação?', widget: 'hidden', default: true }
-      - { name: 'layout', widget: 'hidden', default: '@layouts/wa/groups.astro'}
+      - { name: 'layout', widget: 'hidden', default: '@layouts/wa/whats.astro'}
   - name: 'wagroups'
     label: 'WhatsApp - Link de Redirecionamento para Grupos'
     label_singular: 'WhatsApp - Link para Grupos'
@@ -962,7 +962,7 @@ collections:
     create: true
     delete: true
     preview: false
-    summary: '{{slug}} -> {{fields.link}}'
+    summary: '{{fields.slug}} -> {{fields.link}}'
     slug: '{{fields.slug}}'
     fields:
       - { name: 'slug', label: 'Slug da Página', widget: 'string', hint: 'Pedaço final da url na barra de endereços. Ex.: Se inserir "abc", você terá um link parecido com "seusite.com.br/wa/group/abc". Este campo não pode ser modificado após a criação da página. Se quiser modificar, duplique a página e exclua a antiga.' }
@@ -970,7 +970,7 @@ collections:
         label: 'Link para o Grupo'
         widget: 'string'
         pattern: ['^http', "Insira um link válido"]
-        default: "https://api.whatsapp.com/"
+        default: "https://chat.whatsapp.com/"
       - { name: 'draft',label: 'Rascunho?',  widget: 'boolean', required: false, hint: 'Ative este botão para *Modo Rascunho:* Esta página sai do ar, mas a informação continua aqui para você poder editar.' }
       - { name: 'title', label: 'Título da Página', widget: 'hidden', default: "Redirecionando para o Whatsapp", hint: "Título que aparece na aba do navegador ou em compartilhamento da página" }
       - { name: 'noindex', label: 'Proibir Indexação?', widget: 'hidden', default: true }

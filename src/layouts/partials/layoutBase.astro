@@ -2,9 +2,10 @@
 import BaseHead from '@layouts/partials/baseHead.astro'
 
 const props = (Astro.props.frontmatter || Astro.props.props ) || Astro.props
-let {tema = "dark", persist = false} = props
+let {persist = false} = props
 
 import {frontmatter as data} from 'src/siteInfo.md'
+let tema = props.tema || (data.tema || "dark")
 let lang = props.lang || (data.lang || "pt-BR")
 
 ---
