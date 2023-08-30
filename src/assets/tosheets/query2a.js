@@ -1,3 +1,8 @@
+/*
+Script para passar os parâmetros da URL da visita atual para todos os links da página
+Serve para qualquer página de qualquer sistema, é javascript puro
+*/
+
 //Pegue todos os parâmetros da URL da visita atual
 const newParams = new URLSearchParams(window.location.search) 
 
@@ -11,7 +16,7 @@ function addNewParams(el){
         newParams.forEach((value, key) => {params.append(key,value)}) 
         
         //Faz com que utm_tracker do link seja fbclid
-        params.set('utm_medium', newParams.get('fbclid') || params.get('utm_tracker'))
+        params.set('utm_tracker', newParams.get('fbclid') || params.get('utm_tracker'))
     
         url.search = params.toString()
         let hrefCta = url.toString() //Faz a url final

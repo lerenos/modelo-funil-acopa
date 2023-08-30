@@ -47,6 +47,8 @@ ldjson = ldjson || JSON.stringify({
   ]
 })
 
+import Tracking from '@components/tracking/tr.astro'
+
 ---
 
 <!-- Global Metadata -->
@@ -87,3 +89,5 @@ ldjson = ldjson || JSON.stringify({
 <!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet"> -->
+
+{!props.dontTrack && <Tracking/>}

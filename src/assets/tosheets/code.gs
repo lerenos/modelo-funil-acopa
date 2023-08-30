@@ -1,7 +1,7 @@
 // Original code from https://github.com/jamiewilson/form-to-google-sheets
 // Updated for 2021 and ES6 standards
 
-const sheetName = 'siteData'
+const sheetNameDefault = 'siteData'
 const scriptProp = PropertiesService.getScriptProperties()
 
 function initialSetup () {
@@ -15,6 +15,7 @@ function doPost (e) {
 
   try {
     const doc = SpreadsheetApp.openById(scriptProp.getProperty('key'))
+    const sheetName = e.parameter['sheetName'] || sheetNameDefault
     const sheet = doc.getSheetByName(sheetName)
 
     const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0]

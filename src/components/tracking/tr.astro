@@ -1,0 +1,8 @@
+---
+let META_PIXEL_ID = import.meta.env.PUBLIC_META_PIXEL_ID
+---
+<script src="@components/tracking/tr.js"></script>
+
+{META_PIXEL_ID && <noscript><img height="1" width="1" style="display:none"
+src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
+/></noscript>}
