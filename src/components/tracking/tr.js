@@ -1,4 +1,4 @@
-let GTM = false//import.meta.env.PUBLIC_GTM_ID
+let GTM = import.meta.env.PUBLIC_GTM_ID
 if(GTM){
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -40,7 +40,7 @@ let loadData = {
     fbp: fbp,
 }
 
-export function sendEvent(eventName,eventDetails={},metaObj={}){
+export async function sendEvent(eventName,eventDetails={},metaObj={}){
 
     //eventDetails = {name, email, phone, sheetName...}
 
@@ -59,7 +59,7 @@ export function sendEvent(eventName,eventDetails={},metaObj={}){
     let mergedJsonData = {...loadData, eventName, event_ID, ...eventDetails}
 
     //Send to our edge function (Meta Conversions API, Google Sheets, Mailchimp, some custom POST webhook...)
-    fetch('/sendevent', { 
+    return await fetch('/sendevent', { 
         method: "POST",
         body: JSON.stringify(mergedJsonData)
     })

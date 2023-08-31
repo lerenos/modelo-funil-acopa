@@ -694,7 +694,51 @@ collections:
         required: false
         fields:
           - { name: 'show', widget: 'boolean', label: 'Exibe Formulário?', default: true, required: false}
+          - name: inputs
+            widget: list
+            label: Campos
+            label_singular: Campo
+            collapsed: true
+            summary: '{{fields.type}} {{fields.name}} {{fields.placeholder}} {{fields.value}}'
+            fields:
+              - name: type
+                label: Tipo de Input
+                widget: select
+                default: text
+                options:
+                  - text
+                  - email
+                  - tel
+                  - url
+                  - number
+                  - textarea
+                  - hidden
+              - { name: 'name', label: 'Nome do campo', widget: 'string', default: "name", hint: "Identificação utilizada pelo sistema. Letras minúsculas, tudo junto, sem acentos. Não é exibido para o visitante, é de uso interno." }
+              - { name: 'placeholder', label: 'Placeholder', widget: 'string', default: "Primeiro Nome", hint: "Texto que fica no campo antes do visitante clicar" }
+              - { name: 'required', label: 'Campo Obrigatório?', widget: 'boolean', required: false }
+              - { name: 'minlength', label: 'Mínimo de Caracteres', widget: 'number', value_type: "int", default: 4, required: false}
+              - { name: 'maxlength', label: 'Máximo de Caracteres', widget: 'number', value_type: "int", required: false}
+              - { name: 'value', label: 'Valor Padrão', widget: 'string', required: false, hint: "Valor padrão do campo. Geralmente só é usado com campos ocultos (hidden)" }
+            default:
+              - { name: "name", type: "text", placeholder: "Primeiro Nome", required: true, minlength: 4 }
+              - { name: "email", type: "email", placeholder: "Email", required: true, minlength: 6 }
+              - { name: "tel", type: "tel", placeholder: "DDD + Número do Whatsapp (apenas números)", required: true, minlength: 8 }
           - { name: 'recaptcha', widget: 'boolean', label: 'Proteção Anti-Spam: Ativa recaptcha?', default: false, required: false}
+          - { name: 'sheetName', widget: 'string', label: 'Para qual aba da planilha do Google enviar?', hint: "Apenas se o link para o endpoint para a planilha estiver configurado na variável de ambiente SHEETS_ENDPOINT no painel na Netlify. Caso vazio, vai para a aba padrão de dados de eventos do site.", required: false}
+          - name: mailchimp
+            label: Integração com Mailchimp
+            required: false
+            widget: object
+            hint: Chave da API deve estar colada na variável de ambiente MAILCHIMP no painel da Netlify
+            fields:
+              - { name: 'audience', widget: 'string', label: 'Público', required: false}
+              - { name: 'tags', widget: 'list', label: 'Tags', required: false }
+          - { name: 'sendViaNetlify', widget: 'boolean', label: 'Envia pela Netlify Forms?', required: false, default: false, hint: 'limite de apenas 100 envios gratuitos por mês. Recomendo deixar desativado, a não ser que você queira muito alguma integração de lá (ou tenha plano pago da netlify).' }
+      - name: embed
+        label: Embed de Código (para formulário)
+        widget: code
+        hint: Muito cuidado ao colocar códigos que você não conhece. Não recomendo. Mas caso você queira colocar código de um formulário, aqui é o lugar.
+        required: false
       - name: cta
         label: Call to Action
         widget: object
@@ -901,6 +945,7 @@ collections:
         label: Tema da Página
         widget: 'select'
         required: false
+        default: 'darkLime'
         options:
           - { label: 'Dourado', value: "bumblebee" }
           - { label: 'Dark', value: "dark" }

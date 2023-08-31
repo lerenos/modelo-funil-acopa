@@ -1,12 +1,142 @@
 ---
-let {link,cta, fields, recaptcha} = Astro.props
+let {link,cta, form} = Astro.props
+
+let feedback = {
+    ok: {text:'Dados enviados!', after:''},
+    error: {text:'Ops! Houve algum erro na sua inscrição...', after:'Por favor verifique os campos ou fale conosco.'},
+    wait: {text:'Enviando...', after:''}
+}
+//
 ---
-<form id="contato-simples" class="form-control gap-4 p-4 mb-4" method="POST" action={link} data-netlify="true" name="leads" data-netlify-recaptcha={recaptcha}>
-    <input name="name" type="text" placeholder="Primeiro Nome" required class="input w-full"/>
-    <input name="email" type="email" placeholder="Email" required class="input w-full"/>
-    <input name="tel" type="tel" placeholder="DDD + Número do Whatsapp" required class="input w-full"/>
-    {recaptcha && <div data-netlify-recaptcha="true"></div>}
-    <button type="submit" class="btn btn-primary dark:btn-accent font-semibold" set:html={cta}/>
-</form>
+<lead-form data-action={link} data-ntl={form.sendViaNetlify}>
+    <form id="leads" name="leads" class="form-control gap-4 p-4 mb-4" method="POST" action={link} data-netlify="true" data-netlify-recaptcha={form.recaptcha}>
+        {form.sheetName && <input type="hidden" name="sheetName" value={form.sheetName}/>}
+        {form.mailchimp.audience && <input type="hidden" name="mailchimpAudience" value={form.mailchimp.audience}/>}
+        {form.mailchimp.tags && <input type="hidden" name="mailchimpTags" value={JSON.stringify(form.mailchimp.tags)}/>}
+
+        {form.inputs.map(f => <input type={f.type} name={f.name || f.type} placeholder={f.placeholder} required={f.required} minlength={f.minlength} maxlength={f.maxlength} value={f.value} class="input w-full" /> )}
+
+        {form.recaptcha && <div data-netlify-recaptcha="true"></div>}
+        <button type="submit" class="btn btn-primary dark:btn-accent font-semibold" set:html={cta}/>
+    </form>
+    <div id="feedback" class="max-w-screen-md mx-auto">
+        <div id="feedbackOk" class="hidden">
+            <div class="alert alert-success flex">
+                <div class="flex justify-between gap-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="inline stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span set:html={feedback.ok.text}/>
+                </div>
+            </div>
+            <p class="text-2xl my-4" set:html={feedback.ok.after}/>
+        </div>
+        <div id="feedbackError" class="hidden">
+            <div class="alert alert-error flex">
+                <div class="flex justify-between gap-4 ">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="inline stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span set:html={feedback.error.text}/>
+                </div>
+            </div>
+            <p class="text-2xl my-4" set:html={feedback.error.after}/>
+        </div>
+        <div id="feedbackWait" class="opacity-0 transition delay-[3000ms] duration-1000">
+            <div class="alert flex">
+                <div class="flex justify-between gap-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span set:html={feedback.wait.text} />
+                </div>
+            </div>
+            <p class="text-2xl my-4" set:html={feedback.wait.after}/>
+        </div>
+    </div>
+</lead-form>
 <script>
+import {sendEvent} from "@components/tracking/tr.js"
+class LeadForm extends HTMLElement {
+    constructor() {
+    super();
+
+    let redirectLink = this.dataset.action
+    let sendViaNetlify = this.dataset.ntl
+
+    let btn = this.querySelector("button")
+    let feedbackOk = this.querySelector('#feedbackOk')
+    let feedbackError = this.querySelector('#feedbackError')
+    let feedbackWait = this.querySelector('#feedbackWait')
+
+    this.querySelector("form")?.addEventListener('submit',async (e)=>{
+
+        e.preventDefault();
+        let FD = new FormData(e.target)
+        FD.set('phone',FD.get('tel'))
+
+        let jsonFormData = Object.fromEntries(FD.entries())
+
+        //botão carregando
+        btn.setAttribute('disabled','true')
+        btn.classList.toggle('btn-disabled')
+
+        let btnOriginalText = btn.innerHTML
+        btn.innerHTML="Enviando..."
+
+        if(!feedbackError.classList.contains('hidden')){feedbackError.classList.add('hidden')}
+        if(!feedbackOk.classList.contains('hidden')){feedbackOk.classList.add('hidden')}
+        feedbackWait.classList.remove('opacity-0')
+        feedbackWait.classList.remove('hidden')
+
+        sendEvent('Lead',jsonFormData).then(data => {
+            // volta a visibilidade inicial do botão 
+            btn.removeAttribute('disabled')
+            btn.classList.toggle('btn-disabled')
+
+            feedbackWait.classList.add('hidden')
+            feedbackWait.classList.add('opacity-0')
+            
+            feedbackOk.classList.remove('hidden')
+
+            if (sendViaNetlify){
+                fetch("/", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams(FD).toString(),
+                }).then(() => {
+                    btn.innerHTML=btnOriginalText
+                    window.location.href=redirectLink
+                })
+            }else{
+                btn.innerHTML=btnOriginalText
+                window.location.href=redirectLink
+            }
+
+        }).catch(e =>{
+            console.log("catch: "+e)
+            // volta a visibilidade inicial do botão 
+            btn.removeAttribute('disabled')
+            btn.classList.toggle('btn-disabled')
+
+            //esconde a seção de resultados
+            feedbackWait.classList.add('hidden')
+            feedbackWait.classList.add('opacity-0')
+
+            feedbackError.classList.remove('hidden')
+
+            if (sendViaNetlify){
+                fetch("/", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams(FD).toString(),
+                }).then(() => {
+                    btn.innerHTML=btnOriginalText
+                    window.location.href=redirectLink
+                })
+            }else{
+                btn.innerHTML=btnOriginalText
+                window.location.href=redirectLink
+            }
+
+        })
+    })
+
+    }
+}
+customElements.define('lead-form', LeadForm);
 </script>
