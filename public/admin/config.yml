@@ -225,6 +225,7 @@ collections:
           - "coffee"
           - "winter"
       - { name: 'noindex', label: 'Proibir Indexação?', widget: 'boolean', required: false, default: false, hint: 'Ative se quiser PROIBIR o Google e outros buscadores de mostrarem esta página nos resultados de pesquisa.' }
+      - { name: 'dontTrack', label: 'Não carregar módulo de Tracking para esta Página', widget: 'boolean', required: false, default: false, hint: 'Ative se quiser que não carreguemos os acionadores de eventos de rastreamento. Se essa opção for ativada, não serão mandados dados de enventos (como PageView, ViewContent e Lead) para sua planilha, Meta, Google ou qualquer serviço que você tenha configurado aqui globalmente no site. É útil quando você não tem interesse em qualquer tipo de estatística sobre esta página.' }
       - { name: 'draft',label: 'Rascunho?',  widget: 'boolean', required: false, default: false, hint: 'Ative este botão para *Modo Rascunho:* Esta página sai do ar, mas a informação continua aqui para você poder editar.' }
       - { name: 'layout', widget: 'hidden', default: '@layouts/lp.astro'}
   - name: 'f2lp'
@@ -515,6 +516,7 @@ collections:
           - "coffee"
           - "winter"
       - { name: 'noindex', label: 'Proibir Indexação?', widget: 'boolean', required: false, default: false, hint: 'Ative se quiser PROIBIR o Google e outros buscadores de mostrarem esta página nos resultados de pesquisa.' }
+      - { name: 'dontTrack', label: 'Não carregar módulo de Tracking para esta Página', widget: 'boolean', required: false, default: false, hint: 'Ative se quiser que não carreguemos os acionadores de eventos de rastreamento. Se essa opção for ativada, não serão mandados dados de enventos (como PageView, ViewContent e Lead) para sua planilha, Meta, Google ou qualquer serviço que você tenha configurado aqui globalmente no site. É útil quando você não tem interesse em qualquer tipo de estatística sobre esta página.' }
       - { name: 'draft',label: 'Rascunho?',  widget: 'boolean', required: false, default: false, hint: 'Ative este botão para *Modo Rascunho:* Esta página sai do ar, mas a informação continua aqui para você poder editar.' }
       - { name: 'layout', widget: 'hidden', default: '@layouts/f2/f2lp.astro'}
   - name: 'f2up'
@@ -649,6 +651,7 @@ collections:
           - "coffee"
           - "winter"
       - { name: 'noindex', label: 'Proibir Indexação?', widget: 'boolean', required: false, default: true, hint: 'Ative se quiser PROIBIR o Google e outros buscadores de mostrarem esta página nos resultados de pesquisa. **Padrão desta página: Ativado (ou seja, não queremos que o google indexe)**' }
+      - { name: 'dontTrack', label: 'Não carregar módulo de Tracking para esta Página', widget: 'boolean', required: false, default: false, hint: 'Ative se quiser que não carreguemos os acionadores de eventos de rastreamento. Se essa opção for ativada, não serão mandados dados de enventos (como PageView, ViewContent e Lead) para sua planilha, Meta, Google ou qualquer serviço que você tenha configurado aqui globalmente no site. É útil quando você não tem interesse em qualquer tipo de estatística sobre esta página.' }
       - { name: 'draft',label: 'Rascunho?',  widget: 'boolean', required: false, hint: 'Ative este botão para *Modo Rascunho:* Esta página sai do ar, mas a informação continua aqui para você poder editar.' }
       - { name: 'layout', widget: 'hidden', default: '@layouts/f2/f2up.astro'}
   - name: 'f3'
@@ -978,6 +981,7 @@ collections:
           - "coffee"
           - "winter"
       - { name: 'noindex', label: 'Proibir Indexação?', widget: 'boolean', required: false, default: false, hint: 'Ative se quiser PROIBIR o Google e outros buscadores de mostrarem esta página nos resultados de pesquisa.' }
+      - { name: 'dontTrack', label: 'Não carregar módulo de Tracking para esta Página', widget: 'boolean', required: false, default: false, hint: 'Ative se quiser que não carreguemos os acionadores de eventos de rastreamento. Se essa opção for ativada, não serão mandados dados de enventos (como PageView, ViewContent e Lead) para sua planilha, Meta, Google ou qualquer serviço que você tenha configurado aqui globalmente no site. É útil quando você não tem interesse em qualquer tipo de estatística sobre esta página.' }
       - { name: 'draft',label: 'Rascunho?',  widget: 'boolean', required: false, hint: 'Ative este botão para *Modo Rascunho:* Esta página sai do ar, mas a informação continua aqui para você poder editar.' }
       - { name: 'layout', widget: 'hidden', default: '@layouts/f3.astro'}
   - name: 'wa'
@@ -1001,6 +1005,7 @@ collections:
       - { name: 'draft',label: 'Rascunho?',  widget: 'boolean', required: false, hint: 'Ative este botão para *Modo Rascunho:* Esta página sai do ar, mas a informação continua aqui para você poder editar.' }
       - { name: 'title', label: 'Título da Página', widget: 'hidden', default: "Redirecionando para o Whatsapp", hint: "Título que aparece na aba do navegador ou em compartilhamento da página" }
       - { name: 'noindex', label: 'Proibir Indexação?', widget: 'hidden', default: true }
+      - { name: 'dontTrack', label: 'Não carregar módulo de Tracking para esta Página', widget: 'boolean', required: false, default: false, hint: 'Ative se quiser que não carreguemos os acionadores de eventos de rastreamento. Se essa opção for ativada, não serão mandados dados de enventos (como PageView, ViewContent e Lead) para sua planilha, Meta, Google ou qualquer serviço que você tenha configurado aqui globalmente no site. É útil quando você não tem interesse em qualquer tipo de estatística sobre esta página.' }
       - { name: 'layout', widget: 'hidden', default: '@layouts/wa/whats.astro'}
   - name: 'wagroups'
     label: 'WhatsApp - Link de Redirecionamento para Grupos'
@@ -1021,6 +1026,7 @@ collections:
       - { name: 'draft',label: 'Rascunho?',  widget: 'boolean', required: false, hint: 'Ative este botão para *Modo Rascunho:* Esta página sai do ar, mas a informação continua aqui para você poder editar.' }
       - { name: 'title', label: 'Título da Página', widget: 'hidden', default: "Redirecionando para o Whatsapp", hint: "Título que aparece na aba do navegador ou em compartilhamento da página" }
       - { name: 'noindex', label: 'Proibir Indexação?', widget: 'hidden', default: true }
+      - { name: 'dontTrack', label: 'Não carregar módulo de Tracking para esta Página', widget: 'boolean', required: false, default: false, hint: 'Ative se quiser que não carreguemos os acionadores de eventos de rastreamento. Se essa opção for ativada, não serão mandados dados de enventos (como PageView, ViewContent e Lead) para sua planilha, Meta, Google ou qualquer serviço que você tenha configurado aqui globalmente no site. É útil quando você não tem interesse em qualquer tipo de estatística sobre esta página.' }
       - { name: 'layout', widget: 'hidden', default: '@layouts/wa/groups.astro'}
   - name: "paginasesp"
     label: "Páginas Especiais"
