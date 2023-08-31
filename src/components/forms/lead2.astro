@@ -11,8 +11,8 @@ let feedback = {
 <lead-form data-action={link} data-ntl={form.sendViaNetlify}>
     <form id="leads" name="leads" class="form-control gap-4 p-4 mb-4" method="POST" action={link} data-netlify="true" data-netlify-recaptcha={form.recaptcha}>
         {form.sheetName && <input type="hidden" name="sheetName" value={form.sheetName}/>}
-        {form.mailchimp.audience && <input type="hidden" name="mailchimpAudience" value={form.mailchimp.audience}/>}
-        {form.mailchimp.tags && <input type="hidden" name="mailchimpTags" value={JSON.stringify(form.mailchimp.tags)}/>}
+        {form.mailchimp?.audience && <input type="hidden" name="mailchimpAudience" value={form.mailchimp?.audience}/>}
+        {form.mailchimp?.tags && <input type="hidden" name="mailchimpTags" value={JSON.stringify(form.mailchimp?.tags)}/>}
 
         {form.inputs.map(f => <input type={f.type} name={f.name || f.type} placeholder={f.placeholder} required={f.required} minlength={f.minlength} maxlength={f.maxlength} value={f.value} class="input w-full" /> )}
 
