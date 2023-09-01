@@ -12,7 +12,7 @@ social:
   github: ""
   facebook: ""
   linkedin: ""
-hideFooterLogo: true
+hideFooterLogo: false
 themeChanger: true
 ---
 <svg viewBox="0 0 44 14" class="dark:fill-white fill-black h-10" xmlns="http://www.w3.org/2000/svg">
