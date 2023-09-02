@@ -2,7 +2,7 @@
 import Layout from "@layouts/partials/layoutBase.astro"
 import Footer from "@layouts/partials/footer.astro"
 
-import { Markdown } from '@astropub/md'
+import { Markdown } from 'astro-remote'
 
 import Banner from "@components/banner/countdown.astro"
 
@@ -44,7 +44,7 @@ let roundedBorders=false
         <!-- Promessa, Título e Subpromessa -->
         <section id="headline" class="empty:hidden py-20 text-center [&>*]:md:mx-auto">
             <h1 class="md:max-w-screen-lg md:mx-auto text-2xl md:text-4xl font-bold dark:text-primary tracking-wide my-8 md:mb-12 empty:hidden" set:html={f.headline} />
-            {f.subheadline && <div class="md:max-w-screen-md text-2xl mb-4 md:mb-12 empty:hidden leading-relaxed"><Markdown of={f.subheadline}/></div>}
+            {f.subheadline && <div class="md:max-w-screen-md text-2xl mb-4 md:mb-12 empty:hidden leading-relaxed"><Markdown content={f.subheadline}/></div>}
         </section>
 
         {f.sec1?.subs && <section id="sec1" class:list={["text-center py-12 leading-relaxed [&_h2]:text-primary [&_h2]:text-2xl [&_h2]:md:text-3xl [&_h2]:font-black [&_h2]:my-4",(f.sec1.borderDashed && "border border-dashed")]}>
@@ -60,7 +60,7 @@ let roundedBorders=false
         {f.testimonials?.show &&
             <section id="proof" class="py-12 dark:[&_h2]:text-primary">
                 <h2 class="text-center text-3xl md:text-5xl font-black mb-12 md:mb-16" set:html={f.testimonials.title}/>
-                <div class="text-center mb-8"><Markdown of={f.testimonials.body}/></div>
+                <div class="text-center mb-8"><Markdown content={f.testimonials.body}/></div>
                 <div class="flex gap-12 flex-wrap justify-center">
                     {f.testimonials?.list && f.testimonials.list.map( p => 
                         <Depoimento img={p.img} nome={p.author.name} subtitle={p.author.title} set:html={p.quote}/> 

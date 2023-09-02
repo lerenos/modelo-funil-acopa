@@ -2,7 +2,7 @@
 import Layout from "@layouts/partials/layoutBase.astro"
 import Footer from "@layouts/partials/footer.astro"
 
-import { Markdown } from '@astropub/md'
+import { Markdown } from 'astro-remote'
 
 import Banner from "@components/banner/countdown.astro"
 
@@ -69,7 +69,7 @@ let roundedBorders=false
         <!-- O que você vai apreneder? -->
         <section id="what" class="text-center py-12 leading-relaxed [&>p]:mb-6 md:max-w-screen-md md:mx-auto [&_img]:rounded-sm [&_img]:shadow-lg hover:[&_img]:scale-105 [&_img]:duration-500 [&_img]:my-8 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:list-inside [&_li::marker]:font-bold dark:[&_h2]:text-primary [&_h2]:text-3xl [&_h2]:md:text-5xl [&_h2]:font-black [&_h2]:mt-12 [&_h2]:mb-4">
             <h2 set:html={f.what.title}/>
-            <Markdown of={f.what.body}/>
+            <Markdown content={f.what.body}/>
         </section>
         
         <!-- Learning Outcomes -->

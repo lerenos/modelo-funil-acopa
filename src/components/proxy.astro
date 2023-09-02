@@ -1,5 +1,5 @@
 ---
-import { Markdown } from '@astropub/md'
+import { Markdown } from 'astro-remote'
 
 import Banner from "@components/banner/countdown.astro"
 
@@ -20,7 +20,7 @@ let { p, cta, link, primary } = Astro.props
 {p.type=="section" && 
     <div class:list={["py-8 [&_img]:rounded-[--rounded-box] [&_img]:shadow-lg hover:[&_img]:scale-105 [&_img]:duration-500 [&_img]:my-8 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:list-inside [&_li::marker]:font-bold ", (p.divider?.show && "border-b"), (p.divider?.color=="primary" && "border-b-primary")]}>
         <h2 set:html={p.title}/>
-        <Markdown of={p.body}/>
+        <Markdown content={p.body}/>
     </div>
 }
 
