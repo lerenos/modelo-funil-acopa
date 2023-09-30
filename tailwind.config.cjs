@@ -17,14 +17,41 @@ module.exports = {
 				  '0%': { transform: 'translateX(-100%)' },
 				  '100%': { transform: 'translateX(0)' },
 				},
+				'in-by-right': {
+				  '0%': { transform: 'translateX(100%)' },
+				  '100%': { transform: 'translateX(0)' },
+				},
 				'fade-in': {
 					'0%': { opacity: 0 },
 					'100%': { opacity: 1 },
 				},
+				'floating':{
+					'0%, 100%': { 
+						transform: 'translateY(0)',
+					},
+					'50%': { 
+						transform: 'translateY(-3%)',
+					}
+				},
+				'floating-shadow': {
+					'0%, 100%': { 
+						transform: 'scale(1)',
+						opacity: 1,
+						'box-shadow': '0 20px 20px 1px rgba(0,0,0,0.7)'
+					},
+					'50%': { 
+						transform: 'scale(0.8)',
+						opacity: 0.5,
+						'box-shadow': '0 20px 20px 1px rgba(0,0,0,0.5)' 
+					},
+				}
 			},
 			animation: {
-				'in-by-left': 'in-by-left 3s ease-out',
-				'fade-in': 'fade-in 2s ease-out'
+				'in-by-left': 'in-by-left 2s ease-out',
+				'in-by-right': 'in-by-right 2s ease-out',
+				'fade-in': 'fade-in 2s ease-out',
+				'floating': 'floating 3s ease-in-out infinite',
+				'floating-shadow': 'floating-shadow 3s ease-in-out infinite'
 			},
 		},
 	},
@@ -66,6 +93,17 @@ module.exports = {
 					"primary-content":"black",
 					"--rounded-btn": "0.5",
 					"--rounded-box": "0.5",
+				},
+			},
+			{
+				darkYellow: {
+					...require("daisyui/src/colors/themes")["[data-theme=forest]"],
+					// "base-100": "#1e293b", //slate-800
+					"base-content":"white",
+					"primary":"#FFC820",
+					"primary-content":"black",
+					"--rounded-btn": "0",
+					"--rounded-box": "0",
 				},
 			},
 			{

@@ -1,0 +1,11 @@
+---
+import { Markdown } from 'astro-remote'
+import Cta from "@components/cta.astro"
+
+let { title, titleSize, body, cta } = Astro.props
+
+let h2size = titleSize ? `text-${titleSize==1 ? '' :titleSize}xl md:text-${titleSize+1}xl`: "text-2xl md:text-3xl"
+---
+{title && <h2 set:html={title} class:list={["text-primary", h2size]}/>}
+{body && <div class="prose-xl"><Markdown content={body}/></div>}
+{cta?.text && <Cta type={cta.type} link={cta.link} set:html={cta.text} pos={cta.auxText} />}

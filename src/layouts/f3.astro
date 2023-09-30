@@ -5,7 +5,7 @@ import Footer from "@layouts/partials/footer.astro"
 import { Markdown } from 'astro-remote'
 
 import Banner from "@components/banner/countdown.astro"
-import ProxyElement from "@components/proxy.astro"
+import ProxySection from "@components/proxy.astro"
 
 import Depoimento from "@components/cards/depoimento.astro"
 import Card from "@components/cards/main.astro"
@@ -21,6 +21,7 @@ import Form from "@components/forms/lead2.astro"
 
 //General Site Information
 import {frontmatter as siteInfo} from 'src/siteInfo.md'
+import { imageConfig } from "astro:assets"
 let { tema } = siteInfo
 
 let f = Astro.props.frontmatter
@@ -28,35 +29,38 @@ f.tema = f.tema || tema
 
 let {showLogo, showTitle, showDesc} = f
 
+let h1size = f.headline?.style?.size ? `text-${f.h1size==1 ? '' :f.headline?.style?.size}xl md:text-${f.headline?.style?.size+1}xl`: "text-4xl"
+
 // img 540x540
 // sec max 1080
 ---
 <Layout props={f}>
-<main class="text-xl [&_section]:px-4 min-h-screen">
+<main class="text-xl min-h-screen">
 
     {f.countdown.show &&
         <Banner title={f.countdown.title} text={f.countdown.text} time={f.countdown.time}/>
     }
 
-    <section class="grid place-content-center py-12">
-        <div class="grid place-content-center items-center md:grid-cols-2 gap-4 md:gap-8 max-w-screen-xl">
-            <div class="prose prose-neutral dark:prose-invert">
-                <h1 set:html={f.headline} class="text-primary font-bold"/>
-                <Markdown content={f.subheadline}/>
-                {f.form?.show ? <Form cta={f.cta.txt} link={f.cta.link} form={f.form} /> : <Cta wfull primary link={f.cta.link} set:html={f.cta.txt}/>}
+    <section class="grid place-content-center py-12 px-4">
+        <div class:list={["grid place-content-center items-center gap-4 md:gap-8 max-w-screen-xl",(f.img?.src ? 'md:grid-cols-2': 'text-center')]}>
+            <div class:list={["pt-8", (f.img?.src ? 'prose prose-neutral dark:prose-invert mx-auto': 'text-center') ]}>
+                <h1 set:html={f.headline.text} class:list={["text-primary mb-8", h1size, (f.headline?.style?.weight || "font-bold")]}/>
+                <div class="prose prose-neutral dark:prose-invert mx-auto">
+                    <Markdown content={f.subheadline}/>
+                    {f.form?.show ? (f.form?.embed?.code ? <div set:html={f.form?.embed?.code} /> : <Form cta={f.cta.txt} link={f.cta.link} form={f.form}/>) : <Cta wfull primary link={f.cta.link} set:html={f.cta.txt}/>}
+                </div>
             </div>
-            <div class="grid place-content-center">
-                <img src={f.img.src} alt={f.img.alt || f.headline} />
-            </div>
+            {f.img?.src && <div class="grid place-content-center">
+                <img src={f.img.src} alt={f.img.alt || f.headline.text} class:list={["w-full duration-1000 hover:scale-105", f.img?.animation ]} />
+                {f.img?.animation=="animate-floating" && <div class="w-5/12 mx-auto animate-floating-shadow"></div>}
+            </div>}
         </div>
     </section>
 
-    <div>
-        {f.subs && 
-            <section id="sec" class="text-center py-12 leading-relaxed [&_p]:mb-6 dark:[&_h2]:text-primary [&_h2]:text-2xl [&_h2]:md:text-3xl [&_h2]:font-black [&_h2]:my-4">
-                {f.subs?.map( s => <ProxyElement p={s} cta={f.cta.txt} link="#" primary/>)}
-            </section>}
-    </div>
+    {f.subs && 
+        <div id="secs" class="leading-relaxed [&_p]:mb-6 [&_h2]:my-4 [&_h2]:font-bold">
+            {f.subs?.map( s => <ProxySection p={s} cta={f.cta.txt} link="#" primary/> )}
+        </div>}
 
 </main>
 <Footer dark/>

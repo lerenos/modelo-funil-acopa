@@ -78,7 +78,7 @@ let roundedBorders=false
                 <h2 class="text-primary text-3xl md:text-5xl font-black mb-12" set:html={f.outcomes.title}/>
                 <div class="flex flex-wrap justify-center divide-y divide-base-content bg-black text-white">
                     {f.outcomes.list.map( (b,i) => 
-                        <Card noShadow transparent wfull icon>
+                        <Card noShadow transparent wfull icon icon={{"select":"checkmark"}}>
                             <Fragment slot="h3">{b}</Fragment>
                         </Card> 
                         )
@@ -93,7 +93,7 @@ let roundedBorders=false
             <h2 class="text-center text-3xl md:text-5xl font-black mb-12" set:html={f.who.title}/>
             <div class="flex gap-12 flex-wrap justify-center text-center">
                 {f.who.list.map( (b,i) => 
-                    <Card {roundedBorders} icon="person">
+                    <Card {roundedBorders} icon={{"select":"person"}} >
                         <Fragment slot="h3">{b}</Fragment>
                     </Card> 
                     )

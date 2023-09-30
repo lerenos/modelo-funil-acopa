@@ -1,0 +1,40 @@
+---
+import { Markdown } from 'astro-remote'
+import Subsection from '@components/subsection.astro'
+
+import Banner from "@components/banner/countdown.astro"
+
+import Depoimento from "@components/cards/depoimento.astro"
+import Card from "@components/cards/main.astro"
+import CardN from "@components/cards/numberH3.astro"
+import Offer from "@components/cards/offer3.astro"
+
+import garantia from "@assets/garantia.webp"
+import garantia15 from "@assets/garantia15dias.webp"
+
+import Cta from "@components/cta.astro"
+import Nao from "@components/btnGhost.astro" //up
+
+let { p, cta, link, primary, wfull, alignContent } = Astro.props
+
+let h2size = p.titleSize ? `text-${p.titleSize==1 ? '' :p.titleSize}xl md:text-${p.titleSize+1}xl`: "text-2xl md:text-3xl"
+
+---
+
+{p.type=="card" && 
+    <Card emoji={p.icon.emoji} icon={p.icon} borderIcon={p.icon.borderIcon} etiqueta={p.etiqueta} roundedBorders={p.style?.roundedBorders} noShadow={p.style?.noShadow} transparent={p.style?.transparent} wfull={p.style?.wfull} align={alignContent} >
+        <Fragment slot="h3">{p.title}</Fragment>
+        <>{p.text}</>
+    </Card>
+}
+
+{p.type=="testimonial" && <Depoimento img={p.img} nome={p.author.name} subtitle={p.author.title}>{p.quote}</Depoimento>}
+
+{p.type=="offer" && <Offer content={p} tema={p.tema} featured={p.destaque} wfull={p.style?.wfull} hidePriceFrom={p.hidePriceFrom} roundedBorders={p.style?.roundedBorders} shadow={p.style?.shadow} transparent={p.style?.transparent} cardClass="my-4" />}
+
+{p.type=="img" && <img src={p.src} alt={p.alt} />}
+
+{p.type=="cta" && <Cta {primary} link={p.link || link} pos={p.auxCta} set:html={p.cta || cta}/>}
+
+{p.type=="titleBodyCta" && <Subsection title={p.title} titleSize={p.titleSize} body={p.body} {cta} />}
+

@@ -1,7 +1,9 @@
 ---
-let {emoji, h3size, etiqueta, precoDe, precoPor, roundedBorders, noShadow, transparent, wfull, icon, borderIcon} = Astro.props
+let {emoji, h3size, etiqueta, precoDe, precoPor, roundedBorders, noShadow, transparent, wfull, icon, borderIcon, align} = Astro.props
 
 let iconHtml = emoji
+
+let iconAlign = (align?.includes('center') || icon?.align?.includes('center') || icon?.alignCenter) ? 'center' : null
 
 let h3Html = ""
 if (Astro.slots.has('h3')) {
@@ -22,19 +24,48 @@ import Person from "@assets/icons/personCheck.astro";
 
 let Icon
 switch (icon) {
+    case "checkmark":
+        Icon = Check
+        break;
     case "person":
         Icon = Person
         break;
-    default: Icon = Check
+    default: 
         break;
 }
 
-
+let iconType = icon?.select
 ---
-<div class:list={["w-full p-8 dark:text-white hover:scale-105 hover:shadow-4xl duration-500", (roundedBorders ? "rounded-3xl":""), (noShadow ? "":"shadow-2xl"), (transparent ? "":"bg-base-100 rounded-[--rounded-box]"), (wfull ? "max-w-screen-lg" : "max-w-sm")]}>
-    {etiqueta && <div class="badge badge-success gap-2 float-right" set:html={etiqueta}/>}
-    {icon && <div class:list={["text-primary fill-primary w-fit mx-auto",(borderIcon && "p-8 bg-primary/5 rounded-full border-primary border-4 [&>svg]:w-16 [&>svg]:h-16")]}><Icon/></div>}
-    <p class="text-3xl mb-4" set:html={iconHtml}/>
+<div class:list={["w-full p-8 dark:text-white hover:scale-105 hover:shadow-4xl duration-500", etiqueta && "relative", ((roundedBorders && !transparent) ? "rounded-3xl":"rounded-[--rounded-box]"), (noShadow ? "":"shadow-2xl shadow-base-300"), (transparent ? "":"bg-transparent"), (wfull ? "max-w-screen-lg" : "max-w-sm")]}>
+    {etiqueta && <div class="badge badge-success absolute top-3 right-4" set:html={etiqueta}/>}
+    {borderIcon ? <div class:list={["text-primary fill-primary w-fit my-4 bg-primary/5 rounded-full border-primary border-4",(icon.select=="img"?"aspect-square":"[&>*]:w-16 [&>*]:h-16 p-8"),(iconAlign=="center" ? "mx-auto" : "inline-block" )]}>
+        {(() => {
+        switch(iconType) {
+          case 'checkmark':
+            return <Check/>
+          case 'person':
+            return <Person />
+          case 'img':
+            return <img src={icon.img} alt="Card Icon" class="object-cover w-32 h-32 rounded-full"/>
+          default:
+            return <div class="text-3xl grid place-items-center text-center leading-none" set:html={iconHtml}/>
+        }
+        })()}
+    </div> : <div class:list={["mt-4 mb-2 text-primary",(iconAlign=="center" ? "w-fit mx-auto" : "inline-block")]}>
+        {(() => {
+        switch(iconType) {
+          case 'checkmark':
+            return <Check/>
+          case 'person':
+            return <Person />
+          case 'img':
+            return <img src={icon.img} alt="Card Icon" height="128" class="object-cover h-32"/>
+          default:
+            return <p class="text-3xl leading-none mb-0" set:html={iconHtml}/>
+        }
+        })()}
+    </div>
+}
     <h3 class={h3class} set:html={h3Html}/>
     <p><slot/></p>
     {precoPor &&

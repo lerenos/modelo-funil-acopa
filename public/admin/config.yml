@@ -1,21 +1,468 @@
-# local_backend: true
+local_backend: true
 backend:
-  name: git-gateway
-  # name: proxy
-  # proxy_url: http://localhost:8081/api/v1
+  # name: git-gateway
+  name: proxy
+  proxy_url: http://localhost:8081/api/v1
   branch: main
 locale: pt
 # publish_mode: editorial_workflow
 media_folder: 'public/cms'
 public_folder: '/cms/'
+editor:
+     preview: false
 collections:
   - name: 'lp'
-    label: 'LPs'
+    label: 'Landing Pages'
     label_singular: 'LP'
-    folder: 'src/pages/lp'
+    folder: 'src/pages/lp/'
     create: true
     delete: true
-    preview: false
+    summary: '{{title}} - (slug: {{fields.slug}})'
+    slug: '{{fields.slug}}'
+    fields:
+      - { name: 'slug', label: 'Slug da Página', widget: 'string', hint: 'Pedaço final da url na barra de endereços. Ex.: "metodo-x". Este campo não pode ser modificado após a criação da página. Se quiser modificar, duplique a página e exclua a antiga.' }
+      - { name: 'title', label: 'Título da Página', widget: 'string', default: "Entre no Grupo de Treinamento Gratuito | Sua Marca", hint: "Título que aparece na aba do navegador ou em compartilhamento da página" }
+      - { name: 'description', label: 'Metadescrição', widget: 'string', required: false, default: "Grupo de Treinamento Gratuito sobre X: essa é a melhor chance de ter um negócio sustentável e lucrativo.", hint: "Descrição da página. Texto que aparece em compartilhamentos, e pode auxiliar em mecanismos de busca. Ideal ficar abaixo de 160 caracteres." }
+      - name: 'headline'
+        label: 'Headline (Promessa)'
+        widget: 'object'
+        required: false
+        fields:
+          - name: text
+            label: Texto
+            widget: string
+            hint: "Caso queira, você consegue formatar partes do texto envolvendo com as tags **<strong>**, *<em>* e <u>. Quebra de linha com <br>."
+            default: "Essa pode ser sua melhor chance de conseguir Viver do Digital"
+          - name: style
+            label: Opções de Estilo
+            widget: object
+            collapsed: true
+            fields:
+              - {name: 'size', label: 'Tamanho do Título', widget: 'number', default: 2, value_type: "int", min: 1, max: 8, required: false, hint: "Escolha um número de 1 a 7" }
+              - name: weight
+                label: Espessura
+                widget: select
+                default: "font-semibold"
+                required: false
+                options:
+                  - { label: '100', value: "font-thin" }
+                  - { label: '200', value: "font-extralight" }
+                  - { label: '300', value: "font-light" }
+                  - { label: '400', value: "font-normal" }
+                  - { label: '500', value: "font-medium" }
+                  - { label: '600', value: "font-semibold" }
+                  - { label: '700', value: "font-bold" }
+                  - { label: '800', value: "font-extrabold" }
+                  - { label: '900', value: "font-light" }
+      - name: 'subheadline'
+        label: 'Sub headline (Reforço da Promessa)'
+        widget: 'markdown'
+        required: false
+        minimal: true
+        hint: "Chame para fazer a inscrição."
+        default: "De todos os negócios digitais que eu tentei, fazer X **foi o caminho que me
+            deu resultados mais expressivos, estáveis e escaláveis.**
+
+
+            Preencha para entrar no **Grupo de Treinamento Gratuito:**"
+      - name: img
+        label: Imagem Principal
+        required: false
+        widget: object
+        fields:
+          - { name: 'src', widget: 'image', label: 'Imagem', required: false, default: '/cms/540.webp' }
+          - { name: 'alt', widget: 'string', label: 'Texto Alternativo da Imagem', required: false, hint: 'Se em branco, o padrão é o texto da headline acima' }
+          - name: animation
+            label: Animação da Imagem
+            widget: select
+            required: false
+            options:
+              - { label: 'Fade In', value: animate-fade-in }
+              - { label: 'Entrar pela Direita', value: animate-in-by-right }
+              - { label: 'Flutuação', value: animate-floating }
+      - name: form
+        label: Formulário de Captura de Leads
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { name: 'show', widget: 'boolean', label: 'Exibe Formulário?', default: true, required: false}
+          - name: inputs
+            widget: list
+            label: Campos
+            label_singular: Campo
+            collapsed: true
+            summary: '{{fields.type}} {{fields.name}} {{fields.placeholder}} {{fields.value}}'
+            fields:
+              - name: type
+                label: Tipo de Input
+                widget: select
+                default: text
+                options:
+                  - text
+                  - email
+                  - tel
+                  - url
+                  - number
+                  - textarea
+                  - hidden
+              - { name: 'name', label: 'Nome do campo', widget: 'string', default: "name", hint: "Identificação utilizada pelo sistema. Letras minúsculas, tudo junto, sem acentos. Não é exibido para o visitante, é de uso interno." }
+              - { name: 'placeholder', label: 'Placeholder', widget: 'string', default: "Primeiro Nome", hint: "Texto que fica no campo antes do visitante clicar" }
+              - { name: 'required', label: 'Campo Obrigatório?', widget: 'boolean', required: false }
+              - { name: 'minlength', label: 'Mínimo de Caracteres', widget: 'number', value_type: "int", default: 4, required: false}
+              - { name: 'maxlength', label: 'Máximo de Caracteres', widget: 'number', value_type: "int", required: false}
+              - { name: 'value', label: 'Valor Padrão', widget: 'string', required: false, hint: "Valor padrão do campo. Geralmente só é usado com campos ocultos (hidden)" }
+            default:
+              - { name: "name", type: "text", placeholder: "Primeiro Nome", required: true, minlength: 4 }
+              - { name: "email", type: "email", placeholder: "Email", required: true, minlength: 6 }
+              - { name: "tel", type: "tel", placeholder: "DDD + Número do Whatsapp (apenas números)", required: true, minlength: 8 }
+          - { name: 'recaptcha', widget: 'boolean', label: 'Proteção Anti-Spam: Ativa recaptcha?', default: false, required: false}
+          - { name: 'sheetName', widget: 'string', label: 'Para qual aba da planilha do Google enviar?', hint: "Apenas se o link para o endpoint para a planilha estiver configurado na variável de ambiente SHEETS_ENDPOINT no painel na Netlify. Caso vazio, vai para a aba padrão de dados de eventos do site.", required: false}
+          - name: mailchimp
+            label: Integração com Mailchimp
+            required: false
+            widget: object
+            collapsed: true
+            hint: Chave da API deve estar colada na variável de ambiente MAILCHIMP no painel da Netlify
+            fields:
+              - { name: 'audience', widget: 'string', label: 'Público', required: false}
+              - { name: 'tags', widget: 'list', label: 'Tags', required: false }
+          - { name: 'sendViaNetlify', widget: 'boolean', label: 'Envia pela Netlify Forms?', required: false, default: false, hint: 'limite de apenas 100 envios gratuitos por mês. Recomendo deixar desativado, a não ser que você queira muito alguma integração de lá (ou tenha plano pago da netlify).' }
+          - name: embed
+            label: Embed de Código (para formulário)
+            widget: code
+            default_language: html
+            hint: Muito cuidado ao colocar códigos que você não conhece. Não recomendo. Mas caso você queira colocar código de um formulário, aqui é o lugar.
+            required: false
+      - name: cta
+        label: Call to Action
+        widget: object
+        fields:
+          - name: txt
+            widget: string
+            label: Chamada
+            default: "Quero fazer parte do Grupo de Treinamento"
+            hint: Se o formulário estiver ativo, essa chamada é o botão do formulário
+          - name: link
+            widget: string
+            label: Link de Redirecionamento
+            default: "/wa/group/"
+            hint: Link para o qual a pessoa será redirecionada após envio do form (ou após clicar no CTA, caso não haja form).
+      - name: 'countdown'
+        label: 'Contagem Regressiva no Início da Página?'
+        widget: 'object'
+        collapsed: true
+        required: false
+        fields:
+          - { name: 'show', widget: 'boolean', label: 'Exibe Contagem regressiva?', default: false, required: false}
+          - { name: 'title', widget: 'string', label: 'Título acima da contagem', default: "- inscrições só até T -"}
+          - { name: 'time', widget: 'datetime', label: 'Data e Hora da Contagem Regressiva', date_format: "DD/MM/YYYY", time_format: HH:mm, format: "LLL", default: '', required: false, hint: "Padrão: 23:59:59 do mesmo dia em que a página está sendo visitada."}
+          - { name: 'text', widget: 'string', label: 'Texto logo abaixo da contagem', required: false, default: ""}
+      - name: subs
+        label: Seções
+        widget: list
+        required: false
+        types:
+          - name: "section"
+            label: "Seção"
+            widget: object
+            summary: '{{fields.title}} {{fields.body}}'
+            fields:
+              - { name: 'title', label: 'Título da Seção', widget: 'string', default: "Título desta Seção", required: false, hint: "Este título terá a cor primária. Se quiser com a cor normal, deixe este campo em branco e coloque o título no corpo do texto" }
+              - { name: 'titleSize', label: 'Tamanho do Título', widget: 'number', default: 2, value_type: "int", min: 1, max: 8, required: false, hint: "Escolha um número de 1 a 7" }
+              - { name: 'body', label: 'Texto Longo', widget: 'markdown', required: false,  minimal: true, default: 'Texto Longo, aceita Markdown e Imagens. <u>Para sublinhar, envolva com as tags "u"</u>' }
+              - name: cols
+                label: Colunas
+                label_singular: Coluna
+                widget: list
+                required: false
+                types:
+                  - name: card
+                    label: Card
+                    widget: object
+                    summary: '{{fields.title}} - {{fields.text}}'
+                    fields:
+                      - name: icon
+                        label: Ícone ao topo do card
+                        widget: object
+                        required: false
+                        fields:
+                          - name: select
+                            label: Escolha uma das opções
+                            widget: select
+                            required: false
+                            options:
+                            - { label: 'Ícone de Checkmark ✓', value: checkmark }
+                            - { label: 'Ícone de Pessoa e Checkmark', value: person }
+                            - { label: 'Emoji, Número ou Letra', value: emoji }
+                            - { label: 'Imagem personalizada', value: img }
+                          - name: emoji
+                            widget: string
+                            required: false
+                            label: Emoji, Número ou Letra
+                            hint: Recomendado ser um emoji ou um número (apesar de ser possível inserir qualquer texto).
+                            default: 🚀
+                          - {label: Imagem Personalizada, name: img, widget: image, required: false, hint: "Não recomendado, tente usar um emoji. Mas se realmente for o caso, perfira utilizar um arquivo svg"}
+                          - {name: "borderIcon", label: "Borda redonda envolvendo o Ícone?", widget: "boolean", required: false, default: false}
+                          - name: alignCenter
+                            label: Alinhar ao Centro?
+                            widget: boolean
+                            required: false
+                            default: false
+                            hint: Se ativado, força alinhamento ao centro, mesmo que o alinhamento da seção seja diferente.
+                      - {name: "title", label: "title", widget: "string", required: false, default: "Título do Conteúdo"}
+                      - {name: "text", label: "text", widget: "text", required: false, default: "Texto do Card, explicando rapidamente o tópico. Acima há um emoji ou um ícone"}
+                      - {name: "etiqueta", label: "Tag na parte superior direita", widget: "string", required: false}
+                      - name: style
+                        label: Opções de Estilo
+                        widget: object
+                        collapsed: true
+                        fields:
+                          - {name: "wfull", label: "Card de Largura Máxima?", widget: "boolean", required: false, default: false}
+                          - {name: "roundedBorders", label: "Cantos arredondados?", widget: "boolean", required: false, default: false, hint: "Força campos arredondados, apesar do padrão do tema"}
+                          - {name: "noShadow", label: "Remove sombra?", widget: "boolean", required: false, default: false}
+                          - {name: "transparent", label: "Background Transparente?", widget: "boolean", required: false, default: false}
+                  - name: offer
+                    label: Oferta
+                    widget: object
+                    summary: 'Oferta: R$ {{fields.price}} - {{fields.title}}'
+                    fields:
+                      - { name: 'price', widget: 'string', label: 'Preço', default: 10, required: false}
+                      - { name: 'beforePrice', widget: 'string', label: 'Texto antes do Preço', default: R$, required: false }
+                      - { name: 'title', widget: 'string', label: 'Título da oferta', default: "Acesso Comum", required: false}
+                      - { name: 'text', widget: 'string', label: 'Texto após Título', default: "Pagamento Único", required: false}
+                      - { name: 'link', widget: 'string', label: 'Link do Botão', required: false, default: "https://acopa.com.br/lp/?utm_source=modelo-funil", hint: 'https://...' }
+                      - { name: 'cta', widget: 'string', label: 'Texto do Botão', default: "Clique aqui para liberar o seu acesso" }
+                      - { name: "destaque", label: "Oferta Destaque?", widget: "boolean", required: false, default: false}
+                      - name: 'checkmarks'
+                        label: 'Benefícios'
+                        label_singular: 'Benefício'
+                        widget: 'list'
+                        required: false
+                        summary: '{{fields.item}}'
+                        field: {name: "item", label: "item", widget: "string", required: false, default: "Acesso Vitalício"}
+                      - name: style
+                        label: Opções de Estilo
+                        widget: object
+                        collapsed: true
+                        fields:
+                          - {name: "wfull", label: "Card de Largura Máxima?", widget: "boolean", required: false, default: false}
+                          - {name: "roundedBorders", label: "Cantos arredondados?", widget: "boolean", required: false, default: false, hint: "Força campos arredondados, apesar do padrão do tema"}
+                          - {name: "shadow", label: "Sombra?", widget: "boolean", required: false, default: false}
+                          - {name: "transparent", label: "Background Transparente?", widget: "boolean", required: false, default: false}
+                  - name: testimonial
+                    label: "Depoimento"
+                    widget: "object"
+                    required: false
+                    summary: '{{fields.quote}} - {{fields.author.name}}'
+                    hint: "Pergunte aos seus alunos: eu consegui te ajudar em alguma coisa? Se sim, no que? Como você estava antes, e como está agora?"
+                    fields:
+                      - {name: quote, label: Depoimento, widget: text, default: "Excelente! O curso X foi um divisor de águas. Em <strong>apenas T meses</strong>, eu fui de A para B"}
+                      - name: author
+                        label: Autor
+                        widget: object
+                        required: false
+                        fields:
+                          - {label: Nome, name: name, widget: string, default: "David M."}
+                          - {label: Complemento ao nome, name: title, widget: string, required: false, default: "Rio de Janeiro, RJ", hint: "Cidade, Cargo, Conquista após o método... algo nessa linha"}
+                          - {label: Imagem, name: img, widget: image, required: false}
+              - name: "cta"
+                label: "Call to Action da Seção"
+                widget: object
+                collapsed: true
+                summary: '{{fields.text}} - {{fields.link}}'
+                fields:
+                  - { name: 'text', label: 'Texto do Call to Action', widget: 'string', required: false, default: "Faça a sua Inscrição" }
+                  - { name: 'link', label: 'Link do Call to Action', widget: 'string', required: false, deafult: '#', hint: "Se deixado em branco, o padrão é retornar ao topo da página." }
+              - name: 'tema'
+                label: Tema desta Seção
+                widget: 'select'
+                required: false
+                options:
+                  - { label: 'Dourado', value: "bumblebee" }
+                  - { label: 'Dark', value: "dark" }
+                  - { label: 'Esmeralda', value: "emerald" }
+                  - { label: 'Azul', value: "corporate" }
+                  - "light"
+                  - "darkLime"
+                  - "darkYellow"
+                  - "cupcake"
+                  - "synthwave"
+                  - "retro"
+                  - "cyberpunk"
+                  - "valentine"
+                  - "halloween"
+                  - "garden"
+                  - "forest"
+                  - "aqua"
+                  - "lofi"
+                  - "pastel"
+                  - "fantasy"
+                  - "wireframe"
+                  - "black"
+                  - "luxury"
+                  - "dracula"
+                  - "cmyk"
+                  - "autumn"
+                  - "business"
+                  - "acid"
+                  - "lemonade"
+                  - "night"
+                  - "coffee"
+                  - "winter"
+              - name: "divider"
+                label: "Linha Divisória ao fim da Seção"
+                widget: object
+                collapsed: true
+                fields:
+                  - { name: 'show', widget: 'boolean', label: 'Exibe a linha?',required: false, default: false }
+                  - name: 'color'
+                    label: Cor
+                    widget: 'select'
+                    required: false
+                    options:
+                      - { label: 'Cor Primária do Tema', value: "primary", required: false }
+                      - { label: 'Cor Neutra do Tema', value: "", required: false }
+                    default: "primary"
+                  - name: 'style'
+                    label: Estilo
+                    widget: 'select'
+                    required: false
+                    options:
+                      - { label: 'Linha Contínua', value: "" }
+                      - { label: 'Linha Tracejada', value: "dashed" }
+              - name: style
+                label: Mais opções de estilo
+                widget: object
+                collapsed: true
+                fields:
+                  - name: align
+                    label: Alinhamento da Seção
+                    widget: select
+                    required: false
+                    options:
+                     - {label: Esquerda , value: text-left}
+                     - {label: Centro , value: text-center}
+                     - {label: Direita , value: text-right}
+                    default: {label: Centro , value: text-center}
+                  - name: alignCardContent
+                    label: Alinhamento do Conteúdo dos Cards
+                    widget: select
+                    required: false
+                    options:
+                     - {label: Esquerda , value: text-left}
+                     - {label: Centro , value: text-center}
+                     - {label: Direita , value: text-right}
+                    default: {label: Esquerda , value: text-left}
+          - name: "sectionTxtImg"
+            label: "Seção Painel de Texto e Imagem"
+            widget: object
+            summary: '{{fields.body}}'
+            fields:
+              - { name: 'title', label: 'Título da Seção', widget: 'string', default: "Título desta Seção", hint: "Este título terá a cor primária. Se quiser com a cor normal, deixe este campo em branco e coloque o título no corpo do texto" }
+              - { name: 'titleSize', label: 'Tamanho do Título', widget: 'number', default: 2, value_type: "int", min: 1, max: 8, required: false, hint: "Escolha um número de 1 a 7" }
+              - { name: 'body', label: 'Texto Longo', widget: 'markdown', required: false,  minimal: true, default: 'Texto Longo, aceita Markdown e Imagens. <u>Para sublinhar, envolva com as tags "u"</u>' }
+              - name: img
+                label: Imagem
+                required: false
+                widget: object
+                fields:
+                  - { name: 'src', widget: 'image', label: 'Imagem', required: false, default: '/cms/540.webp' }
+                  - { name: 'alt', widget: 'string', label: 'Texto Alternativo da Imagem', required: false, hint: 'Se em branco, o padrão é o texto da headline acima' }
+                  - { name: 'last', widget: 'boolean', label: 'Dispositivos Móveis: Exibe Imagem por Último?', required: false, hint: 'Coloca a imagem ao fim da seção.' }
+                  - { name: 'desktopLast', widget: 'boolean', label: 'Desktop: Imagem à direita?', required: false, hint: 'Se quiser que a imagem fique à direita em telas largas, ative esta opção.' }
+              - name: 'tema'
+                label: Tema desta Seção
+                widget: 'select'
+                required: false
+                options:
+                  - { label: 'Dourado', value: "bumblebee" }
+                  - { label: 'Dark', value: "dark" }
+                  - { label: 'Esmeralda', value: "emerald" }
+                  - { label: 'Azul', value: "corporate" }
+                  - "light"
+                  - "darkLime"
+                  - "darkYellow"
+                  - "cupcake"
+                  - "synthwave"
+                  - "retro"
+                  - "cyberpunk"
+                  - "valentine"
+                  - "halloween"
+                  - "garden"
+                  - "forest"
+                  - "aqua"
+                  - "lofi"
+                  - "pastel"
+                  - "fantasy"
+                  - "wireframe"
+                  - "black"
+                  - "luxury"
+                  - "dracula"
+                  - "cmyk"
+                  - "autumn"
+                  - "business"
+                  - "acid"
+                  - "lemonade"
+                  - "night"
+                  - "coffee"
+                  - "winter"
+          - name: 'countdown'
+            label: 'Contagem Regressiva'
+            widget: 'object'
+            required: false
+            fields:
+              - { name: 'show', widget: 'boolean', label: 'Exibe Contagem regressiva?', default: false, required: false}
+              - { name: 'title', widget: 'string', label: 'Título acima da contagem', default: "- Inscrições só até T -"}
+              - { name: 'time', widget: 'datetime', label: 'Data e Hora da Contagem Regressiva', date_format: "DD/MM/YYYY", time_format: HH:mm, format: "LLL", default: '', required: false, hint: "Padrão: 23:59:59 do mesmo dia em que a página está sendo visitada."}
+              - { name: 'text', widget: 'string', label: 'Texto logo abaixo da contagem', required: false, default: ""}
+      - name: 'tema'
+        label: Tema da Página
+        widget: 'select'
+        required: false
+        default: 'darkLime'
+        options:
+          - { label: 'Dourado', value: "bumblebee" }
+          - { label: 'Dark', value: "dark" }
+          - { label: 'Esmeralda', value: "emerald" }
+          - { label: 'Azul', value: "corporate" }
+          - "light"
+          - "darkLime"
+          - "darkYellow"
+          - "cupcake"
+          - "synthwave"
+          - "retro"
+          - "cyberpunk"
+          - "valentine"
+          - "halloween"
+          - "garden"
+          - "forest"
+          - "aqua"
+          - "lofi"
+          - "pastel"
+          - "fantasy"
+          - "wireframe"
+          - "black"
+          - "luxury"
+          - "dracula"
+          - "cmyk"
+          - "autumn"
+          - "business"
+          - "acid"
+          - "lemonade"
+          - "night"
+          - "coffee"
+          - "winter"
+      - { name: 'noindex', label: 'Proibir Indexação?', widget: 'boolean', required: false, default: false, hint: 'Ative se quiser PROIBIR o Google e outros buscadores de mostrarem esta página nos resultados de pesquisa.' }
+      - { name: 'dontTrack', label: 'Não carregar módulo de Tracking para esta Página', widget: 'boolean', required: false, default: false, hint: 'Ative se quiser que não carreguemos os acionadores de eventos de rastreamento. Se essa opção for ativada, não serão mandados dados de enventos (como PageView, ViewContent e Lead) para sua planilha, Meta, Google ou qualquer serviço que você tenha configurado aqui globalmente no site. É útil quando você não tem interesse em qualquer tipo de estatística sobre esta página.' }
+      - { name: 'draft',label: 'Rascunho?',  widget: 'boolean', required: false, hint: 'Ative este botão para *Modo Rascunho:* Esta página sai do ar, mas a informação continua aqui para você poder editar.' }
+      - { name: 'layout', widget: 'hidden', default: '@layouts/f3.astro'}
+  - name: 'f1'
+    label: 'F1 - Funil Oferta e Super Oferta'
+    label_singular: 'F1 LP'
+    folder: 'src/pages/f1'
+    create: true
+    delete: true
     summary: '{{title}} - (slug: {{fields.slug}})'
     slug: '{{fields.slug}}'
     fields:
@@ -234,7 +681,6 @@ collections:
     folder: 'src/pages/f2'
     create: true
     delete: true
-    preview: false
     summary: '{{title}} - (slug: {{fields.slug}})'
     slug: '{{fields.slug}}'
     fields:
@@ -491,6 +937,8 @@ collections:
           - { label: 'Esmeralda', value: "emerald" }
           - { label: 'Azul', value: "corporate" }
           - "light"
+          - darkLime
+          - darkYellow
           - "cupcake"
           - "synthwave"
           - "retro"
@@ -525,7 +973,6 @@ collections:
     folder: 'src/pages/f2/up'
     create: true
     delete: true
-    preview: false
     summary: '{{title}} - (slug: {{fields.slug}})'
     slug: '{{fields.slug}}'
     fields:
@@ -626,6 +1073,8 @@ collections:
           - { label: 'Esmeralda', value: "emerald" }
           - { label: 'Azul', value: "corporate" }
           - "light"
+          - darkLime
+          - darkYellow
           - "cupcake"
           - "synthwave"
           - "retro"
@@ -654,343 +1103,12 @@ collections:
       - { name: 'dontTrack', label: 'Não carregar módulo de Tracking para esta Página', widget: 'boolean', required: false, default: false, hint: 'Ative se quiser que não carreguemos os acionadores de eventos de rastreamento. Se essa opção for ativada, não serão mandados dados de enventos (como PageView, ViewContent e Lead) para sua planilha, Meta, Google ou qualquer serviço que você tenha configurado aqui globalmente no site. É útil quando você não tem interesse em qualquer tipo de estatística sobre esta página.' }
       - { name: 'draft',label: 'Rascunho?',  widget: 'boolean', required: false, hint: 'Ative este botão para *Modo Rascunho:* Esta página sai do ar, mas a informação continua aqui para você poder editar.' }
       - { name: 'layout', widget: 'hidden', default: '@layouts/f2/f2up.astro'}
-  - name: 'f3'
-    label: 'F3 - Página Captura de Leads'
-    label_singular: 'F3 Leads'
-    folder: 'src/pages/f3/'
-    create: true
-    delete: true
-    preview: false
-    summary: '{{title}} - (slug: {{fields.slug}})'
-    slug: '{{fields.slug}}'
-    fields:
-      - { name: 'slug', label: 'Slug da Página', widget: 'string', hint: 'Pedaço final da url na barra de endereços. Ex.: "metodo-x". Este campo não pode ser modificado após a criação da página. Se quiser modificar, duplique a página e exclua a antiga.' }
-      - { name: 'title', label: 'Título da Página', widget: 'string', default: "Entre no Grupo de Treinamento Gratuito | Sua Marca", hint: "Título que aparece na aba do navegador ou em compartilhamento da página" }
-      - { name: 'description', label: 'Metadescrição', widget: 'string', required: false, default: "Grupo de Treinamento Gratuito sobre X: essa é a melhor chance de ter um negócio sustentável e lucrativo.", hint: "Descrição da página. Texto que aparece em compartilhamentos, e pode auxiliar em mecanismos de busca. Ideal ficar abaixo de 160 caracteres." }
-      - name: 'headline'
-        label: 'Headline (Promessa)'
-        widget: 'string'
-        required: false
-        hint: "Caso queira, você consegue formatar partes do texto envolvendo com as tags **<strong>**, *<em>* e <u>. Quebra de linha com <br>."
-        default: "Essa pode ser sua melhor chance de conseguir Viver do Digital"
-      - name: 'subheadline'
-        label: 'Sub headline (Reforço da Promessa)'
-        widget: 'markdown'
-        required: false
-        minimal: true
-        hint: "Chame para fazer a inscrição."
-        default: "De todos os negócios digitais que eu tentei, fazer X **foi o caminho que me
-            deu resultados mais expressivos, estáveis e escaláveis.**
-
-
-            Preencha para entrar no **Grupo de Treinamento Gratuito:**"
-      - name: img
-        label: Imagem Principal
-        required: false
-        widget: object
-        fields:
-          - { name: 'src', widget: 'image', label: 'Imagem', required: false, default: '' }
-          - { name: 'alt', widget: 'string', label: 'Texto Alternativo da Imagem', required: false, hint: 'Se em branco, o padrão é o texto da headline acima' }
-      - name: form
-        label: Formulário de Captura de Leads
-        widget: object
-        required: false
-        fields:
-          - { name: 'show', widget: 'boolean', label: 'Exibe Formulário?', default: true, required: false}
-          - name: inputs
-            widget: list
-            label: Campos
-            label_singular: Campo
-            collapsed: true
-            summary: '{{fields.type}} {{fields.name}} {{fields.placeholder}} {{fields.value}}'
-            fields:
-              - name: type
-                label: Tipo de Input
-                widget: select
-                default: text
-                options:
-                  - text
-                  - email
-                  - tel
-                  - url
-                  - number
-                  - textarea
-                  - hidden
-              - { name: 'name', label: 'Nome do campo', widget: 'string', default: "name", hint: "Identificação utilizada pelo sistema. Letras minúsculas, tudo junto, sem acentos. Não é exibido para o visitante, é de uso interno." }
-              - { name: 'placeholder', label: 'Placeholder', widget: 'string', default: "Primeiro Nome", hint: "Texto que fica no campo antes do visitante clicar" }
-              - { name: 'required', label: 'Campo Obrigatório?', widget: 'boolean', required: false }
-              - { name: 'minlength', label: 'Mínimo de Caracteres', widget: 'number', value_type: "int", default: 4, required: false}
-              - { name: 'maxlength', label: 'Máximo de Caracteres', widget: 'number', value_type: "int", required: false}
-              - { name: 'value', label: 'Valor Padrão', widget: 'string', required: false, hint: "Valor padrão do campo. Geralmente só é usado com campos ocultos (hidden)" }
-            default:
-              - { name: "name", type: "text", placeholder: "Primeiro Nome", required: true, minlength: 4 }
-              - { name: "email", type: "email", placeholder: "Email", required: true, minlength: 6 }
-              - { name: "tel", type: "tel", placeholder: "DDD + Número do Whatsapp (apenas números)", required: true, minlength: 8 }
-          - { name: 'recaptcha', widget: 'boolean', label: 'Proteção Anti-Spam: Ativa recaptcha?', default: false, required: false}
-          - { name: 'sheetName', widget: 'string', label: 'Para qual aba da planilha do Google enviar?', hint: "Apenas se o link para o endpoint para a planilha estiver configurado na variável de ambiente SHEETS_ENDPOINT no painel na Netlify. Caso vazio, vai para a aba padrão de dados de eventos do site.", required: false}
-          - name: mailchimp
-            label: Integração com Mailchimp
-            required: false
-            widget: object
-            hint: Chave da API deve estar colada na variável de ambiente MAILCHIMP no painel da Netlify
-            fields:
-              - { name: 'audience', widget: 'string', label: 'Público', required: false}
-              - { name: 'tags', widget: 'list', label: 'Tags', required: false }
-          - { name: 'sendViaNetlify', widget: 'boolean', label: 'Envia pela Netlify Forms?', required: false, default: false, hint: 'limite de apenas 100 envios gratuitos por mês. Recomendo deixar desativado, a não ser que você queira muito alguma integração de lá (ou tenha plano pago da netlify).' }
-      - name: embed
-        label: Embed de Código (para formulário)
-        widget: code
-        hint: Muito cuidado ao colocar códigos que você não conhece. Não recomendo. Mas caso você queira colocar código de um formulário, aqui é o lugar.
-        required: false
-      - name: cta
-        label: Call to Action
-        widget: object
-        fields:
-          - name: txt
-            widget: string
-            label: Chamada
-            default: "Quero fazer parte do Grupo de Treinamento"
-            hint: Se o formulário estiver ativo, essa chamada é o botão do formulário
-          - name: link
-            widget: string
-            label: Link de Redirecionamento
-            default: "/wa/group/"
-            hint: Link para o qual a pessoa será redirecionada após envio do form (ou após clicar no CTA, caso não haja form).
-      - name: 'countdown'
-        label: 'Contagem Regressiva no Início da Página?'
-        widget: 'object'
-        collapsed: true
-        required: false
-        fields:
-          - { name: 'show', widget: 'boolean', label: 'Exibe Contagem regressiva?', default: false, required: false}
-          - { name: 'title', widget: 'string', label: 'Título acima da contagem', default: "- inscrições só até T -"}
-          - { name: 'time', widget: 'datetime', label: 'Data e Hora da Contagem Regressiva', date_format: "DD/MM/YYYY", time_format: HH:mm, format: "LLL", default: '', required: false, hint: "Padrão: 23:59:59 do mesmo dia em que a página está sendo visitada."}
-          - { name: 'text', widget: 'string', label: 'Texto logo abaixo da contagem', required: false, default: ""}
-      - name: subs
-        label: Seções
-        widget: list
-        required: false
-        types:
-          - name: "section"
-            label: "Seção comum (Títulos, Corpo de Texto, Imagens)"
-            widget: object
-            summary: '{{fields.body}}'
-            fields:
-              - { name: 'body', label: 'Texto Longo', widget: 'markdown', required: false,  minimal: true, default: 'Texto Longo, aceita Markdown e Imagens. <u>Para sublinhar, envolva com as tags "u"</u>' }
-              - name: 'tema'
-                label: Tema desta Seção
-                widget: 'select'
-                required: false
-                options:
-                  - { label: 'Dourado', value: "bumblebee" }
-                  - { label: 'Dark', value: "dark" }
-                  - { label: 'Esmeralda', value: "emerald" }
-                  - { label: 'Azul', value: "corporate" }
-                  - "light"
-                  - "darkLime"
-                  - "cupcake"
-                  - "synthwave"
-                  - "retro"
-                  - "cyberpunk"
-                  - "valentine"
-                  - "halloween"
-                  - "garden"
-                  - "forest"
-                  - "aqua"
-                  - "lofi"
-                  - "pastel"
-                  - "fantasy"
-                  - "wireframe"
-                  - "black"
-                  - "luxury"
-                  - "dracula"
-                  - "cmyk"
-                  - "autumn"
-                  - "business"
-                  - "acid"
-                  - "lemonade"
-                  - "night"
-                  - "coffee"
-                  - "winter"
-              - name: "divider"
-                label: "Linha Divisória ao fim da Seção"
-                widget: object
-                collapsed: true
-                fields:
-                  - { name: 'show', widget: 'boolean', label: 'Exibe a linha?',required: false, default: false }
-                  - name: 'color'
-                    label: Cor
-                    widget: 'select'
-                    required: false
-                    options:
-                      - { label: 'Cor Primária do Tema', value: "primary", required: false }
-                      - { label: 'Cor Neutra do Tema', value: "", required: false }
-                    default: "primary"
-                  - name: 'style'
-                    label: Estilo
-                    widget: 'select'
-                    required: false
-                    options:
-                      - { label: 'Linha Contínua', value: "" }
-                      - { label: 'Linha Tracejada', value: "dashed" }
-          - name: "cta"
-            label: "Call to Action"
-            widget: object
-            collapsed: true
-            summary: '{{fields.text}} - {{fields.link}}'
-            fields:
-              - { name: 'text', label: 'Texto do Call to Action', widget: 'string', required: false, default: "Faça a sua Inscrição" }
-              - { name: 'link', label: 'Link do Call to Action', widget: 'string', required: false, deafult: '#', hint: "Se deixado em branco, o padrão é retornar ao topo da página." }
-              - name: 'tema'
-                label: Tema desta Seção
-                widget: 'select'
-                required: false
-                options:
-                  - { label: 'Dourado', value: "bumblebee" }
-                  - { label: 'Dark', value: "dark" }
-                  - { label: 'Esmeralda', value: "emerald" }
-                  - { label: 'Azul', value: "corporate" }
-                  - "light"
-                  - "darkLime"
-                  - "cupcake"
-                  - "synthwave"
-                  - "retro"
-                  - "cyberpunk"
-                  - "valentine"
-                  - "halloween"
-                  - "garden"
-                  - "forest"
-                  - "aqua"
-                  - "lofi"
-                  - "pastel"
-                  - "fantasy"
-                  - "wireframe"
-                  - "black"
-                  - "luxury"
-                  - "dracula"
-                  - "cmyk"
-                  - "autumn"
-                  - "business"
-                  - "acid"
-                  - "lemonade"
-                  - "night"
-                  - "coffee"
-                  - "winter"
-          - name: testimonials
-            label: Depoimentos
-            widget: object
-            hint: "Pergunte aos seus alunos: eu consegui te ajudar em alguma coisa? Se sim, no que? Como você estava antes, e como está agora?"
-            required: false
-            fields:
-              - { name: 'title', label: 'Título da Seção de Depoimentos', widget: 'string', required: false, default: "Por que confiar nos meus produtos?" }
-              - { name: 'body', label: 'Texto Longo', widget: 'markdown', required: false,  minimal: true, default: "Veja o resultados de alguns alunos…", hint: 'Texto Longo, aceita Markdown e Imagens. <u>Para sublinhar, envolva com as tags "u"</u>' }
-              - name: "list"
-                label: "Depoimentos"
-                label_singular: "Depoimento"
-                widget: "list"
-                required: false
-                summary: '{{fields.quote}} - {{fields.author.name}}'
-                fields:
-                  - {name: quote, label: Depoimento, widget: text, default: "Excelente! O curso X foi um divisor de águas. Em <strong>apenas T meses</strong>, eu fui de A para B"}
-                  - name: author
-                    label: Autor
-                    widget: object
-                    required: false
-                    fields:
-                      - {label: Nome, name: name, widget: string, default: "David M."}
-                      - {label: Complemento ao nome, name: title, widget: string, required: false, default: "Rio de Janeiro, RJ", hint: "Cidade, Cargo, Conquista após o método... algo nessa linha"}
-                      - {label: Imagem, name: img, widget: image, required: false}      
-              - name: 'tema'
-                label: Tema da Página
-                widget: 'select'
-                required: false
-                options:
-                  - { label: 'Dourado', value: "bumblebee" }
-                  - { label: 'Dark', value: "dark" }
-                  - { label: 'Esmeralda', value: "emerald" }
-                  - { label: 'Azul', value: "corporate" }
-                  - "light"
-                  - "darkLime"
-                  - "cupcake"
-                  - "synthwave"
-                  - "retro"
-                  - "cyberpunk"
-                  - "valentine"
-                  - "halloween"
-                  - "garden"
-                  - "forest"
-                  - "aqua"
-                  - "lofi"
-                  - "pastel"
-                  - "fantasy"
-                  - "wireframe"
-                  - "black"
-                  - "luxury"
-                  - "dracula"
-                  - "cmyk"
-                  - "autumn"
-                  - "business"
-                  - "acid"
-                  - "lemonade"
-                  - "night"
-                  - "coffee"
-                  - "winter"
-          - name: 'countdown'
-            label: 'Contagem Regressiva'
-            widget: 'object'
-            required: false
-            fields:
-              - { name: 'show', widget: 'boolean', label: 'Exibe Contagem regressiva?', default: false, required: false}
-              - { name: 'title', widget: 'string', label: 'Título acima da contagem', default: "- Inscrições só até T -"}
-              - { name: 'time', widget: 'datetime', label: 'Data e Hora da Contagem Regressiva', date_format: "DD/MM/YYYY", time_format: HH:mm, format: "LLL", default: '', required: false, hint: "Padrão: 23:59:59 do mesmo dia em que a página está sendo visitada."}
-              - { name: 'text', widget: 'string', label: 'Texto logo abaixo da contagem', required: false, default: ""}
-      - name: 'tema'
-        label: Tema da Página
-        widget: 'select'
-        required: false
-        default: 'darkLime'
-        options:
-          - { label: 'Dourado', value: "bumblebee" }
-          - { label: 'Dark', value: "dark" }
-          - { label: 'Esmeralda', value: "emerald" }
-          - { label: 'Azul', value: "corporate" }
-          - "light"
-          - "darkLime"
-          - "cupcake"
-          - "synthwave"
-          - "retro"
-          - "cyberpunk"
-          - "valentine"
-          - "halloween"
-          - "garden"
-          - "forest"
-          - "aqua"
-          - "lofi"
-          - "pastel"
-          - "fantasy"
-          - "wireframe"
-          - "black"
-          - "luxury"
-          - "dracula"
-          - "cmyk"
-          - "autumn"
-          - "business"
-          - "acid"
-          - "lemonade"
-          - "night"
-          - "coffee"
-          - "winter"
-      - { name: 'noindex', label: 'Proibir Indexação?', widget: 'boolean', required: false, default: false, hint: 'Ative se quiser PROIBIR o Google e outros buscadores de mostrarem esta página nos resultados de pesquisa.' }
-      - { name: 'dontTrack', label: 'Não carregar módulo de Tracking para esta Página', widget: 'boolean', required: false, default: false, hint: 'Ative se quiser que não carreguemos os acionadores de eventos de rastreamento. Se essa opção for ativada, não serão mandados dados de enventos (como PageView, ViewContent e Lead) para sua planilha, Meta, Google ou qualquer serviço que você tenha configurado aqui globalmente no site. É útil quando você não tem interesse em qualquer tipo de estatística sobre esta página.' }
-      - { name: 'draft',label: 'Rascunho?',  widget: 'boolean', required: false, hint: 'Ative este botão para *Modo Rascunho:* Esta página sai do ar, mas a informação continua aqui para você poder editar.' }
-      - { name: 'layout', widget: 'hidden', default: '@layouts/f3.astro'}
   - name: 'wa'
     label: 'WhatsApp - Link de Redirecionamento para Conversa'
     label_singular: 'WhatsApp - Link para Conversa'
     folder: 'src/pages/wa/'
     create: true
     delete: true
-    preview: false
     summary: '{{fields.slug}} -> +{{fields.number}} : {{fields.msg}}'
     slug: '{{fields.slug}}'
     fields:
@@ -1013,7 +1131,6 @@ collections:
     folder: 'src/pages/wa/group/'
     create: true
     delete: true
-    preview: false
     summary: '{{fields.slug}} -> {{fields.link}}'
     slug: '{{fields.slug}}'
     fields:

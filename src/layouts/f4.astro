@@ -142,8 +142,8 @@ let hasVideo = props.embedCode || props.ytLink
         <!-- Garantia -->
         <section id="garantia" class="py-16 md:flex md:gap-12 md:items-center md:max-w-screen-lg md:mx-auto">
                 {(garantiaDias==15) ? 
-                    <img src={garantia15} alt="Garantia de 15 dias" class="md:mb-0 mb-8 mx-auto" width="240" height="240"/>:
-                    <img src={garantia} alt={`Garantia de ${garantiaDias} dias`} class="md:mb-0 mb-8 mx-auto" width="240" height="240"/>
+                    <img src={garantia15.src} alt="Garantia de 15 dias" class="md:mb-0 mb-8 mx-auto" width="240" height="240"/>:
+                    <img src={garantia.src} alt={`Garantia de ${garantiaDias} dias`} class="md:mb-0 mb-8 mx-auto" width="240" height="240"/>
                 }
                 <div>
                 <h2 class="md:mb-8 md:text-4xl text-3xl font-bold tracking-wide mb-12 text-black" set:html={garantiaTitle}/>
