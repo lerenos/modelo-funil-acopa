@@ -43,5 +43,5 @@ countdown:
   text: ""
 tema: darkLime
 noindex: false
-layout: "@layouts/f3.astro"
+layout: "@layouts/main.astro"
 ---

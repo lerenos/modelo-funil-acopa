@@ -7,21 +7,14 @@ import { Markdown } from 'astro-remote'
 import Banner from "@components/banner/countdown.astro"
 import ProxySection from "@components/proxy.astro"
 
-import Depoimento from "@components/cards/depoimento.astro"
-import Card from "@components/cards/main.astro"
-import CardN from "@components/cards/numberH3.astro"
-import Offer from "@components/cards/offer.astro"
-
 import garantia from "@assets/garantia.webp"
 import garantia15 from "@assets/garantia15dias.webp"
 
-import Cta from "@components/cta.astro"
-
 import Form from "@components/forms/lead2.astro"
+import Cta from "@components/cta.astro"
 
 //General Site Information
 import {frontmatter as siteInfo} from 'src/siteInfo.md'
-import { imageConfig } from "astro:assets"
 let { tema } = siteInfo
 
 let f = Astro.props.frontmatter
@@ -31,6 +24,7 @@ let {showLogo, showTitle, showDesc} = f
 
 let h1size = f.headline?.style?.size ? `text-${f.h1size==1 ? '' :f.headline?.style?.size}xl md:text-${f.headline?.style?.size+1}xl`: "text-4xl"
 
+import { imageConfig } from "astro:assets"
 // img 540x540
 // sec max 1080
 ---
@@ -64,4 +58,19 @@ let h1size = f.headline?.style?.size ? `text-${f.h1size==1 ? '' :f.headline?.sty
 
 </main>
 <Footer dark/>
+{Astro.url.pathname=="/" && 
+<script is:inline>
+window.addEventListener("load", () => {
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  }
+)
+</script>}
 </Layout>

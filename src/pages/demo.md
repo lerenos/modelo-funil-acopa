@@ -373,6 +373,6 @@ subs:
       alignCardContent: null
 tema: emerald
 noindex: true
-dontTrack: false
-layout: "@layouts/f3.astro"
+dontTrack: true
+layout: "@layouts/main.astro"
 ---

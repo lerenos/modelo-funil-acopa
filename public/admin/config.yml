@@ -14,7 +14,7 @@ collections:
   - name: 'lp'
     label: 'Landing Pages'
     label_singular: 'LP'
-    folder: 'src/pages/lp/'
+    folder: 'src/pages/'
     create: true
     delete: true
     summary: '{{title}} - (slug: {{fields.slug}})'
@@ -456,7 +456,7 @@ collections:
       - { name: 'noindex', label: 'Proibir Indexação?', widget: 'boolean', required: false, default: false, hint: 'Ative se quiser PROIBIR o Google e outros buscadores de mostrarem esta página nos resultados de pesquisa.' }
       - { name: 'dontTrack', label: 'Não carregar módulo de Tracking para esta Página', widget: 'boolean', required: false, default: false, hint: 'Ative se quiser que não carreguemos os acionadores de eventos de rastreamento. Se essa opção for ativada, não serão mandados dados de enventos (como PageView, ViewContent e Lead) para sua planilha, Meta, Google ou qualquer serviço que você tenha configurado aqui globalmente no site. É útil quando você não tem interesse em qualquer tipo de estatística sobre esta página.' }
       - { name: 'draft',label: 'Rascunho?',  widget: 'boolean', required: false, hint: 'Ative este botão para *Modo Rascunho:* Esta página sai do ar, mas a informação continua aqui para você poder editar.' }
-      - { name: 'layout', widget: 'hidden', default: '@layouts/f3.astro'}
+      - { name: 'layout', widget: 'hidden', default: '@layouts/main.astro'}
   - name: 'f1'
     label: 'F1 - Funil Oferta e Super Oferta'
     label_singular: 'F1 LP'
@@ -1148,15 +1148,15 @@ collections:
   - name: "paginasesp"
     label: "Páginas Especiais"
     files:
-      - name: "home"
-        label: "Página Inicial"
-        file: "src/pages/index.md"
-        fields:
-          - { name: 'showLogo', label: 'Mostra a Logo?', widget: 'boolean', default: false, required: false, hint: "Não se preocupe com sua Logo agora. Deixe para colocar isso por último, se quiser. É totalmente opcional. Assim sendo, se você ativar este campo, você esconde a Logo da Página Inicial." }
-          - { name: 'showTitle', label: 'Mostra o nome da sua marca?', widget: 'boolean', default: true, required: false }
-          - { name: 'showDesc', label: 'Mostra a Descrição da Empresa?', widget: 'boolean', default: true, required: false }
-          - { name: 'body', widget: 'markdown', label: 'Texto Após Títulos', required: false}
-          - { name: 'layout', widget: 'hidden', default: '@layouts/home.astro'}
+      # - name: "home"
+      #   label: "Página Inicial"
+      #   file: "src/pages/index.md"
+      #   fields:
+      #     - { name: 'showLogo', label: 'Mostra a Logo?', widget: 'boolean', default: false, required: false, hint: "Não se preocupe com sua Logo agora. Deixe para colocar isso por último, se quiser. É totalmente opcional. Assim sendo, se você ativar este campo, você esconde a Logo da Página Inicial." }
+      #     - { name: 'showTitle', label: 'Mostra o nome da sua marca?', widget: 'boolean', default: true, required: false }
+      #     - { name: 'showDesc', label: 'Mostra a Descrição da Empresa?', widget: 'boolean', default: true, required: false }
+      #     - { name: 'body', widget: 'markdown', label: 'Texto Após Títulos', required: false}
+      #     - { name: 'layout', widget: 'hidden', default: '@layouts/home.astro'}
           # - label: "Links da Sidebar"
           #   label_singular: "Link"
           #   name: "links"

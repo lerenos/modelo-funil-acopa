@@ -4,7 +4,7 @@ import {frontmatter as data} from 'src/siteInfo.md'
 
 let siteInfo = {
   name: data.siteName || ( data.companyName || data.personName),
-  desc: data.siteDesc || data.personDesc,
+  desc: data.siteDesc || ( data.companyDesc || data.personDesc),
   siteTwitterUsername: data.social.twitter ? '@'+data.social.twitter : null
 }
 
@@ -19,8 +19,141 @@ description = description || siteInfo.desc
 lang = lang || (data.lang || "pt-BR")
 const site = Astro.site
 let url = permalink || new URL(Astro.url.pathname, site)
-img = img || Astro.site+'social.webp'
+img = img.src || Astro.site+'social.webp'
 imgAlt = imgAlt || title
+
+// veja mais em https://github.com/JayHoltslander/Structured-Data-JSON-LD
+let ldjsonHome = JSON.stringify({
+    "@context": "http://schema.org",
+    "@graph":[
+        {
+        "@type": ["Organization", "OnlineBusiness"],
+        "@id": site+"#jsonldOrganization",
+        "name": siteInfo.name,
+        "description": siteInfo.desc,
+        "url": site,
+        // "image": site+imgStatic,
+        // "logo": site+imgStatic,
+        "sameAs": [
+            // "https://twitter.com/"+social?.twitter,
+            (data?.social?.instagram && "https://instagram.com/"+data?.social?.instagram),
+            (data?.social?.facebook && "https://www.facebook.com/"+data?.social?.facebook),
+            // "https://linkedin.com/in/"+social?.linkedin,
+            // "https://github.com/"+social?.github
+        ],
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": data?.address?.city,
+            "addressRegion": data?.address?.region,
+            "addressCountry": data?.address?.country
+        },
+        // "priceRange": "$$",
+        // "contactPoint": [
+        //     { 
+        //         "@type": "ContactPoint",
+        //         "contactType": "Customer Service",
+        //         "email": "oi@acopa.com.br",
+        //         "availableLanguage": [
+        //             "Portuguese",
+        //             "English"
+        //         ]
+        //     }
+	    // ],
+        // "makesOffer":[
+        // 	   {
+        //         "@type":"Offer",
+        //         "itemOffered":
+        //             {
+        //                 "@type":"Service",
+        //                 "name":"Service name",
+        //                 "url":"http://example.com/a-leaf-page/for/service"
+        //             }
+        //     },
+        //     {
+        // 		    "@type":"Offer",
+        // 		    "itemOffered":
+        //             {
+        //                 "@type":"Service",
+        //                 "name":"Another Service name",
+        //                 "url":"http://example.com/a-leaf-page/for/service2"
+        //             }
+		// 	    }
+	    // ],
+        // "potentialAction": {
+        //     "@type": "OrderAction",
+        //     "target":
+        //     {
+        //         "@type": "EntryPoint",
+        //         "name":"Book Now",
+        //         "urlTemplate": "https://example.com/contact#contact-form",
+        //         "inLanguage": "en-CA",
+        //         "actionPlatform":
+        //         [
+        //             "http://schema.org/DesktopWebPlatform",
+        //             "http://schema.org/IOSPlatform",
+        //             "http://schema.org/AndroidPlatform"
+        //         ]
+        //     },
+        //     "result":
+        //     {
+        //         "@type": "Reservation",
+        //         "name": "Book Your Free Legal Consultation"
+        //     }
+        // },
+        // "review": [
+        //     {
+        //         "@type": "Review",
+        //         "author": {
+        //             "@type": "Person",
+        //             "name": "Cris B."
+        //         },
+        //         "datePublished": "2020-08-11",
+        //         "reviewBody": "Texto do Review",
+        //         "name": "O atendimento personalizado faz toda a diferença!",
+        //         "reviewRating": {
+        //             "@type": "Rating",
+        //             "bestRating": "5",
+        //             "ratingValue": "5",
+        //             "worstRating": "1"
+        //         }
+        //     }
+        // ],
+        // "foundingDate": "2021",
+    },
+    {
+        "@type":"WebSite",
+        "@id":site+"#jsonldWebsite",
+        "url":site,
+        "name": siteInfo.name,
+        "description":siteInfo.desc,
+        "inLanguage":lang,
+        "publisher": {
+          "@type": "Organization",
+          "@id":site+"#jsonldOrganization",
+          "name": siteInfo.name,
+        },
+    },
+    {
+        "@type":"WebPage",
+        "@id":url+"#jsonldWebpage",
+        "url":url,
+        "name":title,
+        "description":description,
+        "isPartOf":{
+          "@id":site+"#jsonldWebsite",
+    		  "@type":"WebSite",
+        },
+        "inLanguage":lang,
+        "potentialAction":[
+            {
+                "@type":"ReadAction",
+                "target":[url]
+            }
+        ]
+    }
+  ]
+})
+
 
 // veja mais em https://github.com/JayHoltslander/Structured-Data-JSON-LD
 ldjson = ldjson || JSON.stringify({
@@ -46,6 +179,7 @@ ldjson = ldjson || JSON.stringify({
     }
   ]
 })
+ldjson = Astro.url.pathname == "/" ? ldjsonHome : ldjson
 
 import Tracking from '@components/tracking/tr.astro'
 
