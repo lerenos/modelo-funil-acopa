@@ -19,7 +19,7 @@ description = description || siteInfo.desc
 lang = lang || (data.lang || "pt-BR")
 const site = Astro.site
 let url = permalink || new URL(Astro.url.pathname, site)
-img = img.src || Astro.site+'social.webp'
+img = img?.src || Astro.site+'social.webp'
 imgAlt = imgAlt || title
 
 // veja mais em https://github.com/JayHoltslander/Structured-Data-JSON-LD

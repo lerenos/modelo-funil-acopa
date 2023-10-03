@@ -1231,6 +1231,7 @@ collections:
             fields:
             - { name: 'cnpj', label: 'CNPJ', widget: 'string', required: false, hint: '00.000.000/0001-00'}
             - { name: 'razao', label: 'Razão Social', widget: 'string', required: false, hint: 'Razão Social Ltda.'}
-          - { name: 'hideFooterLogo', label: 'Esconde a Logo nos Rodapés?', widget: 'boolean', default: false, required: false, hint: "Não se preocupe com sua Logo agora. Deixe para colocar isso por último, se quiser. É totalmente opcional. Assim sendo, se você marcar este campo, você esconde a Logo nos rodapés." }
+          - { name: 'hideFooterLogo', label: 'Esconde a Logo nos Rodapés?', widget: 'boolean', default: true, required: false, hint: "Não se preocupe com sua Logo agora. Deixe para colocar isso por último, se quiser. É totalmente opcional. Assim sendo, se você marcar este campo, você esconde a Logo nos rodapés." }
           - { name: 'themeChanger', label: 'Exibe botão de Experimentação de Tema nos Rodapés?', widget: 'boolean', default: true, required: false}
           - { name: 'body', widget: 'markdown', modes: ["raw"], buttons: ["bold"], required: false, label: 'Código SVG da sua Logo', hint: "Não se preocupe com isso agora, é totalmente dispensável para começar."}
+          - { name: 'hidePoweredBy', label: 'Esconde o dizer "com tecnologia LP Rápida®" do rodapé.', widget: 'boolean', default: false, required: false, hint: "Te agradeço muito se deixar isso aqui como está... mas se realmente você quiser remover isso do rodapé, é só ativar esta opção." }

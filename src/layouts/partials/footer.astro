@@ -14,6 +14,6 @@ const { dark, hideLogo, divider } = Astro.props
         {info.companyName}® - Todos os direitos reservados. <br class="md:hidden">
         {info.corp?.cnpj && `CNPJ ${info.corp.cnpj}`} {info.corp?.razao}
     </p>
-    <p class="text-gray-600 opacity-80"><a href="https://lprapida.com.br">Com tecnologia LP Rápida®⚡</a></p>
+    {!info.hidePoweredBy && <p class="text-gray-600 opacity-80"><a href="https://lprapida.com.br">com tecnologia LP Rápida®⚡</a></p>}
     {info.themeChanger && <ThemeChanger/>}
 </footer>
