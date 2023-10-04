@@ -8,12 +8,6 @@ headline:
   style:
     size: 5
     weight: font-semibold
-subheadline: >-
-  De todos os negócios digitais que eu tentei, fazer X **foi o caminho que me
-  deu resultados mais expressivos, estáveis e escaláveis.**
-
-
-  Preencha para entrar no **Grupo de Treinamento Gratuito:**
 img:
   src: /cms/bolt.svg
   animation: animate-floating
@@ -376,3 +370,7 @@ noindex: true
 dontTrack: true
 layout: "@layouts/main.astro"
 ---
+De todos os negócios digitais que eu tentei, fazer X **foi o caminho que me
+deu resultados mais expressivos, estáveis e escaláveis.**
+
+Preencha para entrar no **Grupo de Treinamento Gratuito:**

@@ -1,19 +1,12 @@
 ---
 slug: index
-title: Landing Pages Rápidas
-description: "Grupo de Treinamento Gratuito sobre X: essa é a melhor chance de
-  ter um negócio sustentável e lucrativo."
+title: Landing Pages Rápidas - Nota 100 no Google PageSpeed Insights
+description: Construa Landing Pages Nota 100 no Google PageSpeed em poucos minutos
 headline:
-  text: Construa a Landing Page mais rápida do mundo
+  text: A Landing Page que carrega em 1 segundo, perfeita para quem roda anúncios
   style:
-    size: 5
+    size: 4
     weight: font-semibold
-subheadline: >-
-  De todos os negócios digitais que eu tentei, fazer X **foi o caminho que me
-  deu resultados mais expressivos, estáveis e escaláveis.**
-
-
-  Preencha para entrar no **Grupo de Treinamento Gratuito:**
 img:
   src: /cms/bolt.svg
   animation: animate-floating
@@ -373,6 +366,9 @@ subs:
       alignCardContent: null
 tema: emerald
 noindex: true
-dontTrack: false
 layout: "@layouts/main.astro"
+dontTrack: false
 ---
+Aproveite ao máximo **os cliques nos seus anúncios** e veja  sua conversão *disparar*.
+
+Transforme visitantes em clientes com páginas **incrivelmente rápidas** e design de **alta conversão**.

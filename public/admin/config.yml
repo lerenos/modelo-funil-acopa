@@ -54,12 +54,12 @@ collections:
                   - { label: '700', value: "font-bold" }
                   - { label: '800', value: "font-extrabold" }
                   - { label: '900', value: "font-light" }
-      - name: 'subheadline'
+      - name: 'body'
         label: 'Sub headline (Reforço da Promessa)'
         widget: 'markdown'
         required: false
         minimal: true
-        hint: "Chame para fazer a inscrição."
+        hint: "Texto da primeira seção, logo após o título."
         default: "De todos os negócios digitais que eu tentei, fazer X **foi o caminho que me
             deu resultados mais expressivos, estáveis e escaláveis.**
 
