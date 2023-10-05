@@ -35,7 +35,7 @@ import { imageConfig } from "astro:assets"
         <Banner title={f.countdown.title} text={f.countdown.text} time={f.countdown.time}/>
     }
 
-    <section class="grid place-content-center py-12 px-4">
+    <section class:list={["grid place-content-center py-12 px-4", (f.minHscreen && 'min-h-screen') ]}>
         <div class:list={["grid place-content-center items-center gap-4 md:gap-8 max-w-screen-xl",(f.img?.src ? 'md:grid-cols-2': 'text-center')]}>
             <div class:list={["pt-8", (f.img?.src ? 'prose prose-neutral dark:prose-invert mx-auto': 'text-center') ]}>
                 <h1 set:html={f.headline.text} class:list={["text-primary mb-8", h1size, (f.headline?.style?.weight || "font-bold")]}/>

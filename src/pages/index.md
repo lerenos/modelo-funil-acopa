@@ -34,62 +34,57 @@ form:
     lang: html
     code: ""
 cta:
-  txt: Comece agora mesmo
-  link: /wa/group/
+  txt: Saiba Mais
+  link: "#secs"
 countdown:
   show: false
   title: "- inscrições só até T -"
   time: ""
   text: ""
+minHscreen: true
 subs:
-  - type: section
-    body: Texto Longo, aceita Markdown e Imagens. <u>Para sublinhar, envolva com as
-      tags "u"</u>
-    divider:
-      show: false
-      color: primary
-    title: Título desta Seção
-    titleSize: 4
-    tema: darkYellow
   - type: sectionTxtImg
-    title: Título desta Seção
-    body: Texto Longo, aceita Markdown e Imagens. <u>Para sublinhar, envolva com as
-      tags "u"</u>
+    title: Integração fácil com Meta Pixel e API de Conversões
+    body: >-
+      Deixe seu pixel super poderoso, nutrido de dados, e agilize a **otimização
+      dos seus anúncios**.
+
+
+      Um visitante passou pela página? O evento *PageView* será disparado tanto pelo pixel quanto pela API de conversões, com a correta deduplicação.
+
+
+      E se você nunca criou um pixel, tá tudo bem: temos vídeos ensinando como rapidamente deixar tudo certinho.
     img:
       src: /cms/bolt.svg
       butFirstOnDesktop: true
       desktopLast: true
+    tema: null
   - type: sectionTxtImg
-    title: Título desta Seção
-    body: Texto Longo, aceita Markdown e Imagens. <u>Para sublinhar, envolva com as
-      tags "u"</u>
+    title: "UTMs perfeitas: Saiba exatamente de que anúncios seus visitantes e
+      compradores estão vindo"
+    body: >-
+      Os parâmetros de URL que a sua página recebe são automaticamente passados
+      para os links nos botões. Dessa forma, **as páginas de checkout também
+      receberão os parâmetros das campanhas**, e rastreio de conversões nunca
+      mais será um problema para você.
+
+
+      Funciona na Eduzz, Hotmart ou qualquer outra plataforma.
+
+
+      *PS.: Se você nunca fez isso, também temos vídeos ensinando como configurar as UTMs no seu gerenciador de anúncios, clique a clique.*
     img:
       src: /cms/540.webp
-  - type: section
-    title: Título desta Seção
-    body: Texto Longo, aceita Markdown e Imagens. <u>Para sublinhar, envolva com as
-      tags "u"</u>
-    divider:
-      show: false
-      color: primary
-    titleSize: 5
-    cta:
-      text: Voltar ao Topo
-      link: "#"
-    tema: darkYellow
-    style:
-      ? align
   - type: section
     cols:
       - type: card
         icon:
-          emoji: "1"
+          emoji: 🎞️
           borderIcon: false
-          img: /cms/bolt.svg
-          select: img
-          align: null
-        title: Imagem
-        text: Sem alinhamento
+        title: Infoprodutores de cursos online
+        text: Gerando tráfego para seu curso online? Teste nossos modelos de página para
+          realizar ofertas diretas e testar conceitos. Facilmente duplique
+          páginas, modifique copy e temas.
         style:
           wfull: false
           roundedBorders: false
@@ -97,171 +92,12 @@ subs:
           transparent: false
       - type: card
         icon:
-          emoji: ""
-          borderIcon: true
-          select: img
-          alignCenter: true
-          img: /cms/bolt.svg
-        title: Imagem com Borda
-        text: Alinhada ao Centro
-        style:
-          wfull: false
-          roundedBorders: false
-          noShadow: false
-          transparent: false
-      - type: card
-        icon:
-          emoji: 🚀
+          emoji: 🪜
           borderIcon: false
-          select: img
-          img: /cms/capa-de-curso-750x422.jpg
-        title: Imagem
-        text: Não quadrada
-        style:
-          wfull: false
-          roundedBorders: false
-          noShadow: false
-          transparent: false
-        etiqueta: em breve
-      - type: card
-        icon:
-          emoji: ""
-          borderIcon: false
-          select: checkmark
-          align: null
-        title: Ícone
-        text: Sem alinhamento
-        style:
-          wfull: false
-          roundedBorders: false
-          noShadow: false
-          transparent: false
-      - type: card
-        icon:
-          borderIcon: false
-          select: checkmark
-          emoji: ""
-          alignCenter: true
-        style:
-          wfull: false
-          roundedBorders: false
-          noShadow: false
-          transparent: false
-        title: Ícone
-        text: Ao Centro
-        etiqueta: novo!
-      - type: card
-        icon:
-          emoji: 🚀
-          borderIcon: false
-          select: person
-        title: Ícone
-        text: À esquerda
-        style:
-          wfull: false
-          roundedBorders: false
-          noShadow: false
-          transparent: false
-      - type: card
-        icon:
-          emoji: 🚀
-          borderIcon: true
-          select: checkmark
-        title: Ícone com Borda
-        text: Sem alinhamento
-        style:
-          wfull: false
-          roundedBorders: false
-          noShadow: false
-          transparent: false
-      - type: card
-        icon:
-          emoji: 🚀
-          borderIcon: true
-          select: person
-          alignCenter: true
-        title: Ícone com Borda
-        text: Ao centro
-        style:
-          wfull: false
-          roundedBorders: false
-          noShadow: false
-          transparent: false
-      - type: card
-        icon:
-          emoji: 🚀
-          borderIcon: true
-          select: person
-        title: Ícone com Borda
-        text: À Esquerda
-        style:
-          wfull: false
-          roundedBorders: false
-          noShadow: false
-          transparent: false
-      - type: card
-        icon:
-          emoji: 🚀
-          borderIcon: false
-        title: Emoji
-        text: Sem alinhamento
-        style:
-          wfull: false
-          roundedBorders: false
-          noShadow: false
-          transparent: false
-      - type: card
-        icon:
-          emoji: 🚀
-          borderIcon: false
-          alignCenter: true
-        title: Emoji
-        text: Ao centro
-        style:
-          wfull: false
-          roundedBorders: false
-          noShadow: false
-          transparent: false
-      - type: card
-        icon:
-          emoji: "1"
-          borderIcon: false
-        title: Número
-        text: Sem alinhamento
-        style:
-          wfull: false
-          roundedBorders: false
-          noShadow: false
-          transparent: false
-      - type: card
-        icon:
-          emoji: 🚀
-          borderIcon: true
-        title: Emoji com Borda
-        text: Sem alinhamento
-        style:
-          wfull: false
-          roundedBorders: false
-          noShadow: false
-          transparent: false
-      - type: card
-        icon:
-          emoji: 🚀
-          borderIcon: true
-          alignCenter: true
-        title: Emoji com Borda
-        text: Ao centro
-        style:
-          wfull: false
-          roundedBorders: false
-          noShadow: false
-          transparent: false
-      - type: card
-        icon:
-          emoji: "3"
-          borderIcon: true
-        title: Número com Borda
-        text: Sem alinhamento
+          alignCenter: false
+        title: Estrategistas do Baixo Ticket
+        text: A página de vendas é peça central da sua estratégia. Teste rapidamente sua
+          copy e não perca tempo configurando infraestrutura.
         style:
           wfull: false
           roundedBorders: false
@@ -272,44 +108,86 @@ subs:
           emoji: 🚀
           borderIcon: false
           alignCenter: false
-        title: Largura Máxima
-        text: Sem sombra
+        title: Lançadores
+        text: Complicado lidar com picos de tráfego e coletar leads? Agora não mais. Não
+          há problema algum em receber milhares de visitas no mesmo minuto. A
+          CDN usada pela nossa tecnologia dá conta do recado, sem requerer
+          nenhuma configuração adicional.
         style:
-          wfull: true
-          roundedBorders: false
-          noShadow: true
-          transparent: false
-      - type: card
-        icon:
-          emoji: 🚀
-          borderIcon: false
-          alignCenter: false
-        title: Seção com Largura Máxima
-        text: Texto do Card, explicando rapidamente o tópico. Acima há um emoji ou um
-          ícone
-        style:
-          wfull: true
+          wfull: false
           roundedBorders: false
           noShadow: false
           transparent: false
       - type: card
         icon:
-          emoji: ""
+          emoji: 🔍
           borderIcon: false
-        title: Sem Ícone
-        text: ""
+          alignCenter: false
+        title: Gestores de SEO
+        text: Precisa atingir Nota 100 no Google PageSpeed Insights? Aqui você consegue
+          por padrão, sem rodeios.
+        style:
+          wfull: false
+          roundedBorders: false
+          noShadow: false
+          transparent: false
+      - type: card
+        icon:
+          emoji: ⚙
+          borderIcon: false
+          alignCenter: false
+        title: Para quem está cansado de perder tempo com infraestrutura
+        text: "Foque o seu tempo no que é mais importante: fazer copy e passar a
+          mensagem para a sua audiência. Deixe a chatice da infraestrutura com a
+          gente."
+        style:
+          wfull: false
+          roundedBorders: false
+          noShadow: false
+          transparent: false
+      - type: card
+        icon:
+          emoji: 🤬
+          borderIcon: false
+          alignCenter: false
+        title: Para quem está perdendo a paciência com o Wordpress
+        text: Aqui você não vai ter problemas com plugins, base de dado invadida,
+          configuração de servidor e CDN... é só criar a sua conta e instalar
+          seu site com um clique.
         style:
           wfull: false
           roundedBorders: false
           noShadow: false
           transparent: false
     tema: null
-    title: Teste de Cards
-    titleSize: 5
-    body: Diversos tipos de cards
+    title: Para quem é?
+    titleSize: 7
+    body: Se você quer produzir sites e Landing Pages **sem complicação e com
+      eficiência de custos**, você está no lugar certo.
     style:
       ? alignCardContent
       ? align
+  - type: section
+    title: ""
+    titleSize: 2
+    body: >-
+      <img src="/cms/53.webp" alt="53% das visitas são abandonadas se um site
+      mobile demora mais de três segundos para carregar" width="300"/>
+
+
+      *53% das visitas são **abandonadas** se um site mobile demora mais de **três segundos** para carregar.*<br>
+
+      *(Google)*
+
+
+      Mas para você, isso não será mais um problema.
+    divider:
+      show: false
+      color: primary
+    style:
+      ? align
+      ? alignCardContent
+    tema: null
   - type: section
     cols:
       - destaque: false
@@ -321,35 +199,44 @@ subs:
         type: offer
         link: https://acopa.com.br/lp/?utm_source=modelo-funil
         checkmarks:
+          - Páginas rápidas, muito rápidas mesmo. Garantia de Nota acima de 95
+            no Google PageSpeed Insights
           - Automaticamente escalável, sem necessitar de ajustes
           - Disponibilidade do Site de 99,9%
-          - Páginas rápidas, muito rápidas mesmo
-          - Templates Validados de Funis de Vendas
           - Integração Fácil com Pixel
           - Integração Fácil com API de Conversões da Meta
           - Sites Ilimitados
           - Páginas Ilimitadas
+          - Até 100.000 acessos mensais gratuitos
+          - Utilize seu próprio domínio personalizado
+          - Vídeos te guiando por todo o processo (inclusive sobre a
+            configuração de anúncios)
           - Acesso Vitalício
           - Garantia de 7 dias
       - destaque: true
         price: 97
         beforePrice: R$
-        text: Para quem quer modelos validados. Pagamento Único
+        text: Para quem quer <b>forms de captura de leads</b> e modelos de página
+          validados. <br>Pagamento Único
         cta: Libere o seu acesso
         title: Pacote Completo
         type: offer
         link: https://acopa.com.br/lp/?utm_source=modelo-funil
         checkmarks:
-          - Automaticamente escalável, sem necessitar de ajustes
-          - Disponibilidade do Site de 99,9%
-          - Páginas rápidas, muito rápidas mesmo
-          - Integração Fácil com Pixel
-          - Integração Fácil com API de Conversões da Meta
-          - Sites Ilimitados
-          - Páginas Ilimitadas
-          - Acesso Vitalício
-          - Templates Validados de Funis de Vendas
-          - "Garantia Total: teste sem compromisso por 15 dias"
+          - Tudo do Plano Básico, mais...
+          - Dezenas de Temas para Personalizar suas Páginas (ou mesmo as seções
+            dentro das Páginas)
+          - Formulário de Captura de Leads
+          - Integração Fácil do Formulário com Planilha do Google
+          - Integração Fácil com Google Tag Manager
+          - "Modelo Funil de Vendas Validado #1 - Oferta e Super Oferta"
+          - "Modelo Funil de Vendas Validado #2 - Funil de Upgrade"
+          - "Modelo Funil de Vendas Validado #3 - Captura de Lead +
+            Redirecionamento para grupo no Whats"
+          - Seu próprio gerador de links de redirecionamento para Grupo no
+            WhatsApp
+          - Links para conversas no WhatsApp
+          - "Teste sem pressa: Garantia de 15 dias"
       - type: offer
         price: ""
         beforePrice: Fale conosco
@@ -357,17 +244,24 @@ subs:
         text: "Nós cuidamos de tudo para você: da copy à implementação"
         link: https://acopa.com.br/lp/?utm_source=modelo-funil
         cta: Fale com a gente
+        checkmarks:
+          - "Não perca seu tempo com nada: nós resolvemos tudo."
+          - Componentes personalizados e únicos
+          - Sistemas adequados às suas necessidades
+          - Entrega rápida e revisões ilimitadas
+          - A partir de R$ 1.997
     tema: null
-    title: "Escolha a melhor oferta para você:"
+    title: Escolha a melhor oferta para você
     titleSize: 6
-    body: Teste com tranquilidade. Garantia com reembolso
+    body: "**Teste sem compromisso:** dê uma chance ao nosso construtor e **compare
+      com sua solução atual**. Você com certeza verá a diferença."
     style:
       align: text-left
       alignCardContent: null
 tema: emerald
 noindex: true
-layout: "@layouts/main.astro"
 dontTrack: false
+layout: "@layouts/main.astro"
 ---
 Aproveite ao máximo **os cliques nos seus anúncios** e veja  sua conversão *disparar*.
 

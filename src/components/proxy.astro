@@ -24,7 +24,7 @@ let h2size = p.titleSize ? `text-${p.titleSize==1 ? '' :p.titleSize}xl md:text-$
 {p.type=="section" && 
     <section class:list={["mx-auto px-4 py-10 md:py-16", (p.divider?.show && "border-b"), (p.divider?.color=="primary" && "border-b-primary"), (p.style?.align || "text-center" )]}>
 
-        <div class="max-w-screen-xl mx-auto [&_img]:rounded-[--rounded-box] [&_img]:shadow-lg hover:[&_img]:scale-105 [&_img]:duration-500 [&_img]:my-8 [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:list-inside [&_li::marker]:font-bold ">
+        <div class="max-w-screen-xl mx-auto [&_img]:rounded-[--rounded-box] [&_img]:shadow-lg hover:[&_img]:scale-105 [&_img]:duration-500 [&_img]:my-8 [&_img]:inline-block [&_ol]:mb-4 [&_ol]:list-decimal [&_ol]:list-inside [&_li::marker]:font-bold ">
             <Subsection title={p.title} titleSize={p.titleSize} body={p.body}  />
         </div>
 
@@ -32,7 +32,7 @@ let h2size = p.titleSize ? `text-${p.titleSize==1 ? '' :p.titleSize}xl md:text-$
             {p.cols?.map( s => <ProxyElement p={s} alignContent={p.style?.alignCardContent}/> )}
         </div>}
 
-        {p.cta && <Cta {primary} style={p.cta.style} link={p.cta.link} pos={p.cta.auxText} set:html={p.cta.text}/>}
+        {p.cta?.text && <Cta {primary} style={p.cta.style} link={p.cta.link} pos={p.cta.auxText} set:html={p.cta.text}/>}
 
     </section>
 }
@@ -40,7 +40,7 @@ let h2size = p.titleSize ? `text-${p.titleSize==1 ? '' :p.titleSize}xl md:text-$
 <!-- Text And Image Panel -->
 
 {p.type=="sectionTxtImg" && 
-    <section class="grid place-content-center items-center md:grid-cols-2 gap-4 md:gap-8 max-w-screen-xl py-12 px-4 mx-auto">
+    <section class="grid place-content-center items-center md:grid-cols-2 gap-4 md:gap-8 max-w-7xl py-12 px-4 mx-auto">
         {p.img && <div class:list={["grid place-content-center py-8", p.img?.last && "order-last", p.img?.desktopLast ? "md:order-last" : "md:order-first" ]}>
             <img src={p.img.src} alt={p.img.alt || p.title} class="w-full rounded-[--rounded-box] hover:scale-105 duration-500"/>
         </div>}
