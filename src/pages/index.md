@@ -151,9 +151,10 @@ subs:
           borderIcon: false
           alignCenter: false
         title: Para quem está perdendo a paciência com o Wordpress
-        text: Aqui você não vai ter problemas com plugins, base de dado invadida,
+        text: Aqui você não vai ter problemas com plugins, base de dados invadida,
           configuração de servidor e CDN... é só criar a sua conta e instalar
-          seu site com um clique.
+          seu site com um clique. Desempenho incrível é simplesmente o nosso
+          padrão.
         style:
           wfull: false
           roundedBorders: false
