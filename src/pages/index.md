@@ -55,7 +55,7 @@ subs:
 
       E se você nunca criou um pixel, tá tudo bem: temos vídeos ensinando como rapidamente deixar tudo certinho.
     img:
-      src: /cms/bolt.svg
+      src: /cms/meta.svg
       butFirstOnDesktop: true
       desktopLast: true
     tema: null
@@ -74,7 +74,7 @@ subs:
 
       *PS.: Se você nunca fez isso, também temos vídeos ensinando como configurar as UTMs no seu gerenciador de anúncios, clique a clique.*
     img:
-      src: /cms/540.webp
+      src: /cms/utm_ok.svg
   - type: section
     cols:
       - type: card
