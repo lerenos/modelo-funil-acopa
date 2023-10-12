@@ -3,7 +3,12 @@ let {emoji, h3size, etiqueta, precoDe, precoPor, roundedBorders, noShadow, trans
 
 let iconHtml = emoji
 
-let iconAlign = (align?.includes('center') || icon?.align?.includes('center') || icon?.alignCenter) ? 'center' : null
+let iconAlign = null
+try{
+  iconAlign = align?.value ? ( (align?.value?.includes('center') || icon?.align?.includes('center') || icon?.alignCenter) ? 'center' : null ) : null
+} catch{
+  iconAlign = null
+}
 
 let h3Html = ""
 if (Astro.slots.has('h3')) {
